@@ -20,14 +20,17 @@ dev_dependencies:
 
 flutter:
   fonts:
-    - family: UniNeue
+    - family: Aegis Icons
+      fonts: 
+        - asset: lib/fonts/aegis_icons/AegisIcons.ttf
+    - family: Uni Neue
       fonts:
-        - asset: lib/fonts/UniNeue-Regular.otf
+        - asset: lib/fonts/uni_neue/UniNeue-Regular.otf
           weight: 400
-        - asset: lib/fonts/UniNeue-Light.otf
+        - asset: lib/fonts/uni_neue/UniNeue-Light.otf
           weight: 200
-        - asset: lib/fonts/UniNeue-Bold.otf
+        - asset: lib/fonts/uni_neue/UniNeue-Bold.otf
           weight: 600
-        - asset: lib/fonts/UniNeue-HeavyItalic.otf
+        - asset: lib/fonts/uni_neue/UniNeue-HeavyItalic.otf
           weight: 700
           style: italic
