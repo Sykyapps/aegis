@@ -1,7 +1,8 @@
-import 'package:aegis/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../foundation.dart';
 
 enum SkFieldState {
   enabled,
@@ -43,6 +44,16 @@ class SkTextField extends HookWidget {
               : SkFieldState.disabled
           : SkFieldState.error,
     );
+    var getStateColor = useCallback(() {
+      switch (fieldState.value) {
+        case SkFieldState.error:
+          return AegisColors.red300;
+        case SkFieldState.disabled:
+          return AegisColors.neutral300;
+        default:
+          return AegisColors.neutral500;
+      }
+    }, [])();
     var error = useState<String?>(errorText);
 
     useEffect(() {
@@ -73,59 +84,67 @@ class SkTextField extends HookWidget {
           labelText,
           style: AegisFont.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: fieldState.value == SkFieldState.error
-                ? AegisColors.red300
-                : AegisColors.neutral500,
+            color: getStateColor,
           ),
         ),
         TextFormField(
+          enabled: enabled,
           focusNode: focusNode,
           controller: _controller,
           onChanged: onChanged,
           validator: validator == null
               ? null
               : (value) => error.value = validator!(value),
-          style: AegisFont.bodyLarge,
+          style: AegisFont.bodyLarge.copyWith(
+            color: enabled ? null : AegisColors.neutral300,
+          ),
           obscureText: obscureText,
           cursorHeight: 24.h,
           cursorWidth: 1.w,
           cursorColor: AegisColors.blue300,
           decoration: InputDecoration(
-              // filled: true,
-              isDense: true,
-              focusedBorder: const UnderlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(
-                  color: AegisColors.blue300,
-                ),
+            isDense: true,
+            enabled: enabled,
+            focusedBorder: const UnderlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(
+                color: AegisColors.blue300,
               ),
-              focusedErrorBorder: const UnderlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(
-                  color: AegisColors.red300,
-                ),
-              ),
-              enabledBorder: const UnderlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(
-                  color: AegisColors.neutral200,
-                ),
-              ),
-              errorBorder: const UnderlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(
-                  color: AegisColors.red300,
-                ),
-              ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 8),
-              hintText: hintText,
-              hintStyle: AegisFont.bodyLarge.copyWith(
-                color: AegisColors.neutral300,
-              ),
-              errorText: error.value,
-              errorStyle: AegisFont.bodyMedium.copyWith(
+            ),
+            focusedErrorBorder: const UnderlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(
                 color: AegisColors.red300,
-              )),
+              ),
+            ),
+            enabledBorder: const UnderlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(
+                color: AegisColors.neutral200,
+              ),
+            ),
+            disabledBorder: const UnderlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(
+                color: AegisColors.neutral200,
+              ),
+            ),
+            errorBorder: const UnderlineInputBorder(
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(
+                color: AegisColors.red300,
+              ),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 8),
+            hintText: hintText,
+            hintStyle: AegisFont.bodyLarge.copyWith(
+              color: AegisColors.neutral300,
+            ),
+            errorText: error.value,
+            errorStyle: AegisFont.bodyMedium.copyWith(
+              color: AegisColors.red300,
+            ),
+          ),
         ),
       ],
     );
