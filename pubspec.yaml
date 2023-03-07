@@ -22,7 +22,7 @@ dev_dependencies:
 
 flutter:
   fonts:
-    - family: Aegis Icons
+    - family: AegisIcons
       fonts: 
         - asset: lib/fonts/aegis_icons/AegisIcons.ttf
     - family: Uni Neue
