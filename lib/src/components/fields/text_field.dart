@@ -22,9 +22,13 @@ class SkTextField extends HookWidget {
     this.obscureText = false,
     this.onChanged,
     this.controller,
+    this.prefix,
+    this.suffixIcon,
+    this.focusNode,
   });
 
   final bool enabled;
+  final FocusNode? focusNode;
   final FormFieldValidator<String>? validator;
   final String? errorText;
   final String labelText;
@@ -32,11 +36,13 @@ class SkTextField extends HookWidget {
   final bool obscureText;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
+  final Widget? prefix;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
-    var focusNode = useFocusNode();
-    var _controller = controller ?? useTextEditingController();
+    var fn = focusNode ?? useFocusNode();
+    var ctrl = controller ?? useTextEditingController();
     var fieldState = useState<SkFieldState>(
       errorText == null
           ? enabled
@@ -57,12 +63,14 @@ class SkTextField extends HookWidget {
     var error = useState<String?>(errorText);
 
     useEffect(() {
-      focusNode.addListener(
+      fn.addListener(
         () {
-          if (error.value == null) {
-            fieldState.value = focusNode.hasFocus
-                ? SkFieldState.focused
-                : SkFieldState.enabled;
+          if (!enabled) return;
+          if (error.value != null) return;
+          if (fn.hasFocus) {
+            fieldState.value = SkFieldState.focused;
+          } else {
+            fieldState.value = SkFieldState.enabled;
           }
         },
       );
@@ -89,8 +97,8 @@ class SkTextField extends HookWidget {
         ),
         TextFormField(
           enabled: enabled,
-          focusNode: focusNode,
-          controller: _controller,
+          focusNode: fn,
+          controller: ctrl,
           onChanged: onChanged,
           validator: validator == null
               ? null
@@ -144,6 +152,9 @@ class SkTextField extends HookWidget {
             errorStyle: AegisFont.bodyMedium.copyWith(
               color: AegisColors.red300,
             ),
+            prefix: prefix,
+            suffixIcon: suffixIcon,
+            suffixIconConstraints: const BoxConstraints(),
           ),
         ),
       ],
