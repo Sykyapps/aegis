@@ -13,6 +13,7 @@ class SkButton extends HookWidget {
     this.bgColor,
     this.textStyle,
     this.onPressed,
+    this.elevation,
     super.key,
   });
 
@@ -22,6 +23,7 @@ class SkButton extends HookWidget {
   final Color? bgColor;
   final TextStyle? textStyle;
   final VoidCallback? onPressed;
+  final double? elevation;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class SkButton extends HookWidget {
           fontWeight: FontWeight.bold,
         ),
         minimumSize: Size.fromHeight(48.h),
+        elevation: elevation,
       ),
       onPressed: isLoading ? () {} : onPressed,
       child: isLoading
