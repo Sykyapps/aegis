@@ -23,7 +23,7 @@ class SkTextField extends HookWidget {
     this.onChanged,
     this.controller,
     this.prefix,
-    this.suffixIcon,
+    this.suffix,
     this.focusNode,
   });
 
@@ -37,12 +37,13 @@ class SkTextField extends HookWidget {
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final Widget? prefix;
-  final Widget? suffixIcon;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
     var fn = focusNode ?? useFocusNode();
     var ctrl = controller ?? useTextEditingController();
+    var textUpdate = useValueListenable(ctrl);
     var fieldState = useState<SkFieldState>(
       errorText == null
           ? enabled
@@ -81,8 +82,10 @@ class SkTextField extends HookWidget {
           fieldState.value = SkFieldState.enabled;
         }
       });
+      ctrl.value = textUpdate;
+      
       return;
-    }, []);
+    }, [textUpdate]);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -152,8 +155,9 @@ class SkTextField extends HookWidget {
             errorStyle: AegisFont.bodyMedium.copyWith(
               color: AegisColors.red300,
             ),
-            prefix: prefix,
-            suffixIcon: suffixIcon,
+            prefixIcon: prefix,
+            prefixIconConstraints: const BoxConstraints(),
+            suffixIcon: ctrl.text.isNotEmpty ? suffix : null,
             suffixIconConstraints: const BoxConstraints(),
           ),
         ),
