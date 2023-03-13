@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
+import '../../../icons.dart';
 
 enum SkFieldState {
   enabled,
@@ -157,11 +158,35 @@ class SkTextField extends HookWidget {
             ),
             prefixIcon: prefix,
             prefixIconConstraints: const BoxConstraints(),
-            suffixIcon: ctrl.text.isNotEmpty ? suffix : null,
+            suffixIcon: suffix ??
+                (fn.hasFocus && ctrl.text.isNotEmpty
+                    ? _ClearButton(controller: ctrl)
+                    : null),
             suffixIconConstraints: const BoxConstraints(),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ClearButton extends StatelessWidget {
+  const _ClearButton({Key? key, required this.controller}) : super(key: key);
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => controller.clear(),
+      icon: const Icon(AegisIcons.circle_close),
+      constraints: const BoxConstraints(),
+      padding: const EdgeInsets.only(left: 8).r,
+      iconSize: 20.r,
+      color: AegisColors.neutral300,
+      enableFeedback: false,
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
     );
   }
 }
