@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AegisColors {
+  static const transparent = Color.fromRGBO(0, 0, 0, 0);
+
   static const neutral0 = Color.fromRGBO(255, 255, 255, 1);
   static const neutral100 = Color.fromRGBO(245, 246, 250, 1);
   static const neutral200 = Color.fromRGBO(224, 227, 239, 1);
