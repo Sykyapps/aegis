@@ -29,7 +29,7 @@ class SkButton extends HookWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: bgColor ?? AegisColors.purple300,
+        backgroundColor: bgColor ?? AegisColors.purple300,
         textStyle: AegisFont.bodyLarge.copyWith(
           fontWeight: FontWeight.bold,
         ),
