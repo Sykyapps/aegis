@@ -22,6 +22,7 @@ class SkIconButton extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(12, 12, 0, 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: AegisColors.neutral200),
         boxShadow: [
           BoxShadow(
             color: const Color(0xFF000000).withOpacity(0.08),
