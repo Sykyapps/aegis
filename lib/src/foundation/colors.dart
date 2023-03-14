@@ -42,4 +42,18 @@ class AegisColors {
   static const red100 = Color.fromRGBO(255, 229, 236, 1);
   static const red200 = Color.fromRGBO(255, 126, 159, 1);
   static const red300 = Color.fromRGBO(255, 49, 101, 1);
+
+  static const backgroundWhite = neutral0;
+  static const backgroundGray = neutral100;
+
+  static const textHighEmphasis = neutral500;
+  static const textLowEmphasis = neutral400;
+  static const textDisabled = neutral300;
+
+  static const iconHighEmphasis = neutral500;
+  static const iconLowEmphasis = neutral300;
+  static const iconDisabled = neutral200;
+
+  static const borderHighEmphasis = neutral200;
+  static const borderLowEmphasis = neutral100;
 }
