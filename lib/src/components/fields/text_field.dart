@@ -40,6 +40,17 @@ class SkTextField extends HookWidget {
   final Widget? prefix;
   final Widget? suffix;
 
+  Color getStateColor(SkFieldState value) {
+    switch (value) {
+      case SkFieldState.error:
+        return AegisColors.red300;
+      case SkFieldState.disabled:
+        return AegisColors.neutral300;
+      default:
+        return AegisColors.neutral500;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var fn = focusNode ?? useFocusNode();
@@ -52,16 +63,19 @@ class SkTextField extends HookWidget {
               : SkFieldState.disabled
           : SkFieldState.error,
     );
-    var getStateColor = useCallback(() {
-      switch (fieldState.value) {
-        case SkFieldState.error:
-          return AegisColors.red300;
-        case SkFieldState.disabled:
-          return AegisColors.neutral300;
-        default:
-          return AegisColors.neutral500;
-      }
-    }, [])();
+
+    // TODO(dany): this function not trigger rebuild
+    // var getStateColor = useCallback(() {
+    //   switch (fieldState.value) {
+    //     case SkFieldState.error:
+    //       return AegisColors.red300;
+    //     case SkFieldState.disabled:
+    //       return AegisColors.neutral300;
+    //     default:
+    //       return AegisColors.neutral500;
+    //   }
+    // }, [])();
+
     var error = useState<String?>(errorText);
 
     void onFocusChanged() {
@@ -110,7 +124,7 @@ class SkTextField extends HookWidget {
           labelText,
           style: AegisFont.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: getStateColor,
+            color: getStateColor(fieldState.value),
           ),
         ),
         TextFormField(
