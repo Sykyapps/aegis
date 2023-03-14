@@ -64,29 +64,43 @@ class SkTextField extends HookWidget {
     }, [])();
     var error = useState<String?>(errorText);
 
+    void onFocusChanged() {
+      if (!enabled) return;
+      if (error.value != null) return;
+      if (fn.hasFocus) {
+        fieldState.value = SkFieldState.focused;
+      } else {
+        fieldState.value = SkFieldState.enabled;
+      }
+    }
+
+    void onErrorChanged() {
+      if (error.value != null) {
+        fieldState.value = SkFieldState.error;
+      } else {
+        fieldState.value = SkFieldState.enabled;
+      }
+    }
+
     useEffect(() {
-      fn.addListener(
-        () {
-          if (!enabled) return;
-          if (error.value != null) return;
-          if (fn.hasFocus) {
-            fieldState.value = SkFieldState.focused;
-          } else {
-            fieldState.value = SkFieldState.enabled;
-          }
-        },
-      );
-      error.addListener(() {
-        if (error.value != null) {
-          fieldState.value = SkFieldState.error;
-        } else {
-          fieldState.value = SkFieldState.enabled;
-        }
-      });
+      fn.addListener(onFocusChanged);
+      error.addListener(onErrorChanged);
+      return () {
+        fn.removeListener(onFocusChanged);
+        error.removeListener(onErrorChanged);
+      };
+    }, []);
+
+    useEffect(() {
       ctrl.value = textUpdate;
-      
       return;
     }, [textUpdate]);
+
+    useEffect(() {
+      error.value = errorText;
+      onErrorChanged();
+      return;
+    }, [errorText]);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -104,9 +118,7 @@ class SkTextField extends HookWidget {
           focusNode: fn,
           controller: ctrl,
           onChanged: onChanged,
-          validator: validator == null
-              ? null
-              : (value) => error.value = validator!(value),
+          validator: (value) => error.value = validator?.call(value),
           style: AegisFont.bodyLarge.copyWith(
             color: enabled ? null : AegisColors.neutral300,
           ),

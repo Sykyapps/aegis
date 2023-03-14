@@ -6,16 +6,17 @@ import 'package:form_validator/form_validator.dart';
 
 import '../../../foundation.dart';
 import 'fields.dart';
-import 'validator.dart';
 
 class SkPhoneEmailField extends HookWidget {
   const SkPhoneEmailField({
     Key? key,
     required this.controller,
+    this.errorMessage,
     this.requiredMessage,
   }) : super(key: key);
 
   final TextEditingController controller;
+  final String? errorMessage;
   final String? requiredMessage;
 
   @override
@@ -34,6 +35,7 @@ class SkPhoneEmailField extends HookWidget {
     return SkTextField(
       labelText: 'Nomor Ponsel atau Email',
       hintText: 'Masukkan nomor ponsel atau email.',
+      errorText: errorMessage,
       controller: controller,
       prefix: isPhoneMin && !hasNonDigit ? const _PhonePrefix() : null,
       validator: ValidationBuilder(requiredMessage: requiredMessage)
