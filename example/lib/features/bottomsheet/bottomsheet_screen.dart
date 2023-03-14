@@ -1,13 +1,10 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'dart:core';
-import 'dart:math' as math;
 
 import 'package:aegis/components.dart';
 import 'package:aegis/foundation.dart';
 import 'package:aegis/icons.dart';
-import 'package:aegis_app/core/injection/dependency_injection.dart';
-import 'package:aegis_app/core/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -44,10 +41,10 @@ class BottomSheetScreen extends StatelessWidget {
                     child: CustomScrollView(
                       shrinkWrap: true,
                       slivers: [
-                        _Header(),
+                        const _Header(),
                         SliverToBoxAdapter(
                           child: Column(
-                            children: [
+                            children: const [
                               ListTile(
                                 leading: Icon(Icons.share),
                                 title: Text('Share'),
@@ -111,8 +108,8 @@ class _Header extends StatelessWidget {
           }
 
           var currentHeight = constraint.biggest.height;
-          var scale = difference(currentHeight, height) /
-              difference(height, expandedHeight);
+          // var scale = difference(currentHeight, height) /
+          //     difference(height, expandedHeight);
           return FlexibleSpaceBar(
             centerTitle: false,
             expandedTitleScale: 1,
