@@ -37,6 +37,7 @@ class SkPhoneField extends HookWidget {
       hintText: 'Masukkan nomor hp.',
       errorText: errorMessage,
       controller: controller,
+      keyboardType: TextInputType.number,
       prefix: const PhonePrefix(),
       suffix: suffix ?? const PhoneSuffix(),
       validator: ValidationBuilder(requiredMessage: requiredMessage)

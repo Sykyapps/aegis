@@ -26,6 +26,7 @@ class SkTextField extends HookWidget {
     this.prefix,
     this.suffix,
     this.focusNode,
+    this.keyboardType,
   });
 
   final bool enabled;
@@ -39,7 +40,7 @@ class SkTextField extends HookWidget {
   final TextEditingController? controller;
   final Widget? prefix;
   final Widget? suffix;
-
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +129,7 @@ class SkTextField extends HookWidget {
           cursorHeight: 24.h,
           cursorWidth: 1.w,
           cursorColor: AegisColors.blue300,
+          keyboardType: keyboardType,
           decoration: InputDecoration(
             isDense: true,
             enabled: enabled,
