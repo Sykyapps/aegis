@@ -40,16 +40,6 @@ class SkTextField extends HookWidget {
   final Widget? prefix;
   final Widget? suffix;
 
-  Color getStateColor(SkFieldState value) {
-    switch (value) {
-      case SkFieldState.error:
-        return AegisColors.red300;
-      case SkFieldState.disabled:
-        return AegisColors.neutral300;
-      default:
-        return AegisColors.neutral500;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,17 +54,16 @@ class SkTextField extends HookWidget {
           : SkFieldState.error,
     );
 
-    // TODO(dany): this function not trigger rebuild
-    // var getStateColor = useCallback(() {
-    //   switch (fieldState.value) {
-    //     case SkFieldState.error:
-    //       return AegisColors.red300;
-    //     case SkFieldState.disabled:
-    //       return AegisColors.neutral300;
-    //     default:
-    //       return AegisColors.neutral500;
-    //   }
-    // }, [])();
+    var getStateColor = useCallback(() {
+      switch (fieldState.value) {
+        case SkFieldState.error:
+          return AegisColors.red300;
+        case SkFieldState.disabled:
+          return AegisColors.neutral300;
+        default:
+          return AegisColors.neutral500;
+      }
+    }, []);
 
     var error = useState<String?>(errorText);
 
@@ -112,7 +101,6 @@ class SkTextField extends HookWidget {
 
     useEffect(() {
       error.value = errorText;
-      onErrorChanged();
       return;
     }, [errorText]);
 
@@ -124,7 +112,7 @@ class SkTextField extends HookWidget {
           labelText,
           style: AegisFont.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: getStateColor(fieldState.value),
+            color: getStateColor(),
           ),
         ),
         TextFormField(
