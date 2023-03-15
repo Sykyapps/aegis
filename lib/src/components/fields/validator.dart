@@ -3,6 +3,8 @@ class RegExpValidator {
   static final anyAlphabetRegExp = RegExp(r'[A-Za-z]');
   static final anyDigitRegExp = RegExp(r'\d');
   static final anyNonDigitRegExp = RegExp(r'\D');
+  static final anyLowerCaseRegExp = RegExp('^(.*?[a-z]){1,}');
+  static final anyUpperCaseRegExp = RegExp('^(.*?[A-Z]){1,}');
 
   // Email
   static final emailRegExp = RegExp(
@@ -40,5 +42,17 @@ class RegExpValidator {
     }
 
     return phoneValidator(value);
+  }
+
+  static String? passwordValidator(String? value) {
+    String text = value ?? '';
+
+    if (text.length >= 8 &&
+        anyLowerCaseRegExp.hasMatch(text) &&
+        anyUpperCaseRegExp.hasMatch(text) &&
+        anyDigitRegExp.hasMatch(text)) {
+      return null;
+    }
+    return 'Kata sandi belum memenuhi syarat';
   }
 }
