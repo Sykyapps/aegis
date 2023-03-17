@@ -1,7 +1,7 @@
 enum AegisScreen {
   home,
   button,
-  field,
+  fields,
   card,
   bottomsheet,
   chip,
@@ -17,6 +17,8 @@ extension AegisScreenX on AegisScreen {
         return '/bottomsheet';
       case AegisScreen.segmentedControl:
         return '/segmented-control';
+      case AegisScreen.fields:
+        return '/field';
       default:
         return '/';
     }
@@ -30,6 +32,8 @@ extension AegisScreenX on AegisScreen {
         return 'bottomsheet';
       case AegisScreen.segmentedControl:
         return 'segmentedControl';
+      case AegisScreen.fields:
+        return 'field';
       default:
         return 'home';
     }
@@ -43,6 +47,8 @@ extension AegisScreenX on AegisScreen {
         return 'Bottom Sheet';
       case AegisScreen.segmentedControl:
         return 'Segmented Control';
+      case AegisScreen.fields:
+        return 'Fields';
       default:
         return '';
     }

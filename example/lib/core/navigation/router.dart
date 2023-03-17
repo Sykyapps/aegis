@@ -1,10 +1,11 @@
-import 'package:aegis_app/core/navigation/screens.dart';
-import 'package:aegis_app/features/segmented_control/segmented_control_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/bottomsheet/bottomsheet_screen.dart';
+import '../../features/fields/fields_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/segmented_control/segmented_control_screen.dart';
+import 'screens.dart';
 
 class AppRouter {
   static final _navigatorKey = GlobalKey<NavigatorState>();
@@ -34,6 +35,13 @@ class AppRouter {
         path: AegisScreen.segmentedControl.path,
         builder: (context, state) {
           return const SegmentedControlScreen();
+        },
+      ),
+      GoRoute(
+        name: AegisScreen.fields.name,
+        path: AegisScreen.fields.path,
+        builder: (context, state) {
+          return const FieldsScreen();
         },
       ),
     ],
