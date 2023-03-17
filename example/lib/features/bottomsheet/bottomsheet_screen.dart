@@ -22,56 +22,75 @@ class BottomSheetScreen extends StatelessWidget {
           label: 'Tap to open Bottom Sheet',
           onPressed: () {
             log('Button pressed');
+            var mq = MediaQuery.of(context);
             showModalBottomSheet(
               context: context,
               // barrierColor: Colors.transparent,
               backgroundColor: Colors.transparent,
+              isScrollControlled: true,
+              constraints: BoxConstraints(
+                maxHeight: mq.size.height - mq.viewPadding.top,
+              ),
+
               builder: (context) {
-                return BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: Shadow.convertRadiusToSigma(4),
-                    sigmaY: Shadow.convertRadiusToSigma(4),
-                  ),
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16).r,
-                      color: AegisColors.neutral0,
-                    ),
-                    child: CustomScrollView(
-                      shrinkWrap: true,
-                      slivers: [
-                        const _Header(),
-                        SliverToBoxAdapter(
-                          child: Column(
-                            children: const [
-                              ListTile(
-                                leading: Icon(Icons.share),
-                                title: Text('Share'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.link),
-                                title: Text('Get link'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.edit),
-                                title: Text('Edit name'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.delete),
-                                title: Text('Delete collection'),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                return SkBottomSheet();
               },
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class SkBottomSheet extends StatelessWidget {
+  const SkBottomSheet({
+    Key? key,
+    this.child,
+    this.useDraggableScrollableSheet = false,
+  }) : super(key: key);
+
+  final bool useDraggableScrollableSheet;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: Shadow.convertRadiusToSigma(4),
+        sigmaY: Shadow.convertRadiusToSigma(4),
+      ),
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16).r,
+          color: AegisColors.neutral0,
+        ),
+        child: useDraggableScrollableSheet
+            ? DraggableScrollableSheet(
+                expand: false,
+                builder: (context, scrollController) {
+                  return CustomScrollView(
+                    controller: scrollController,
+                    shrinkWrap: true,
+                    slivers: [
+                      const _Header(),
+                      SliverToBoxAdapter(
+                        child: child ?? Padding(padding: EdgeInsets.all(20.r)),
+                      )
+                    ],
+                  );
+                },
+              )
+            : CustomScrollView(
+                shrinkWrap: true,
+                slivers: [
+                  const _Header(),
+                  SliverToBoxAdapter(
+                    child: child ?? Padding(padding: EdgeInsets.all(20.r)),
+                  )
+                ],
+              ),
       ),
     );
   }
@@ -83,8 +102,6 @@ class _Header extends StatelessWidget {
   }) : super(key: key);
 
   static final double height = 56.r;
-  static final double expandedHeight = 108.r;
-  static final double leadingWidth = 64.r;
 
   @override
   Widget build(BuildContext context) {
@@ -97,31 +114,8 @@ class _Header extends StatelessWidget {
         onPressed: () {},
       ),
       toolbarHeight: height,
-      leadingWidth: leadingWidth,
-      expandedHeight: expandedHeight,
       backgroundColor: AegisColors.neutral200,
       foregroundColor: AegisColors.neutral500,
-      flexibleSpace: LayoutBuilder(
-        builder: (context, constraint) {
-          double difference(double a, double b) {
-            return (a - b).abs();
-          }
-
-          var currentHeight = constraint.biggest.height;
-          // var scale = difference(currentHeight, height) /
-          //     difference(height, expandedHeight);
-          return FlexibleSpaceBar(
-            centerTitle: false,
-            expandedTitleScale: 1,
-            title: Text(
-              '${difference(currentHeight, height) / difference(height, expandedHeight)}',
-              style: AegisFont.headlineMedium.copyWith(
-                color: AegisColors.neutral500,
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }
