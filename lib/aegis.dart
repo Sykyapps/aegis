@@ -1,4 +1,5 @@
 library aegis;
 
-export 'foundation.dart';
 export 'components.dart';
+export 'foundation.dart';
+export 'icons.dart';

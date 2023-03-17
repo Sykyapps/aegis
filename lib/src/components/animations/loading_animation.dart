@@ -6,10 +6,12 @@ import '../../../foundation.dart';
 
 class SkLoadingAnimation extends StatelessWidget {
   final double size;
+  final Color color;
 
   const SkLoadingAnimation({
     super.key,
     this.size = 40,
+    this.color = AegisColors.neutral100,
   });
 
   @override
@@ -22,7 +24,7 @@ class SkLoadingAnimation extends StatelessWidget {
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(500),
-              color: AegisColors.neutral100,
+              color: color,
             ),
           ),
         );

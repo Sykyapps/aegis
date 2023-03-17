@@ -12,11 +12,15 @@ class SkPhoneEmailField extends HookWidget {
     required this.controller,
     this.errorMessage,
     this.requiredMessage,
+    this.phoneCodes,
+    this.onCountrySelected,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String? errorMessage;
   final String? requiredMessage;
+  final List<Map<String, dynamic>>? phoneCodes;
+  final Function(String)? onCountrySelected;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,9 @@ class SkPhoneEmailField extends HookWidget {
       hintText: 'Masukkan nomor ponsel atau email.',
       errorText: errorMessage,
       controller: controller,
-      prefix: isPhoneMin && !hasNonDigit ? const PhonePrefix() : null,
+      prefix: isPhoneMin && !hasNonDigit
+          ? PhonePrefix(phoneCodes: phoneCodes, onSelected: onCountrySelected)
+          : null,
       suffix: isPhoneMin && !hasNonDigit ? const PhoneSuffix() : null,
       validator: ValidationBuilder(requiredMessage: requiredMessage)
           .add(RegExpValidator.phoneEmailValidator)
