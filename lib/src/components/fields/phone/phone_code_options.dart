@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,10 +23,7 @@ class PhoneCodeOptions extends HookWidget {
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (context) {
-        return FractionallySizedBox(
-          heightFactor: 0.93,
-          child: PhoneCodeOptions(phoneCodes: phoneCodes),
-        );
+        return PhoneCodeOptions(phoneCodes: phoneCodes);
       },
     );
 
@@ -45,27 +44,42 @@ class PhoneCodeOptions extends HookWidget {
           .toList();
     }
 
-    return Container(
-      clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
-        color: AegisColors.neutral0,
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: Shadow.convertRadiusToSigma(4),
+        sigmaY: Shadow.convertRadiusToSigma(4),
       ),
-      child: CustomScrollView(
-        slivers: [
-          _Header(controller: controller, onChanged: onChanged),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              codes.value
-                  .map((c) => ListTile(
-                        leading: SvgPicture.network(c['flagUrl'], width: 25.r),
-                        title: Text('${c['name']} (+${c['phoneCode']})'),
-                        onTap: () => Navigator.of(context).pop(c),
-                      ))
-                  .toList(),
-            ),
-          ),
-        ],
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
+          color: AegisColors.neutral0,
+        ),
+        child: DraggableScrollableSheet(
+          expand: false,
+          maxChildSize: .93,
+          builder: (context, scrollController) {
+            return CustomScrollView(
+              controller: scrollController,
+              shrinkWrap: true,
+              slivers: [
+                _Header(controller: controller, onChanged: onChanged),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    codes.value
+                        .map((c) => ListTile(
+                              leading:
+                                  SvgPicture.network(c['flagUrl'], width: 25.r),
+                              title: Text('${c['name']} (+${c['phoneCode']})'),
+                              onTap: () => Navigator.of(context).pop(c),
+                            ))
+                        .toList(),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
