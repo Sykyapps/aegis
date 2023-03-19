@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_validator/form_validator.dart';
 
 import '../fields.dart';
+import '../formatter/phone_formatter.dart';
 import 'phone_prefix.dart';
 import 'phone_suffix.dart';
 
@@ -50,6 +51,7 @@ class SkPhoneField extends HookWidget {
       validator: ValidationBuilder(requiredMessage: requiredMessage)
           .add(RegExpValidator.phoneValidator)
           .build(),
+      inputFormatters: [PhoneFormatter()],
     );
   }
 }

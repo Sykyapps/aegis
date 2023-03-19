@@ -44,6 +44,13 @@ class RegExpValidator {
     return phoneValidator(value);
   }
 
+  static bool showPhoneCode(String value) {
+    if (value.startsWith('+62')) return true;
+    if (!RegExpValidator.phoneRegExpMin.hasMatch(value)) return false;
+    if (RegExpValidator.anyNonDigitRegExp.hasMatch(value)) return false;
+    return true;
+  }
+
   static String? passwordValidator(String? value) {
     String text = value ?? '';
 

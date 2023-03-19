@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,6 +28,7 @@ class SkTextField extends HookWidget {
     this.suffix,
     this.focusNode,
     this.keyboardType,
+    this.inputFormatters,
   });
 
   final bool enabled;
@@ -41,6 +43,7 @@ class SkTextField extends HookWidget {
   final Widget? prefix;
   final Widget? suffix;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +133,7 @@ class SkTextField extends HookWidget {
           cursorWidth: 1.w,
           cursorColor: AegisColors.blue300,
           keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             isDense: true,
             enabled: enabled,

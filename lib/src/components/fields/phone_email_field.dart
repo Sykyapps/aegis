@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_validator/form_validator.dart';
 
 import 'fields.dart';
+import 'formatter/phone_formatter.dart';
 import 'phone/phone_prefix.dart';
 import 'phone/phone_suffix.dart';
 
@@ -31,22 +32,21 @@ class SkPhoneEmailField extends HookWidget {
       return;
     }, [update]);
 
-    var isPhoneMin = RegExpValidator.phoneRegExpMin.hasMatch(controller.text);
-    var hasNonDigit =
-        RegExpValidator.anyNonDigitRegExp.hasMatch(controller.text);
-
     return SkTextField(
       labelText: 'Nomor Ponsel atau Email',
       hintText: 'Masukkan nomor ponsel atau email.',
       errorText: errorMessage,
       controller: controller,
-      prefix: isPhoneMin && !hasNonDigit
+      prefix: RegExpValidator.showPhoneCode(controller.text)
           ? PhonePrefix(phoneCodes: phoneCodes, onSelected: onCountrySelected)
           : null,
-      suffix: isPhoneMin && !hasNonDigit ? const PhoneSuffix() : null,
+      suffix: RegExpValidator.showPhoneCode(controller.text)
+          ? const PhoneSuffix()
+          : null,
       validator: ValidationBuilder(requiredMessage: requiredMessage)
           .add(RegExpValidator.phoneEmailValidator)
           .build(),
+      inputFormatters: [PhoneFormatter()],
     );
   }
 }
