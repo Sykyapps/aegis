@@ -1,51 +1,76 @@
-import 'package:aegis/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../foundation.dart';
+import '../animations/animations.dart';
+
 class SkIconButton extends StatelessWidget {
-  final String title;
   final IconData icon;
-  final Function() onPressed;
+  final String title;
+  final Function()? onPressed;
+  final Color backgroundColor;
+  final Color foregroundColor;
+  final EdgeInsetsGeometry padding;
+  final BorderSide border;
+  final bool isLoading;
   final int width;
+
   const SkIconButton({
     super.key,
     required this.title,
     required this.icon,
-    required this.onPressed,
+    this.onPressed,
+    this.backgroundColor = AegisColors.neutral0,
+    this.foregroundColor = AegisColors.neutral500,
+    this.padding = EdgeInsets.zero,
+    this.border = const BorderSide(color: AegisColors.neutral200),
     this.width = 125,
+    this.isLoading = false,
   });
+
+  factory SkIconButton.primary({
+    required IconData icon,
+    required String title,
+    Function()? onPressed,
+    EdgeInsetsGeometry padding = const EdgeInsets.all(12),
+    BorderSide border = BorderSide.none,
+    bool isLoading = false,
+  }) =>
+      SkIconButton(
+        title: title,
+        icon: icon,
+        onPressed: onPressed,
+        backgroundColor: AegisColors.purple300,
+        foregroundColor: AegisColors.neutral0,
+        padding: padding,
+        isLoading: isLoading,
+      );
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width.w,
-      margin: const EdgeInsets.fromLTRB(12, 12, 0, 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: AegisColors.neutral200),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF000000).withOpacity(0.08),
-            offset: const Offset(0, 2),
-            blurRadius: 8,
-          ),
-        ],
-      ),
       child: ElevatedButton.icon(
-        icon: Icon(
-          icon,
-          color: AegisColors.neutral500,
-        ),
-        label: Text(
-          title,
-          style: AegisFont.bodyMedium.copyWith(
-            color: AegisColors.neutral500,
-          ),
-        ),
+        icon: isLoading
+            ? SkLoadingAnimation(color: foregroundColor)
+            : Icon(icon, color: foregroundColor),
+        label: isLoading
+            ? const SizedBox()
+            : Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AegisFont.bodyMedium.copyWith(color: foregroundColor),
+              ),
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          backgroundColor: AegisColors.neutral0,
+          padding: padding,
+          backgroundColor: backgroundColor,
           elevation: 0,
+          shape: RoundedRectangleBorder(
+            side: border,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          shadowColor: const Color(0xFF000000).withOpacity(0.08),
         ),
         onPressed: onPressed,
       ),

@@ -10,7 +10,7 @@ class SkLoadingAnimation extends StatelessWidget {
 
   const SkLoadingAnimation({
     super.key,
-    this.size = 40,
+    this.size = 20,
     this.color = AegisColors.neutral100,
   });
 
