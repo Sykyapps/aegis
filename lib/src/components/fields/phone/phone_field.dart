@@ -38,8 +38,8 @@ class SkPhoneField extends HookWidget {
 
     return SkTextField(
       enabled: enabled,
-      labelText: 'Nomor HP',
-      hintText: 'Masukkan nomor hp.',
+      labelText: 'Nomor Ponsel',
+      hintText: 'Masukkan nomor ponsel.',
       errorText: errorMessage,
       controller: controller,
       keyboardType: TextInputType.number,

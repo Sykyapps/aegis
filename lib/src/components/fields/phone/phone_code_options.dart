@@ -148,7 +148,7 @@ class _Header extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20).r,
           child: SkSearchField(
             controller: controller,
-            hintText: 'Cari nama negara atau kode negara',
+            hintText: 'Cari kode ataupun nama negara',
             onChanged: onChanged,
           ),
         ),
@@ -205,7 +205,7 @@ class _Empty extends StatelessWidget {
             ),
           ),
           Text(
-            'Pastikan penulisan kode negara sudah tepat atau ganti kata kunci.',
+            'Pastikan penulisan kode negara atau kata kunci sudah tepat',
             textAlign: TextAlign.center,
             style: AegisFont.bodyMedium.copyWith(
               color: AegisColors.textHighEmphasis,
