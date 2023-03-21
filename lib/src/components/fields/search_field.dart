@@ -52,8 +52,9 @@ class SkSearchField extends HookWidget {
         ),
         prefixIcon: const _SearchPrefix(),
         prefixIconConstraints: const BoxConstraints(),
-        suffixIcon:
-            ctrl.text.isNotEmpty ? _ClearButton(controller: ctrl) : null,
+        suffixIcon: ctrl.text.isNotEmpty
+            ? _ClearButton(controller: ctrl, onChanged: onChanged)
+            : null,
         suffixIconConstraints: const BoxConstraints(),
       ),
     );
@@ -73,9 +74,11 @@ class _SearchPrefix extends StatelessWidget {
 }
 
 class _ClearButton extends StatelessWidget {
-  const _ClearButton({Key? key, required this.controller}) : super(key: key);
+  const _ClearButton({Key? key, required this.controller, this.onChanged})
+      : super(key: key);
 
   final TextEditingController controller;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {

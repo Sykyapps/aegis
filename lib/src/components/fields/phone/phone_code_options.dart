@@ -64,18 +64,22 @@ class PhoneCodeOptions extends HookWidget {
               shrinkWrap: true,
               slivers: [
                 _Header(controller: controller, onChanged: onChanged),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    codes.value
-                        .map((c) => ListTile(
-                              leading:
-                                  SvgPicture.network(c['flagUrl'], width: 25.r),
-                              title: Text('${c['name']} (+${c['phoneCode']})'),
-                              onTap: () => Navigator.of(context).pop(c),
-                            ))
-                        .toList(),
+                if (codes.value.isEmpty)
+                  const SliverToBoxAdapter(child: _Empty())
+                else
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      codes.value
+                          .map((c) => ListTile(
+                                leading: SvgPicture.network(c['flagUrl'],
+                                    width: 25.r),
+                                title:
+                                    Text('${c['name']} (+${c['phoneCode']})'),
+                                onTap: () => Navigator.of(context).pop(c),
+                              ))
+                          .toList(),
+                    ),
                   ),
-                ),
               ],
             );
           },
@@ -179,6 +183,35 @@ class _Title extends StatelessWidget {
       'Kode Negara',
       style: AegisFont.headlineMedium.copyWith(
         color: AegisColors.neutral500,
+      ),
+    );
+  }
+}
+
+class _Empty extends StatelessWidget {
+  const _Empty({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Text(
+            'Kode Negara Tidak Ditemukan',
+            style: AegisFont.bodyLarge.copyWith(
+              color: AegisColors.textHighEmphasis,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            'Pastikan penulisan kode negara sudah tepat atau ganti kata kunci.',
+            textAlign: TextAlign.center,
+            style: AegisFont.bodyMedium.copyWith(
+              color: AegisColors.textHighEmphasis,
+            ),
+          ),
+        ],
       ),
     );
   }
