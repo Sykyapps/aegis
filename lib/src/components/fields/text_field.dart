@@ -29,6 +29,7 @@ class SkTextField extends HookWidget {
     this.focusNode,
     this.keyboardType,
     this.inputFormatters,
+    this.textCapitalization = TextCapitalization.none,
   });
 
   final bool enabled;
@@ -44,6 +45,7 @@ class SkTextField extends HookWidget {
   final Widget? suffix;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final TextCapitalization textCapitalization;
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +136,7 @@ class SkTextField extends HookWidget {
           cursorColor: AegisColors.blue300,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
+          textCapitalization: textCapitalization,
           decoration: InputDecoration(
             isDense: true,
             enabled: enabled,
