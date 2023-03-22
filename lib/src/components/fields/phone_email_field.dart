@@ -13,14 +13,14 @@ class SkPhoneEmailField extends HookWidget {
     Key? key,
     required this.controller,
     this.errorMessage,
-    this.requiredMessage,
+    this.validator,
     this.phoneCodes,
     this.onCountrySelected,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String? errorMessage;
-  final String? requiredMessage;
+  final SkPhoneEmailValidator? validator;
   final List<Map<String, dynamic>>? phoneCodes;
   final Function(String)? onCountrySelected;
 
@@ -38,18 +38,18 @@ class SkPhoneEmailField extends HookWidget {
       hintText: 'Masukkan nomor ponsel atau email.',
       errorText: errorMessage,
       controller: controller,
-      prefix: RegExpValidator.showPhoneCode(controller.text)
+      prefix: SkPhoneValidator.showPhoneCode(controller.text)
           ? PhonePrefix(phoneCodes: phoneCodes, onSelected: onCountrySelected)
           : null,
-      suffix: RegExpValidator.showPhoneCode(controller.text)
+      suffix: SkPhoneValidator.showPhoneCode(controller.text)
           ? const PhoneSuffix()
           : null,
-      validator: ValidationBuilder(requiredMessage: requiredMessage)
-          .add(RegExpValidator.phoneEmailValidator)
+      validator: ValidationBuilder(requiredMessage: validator?.required)
+          .add((value) => validator?.validate(value))
           .build(),
       inputFormatters: [
         FilteringTextInputFormatter.deny(' '),
-        FilteringTextInputFormatter.deny(RegExpValidator.anyEmoticonRegExp),
+        FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
         PhoneFormatter(),
       ],
     );

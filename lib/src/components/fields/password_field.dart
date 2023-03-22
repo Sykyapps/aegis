@@ -7,18 +7,20 @@ import 'package:form_validator/form_validator.dart';
 import '../../../foundation.dart';
 import '../../../icons.dart';
 import 'text_field.dart';
-import 'validator.dart';
+import 'validators/validators.dart';
 
 class SkPasswordField extends HookWidget {
   const SkPasswordField({
     super.key,
     required this.controller,
     this.showValidator = false,
+    this.validator,
     this.errorMessage,
   });
 
   final TextEditingController controller;
   final bool showValidator;
+  final SkPasswordValidator? validator;
   final String? errorMessage;
 
   @override
@@ -41,11 +43,9 @@ class SkPasswordField extends HookWidget {
             if (!showValidator) return;
 
             hasMinChar.value = password.length >= 8;
-            hasLowerCase.value =
-                RegExpValidator.anyLowerCaseRegExp.hasMatch(password);
-            hasUpperCase.value =
-                RegExpValidator.anyUpperCaseRegExp.hasMatch(password);
-            hasNumber.value = RegExpValidator.anyDigitRegExp.hasMatch(password);
+            hasLowerCase.value = SkRegExp.anyLowerCase.hasMatch(password);
+            hasUpperCase.value = SkRegExp.anyUpperCase.hasMatch(password);
+            hasNumber.value = SkRegExp.anyDigit.hasMatch(password);
           },
           suffix: IconButton(
             onPressed: () => obscureText.value = !obscureText.value,
@@ -61,14 +61,10 @@ class SkPasswordField extends HookWidget {
           ),
           inputFormatters: [
             FilteringTextInputFormatter.deny(' '),
-            FilteringTextInputFormatter.deny(RegExpValidator.anyEmoticonRegExp),
+            FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
           ],
-          validator: ValidationBuilder(
-            requiredMessage: 'Kata sandi wajib diisi',
-          )
-              .add((value) => showValidator
-                  ? RegExpValidator.passwordValidator(value)
-                  : null)
+          validator: ValidationBuilder(requiredMessage: validator?.required)
+              .add((value) => showValidator ? validator?.validate(value) : null)
               .build(),
         ),
         if (showValidator)
@@ -77,6 +73,7 @@ class SkPasswordField extends HookWidget {
             hasUpperCase: hasUpperCase.value,
             hasNumber: hasNumber.value,
             hasMinChar: hasMinChar.value,
+            validator: validator ?? SkPasswordValidator(),
           ),
       ],
     );
@@ -90,12 +87,14 @@ class _PasswordValidator extends StatelessWidget {
     required this.hasNumber,
     required this.hasUpperCase,
     required this.hasMinChar,
+    required this.validator,
   }) : super(key: key);
 
   final bool hasLowerCase;
   final bool hasNumber;
   final bool hasUpperCase;
   final bool hasMinChar;
+  final SkPasswordValidator validator;
 
   @override
   Widget build(BuildContext context) {
@@ -109,14 +108,14 @@ class _PasswordValidator extends StatelessWidget {
                 child: _PasswordValidatorItem(
                   valid: hasLowerCase,
                   icon: AegisIcons.check_circle_fill,
-                  requirement: '1 Huruf kecil',
+                  requirement: validator.lowercase,
                 ),
               ),
               Flexible(
                 child: _PasswordValidatorItem(
                   valid: hasNumber,
                   icon: AegisIcons.check_circle_fill,
-                  requirement: '1 Angka',
+                  requirement: validator.number,
                 ),
               ),
             ],
@@ -128,14 +127,14 @@ class _PasswordValidator extends StatelessWidget {
                 child: _PasswordValidatorItem(
                   valid: hasUpperCase,
                   icon: AegisIcons.check_circle_fill,
-                  requirement: '1 Huruf besar',
+                  requirement: validator.uppercase,
                 ),
               ),
               Flexible(
                 child: _PasswordValidatorItem(
                   valid: hasMinChar,
                   icon: AegisIcons.check_circle_fill,
-                  requirement: 'Minimal 8 karakter',
+                  requirement: validator.minChar,
                 ),
               ),
             ],

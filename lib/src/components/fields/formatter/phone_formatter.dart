@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import '../../../../components.dart';
+import '../validators/phone_validator.dart';
 
 class PhoneFormatter extends TextInputFormatter {
   @override
@@ -12,8 +12,8 @@ class PhoneFormatter extends TextInputFormatter {
     if (newText.isNotEmpty) {
       var oldText = oldValue.text;
       if (newText.length > oldText.length) {
-        if (RegExpValidator.showPhoneCode(newText) &&
-            RegExpValidator.showPhoneCode(oldText)) {
+        if (SkPhoneValidator.showPhoneCode(newText) &&
+            SkPhoneValidator.showPhoneCode(oldText)) {
           if (newText.startsWith('+62') && newText.length >= 9) {
             newText = newText.replaceFirst('+62', '');
           } else if (newText.startsWith('62') && newText.length >= 8) {

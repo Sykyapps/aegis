@@ -13,7 +13,7 @@ class SkPhoneField extends HookWidget {
     required this.controller,
     this.enabled = true,
     this.errorMessage,
-    this.requiredMessage,
+    this.validator,
     this.suffix,
     this.phoneCode,
     this.phoneCodes,
@@ -23,8 +23,8 @@ class SkPhoneField extends HookWidget {
   final TextEditingController controller;
   final bool enabled;
   final String? errorMessage;
-  final String? requiredMessage;
   final Widget? suffix;
+  final SkPhoneValidator? validator;
   final String? phoneCode;
   final List<Map<String, dynamic>>? phoneCodes;
   final Function(String)? onCountrySelected;
@@ -51,8 +51,8 @@ class SkPhoneField extends HookWidget {
         onSelected: onCountrySelected,
       ),
       suffix: suffix ?? const PhoneSuffix(),
-      validator: ValidationBuilder(requiredMessage: requiredMessage)
-          .add(RegExpValidator.phoneValidator)
+      validator: ValidationBuilder(requiredMessage: validator?.required)
+          .add((value) => validator?.validate(value))
           .build(),
       inputFormatters: [PhoneFormatter()],
     );
