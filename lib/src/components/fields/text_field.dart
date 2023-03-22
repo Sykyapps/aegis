@@ -199,7 +199,7 @@ class _ClearButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () => controller.clear(),
-      icon: const Icon(AegisIcons.circle_close),
+      icon: const Icon(AegisIcons.close_circle_fill),
       constraints: const BoxConstraints(),
       padding: const EdgeInsets.only(left: 8).r,
       iconSize: 20.r,

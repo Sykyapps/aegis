@@ -49,7 +49,7 @@ class SkPasswordField extends HookWidget {
           suffix: IconButton(
             onPressed: () => obscureText.value = !obscureText.value,
             icon: Icon(
-              obscureText.value ? AegisIcons.eye : AegisIcons.eye_off,
+              obscureText.value ? AegisIcons.eye_open : AegisIcons.eye_close,
             ),
             constraints: const BoxConstraints(),
             padding: EdgeInsets.zero,
@@ -103,14 +103,14 @@ class _PasswordValidator extends StatelessWidget {
               Flexible(
                 child: _PasswordValidatorItem(
                   valid: hasLowerCase,
-                  icon: AegisIcons.circle_check,
+                  icon: AegisIcons.check_circle_fill,
                   requirement: '1 Huruf kecil',
                 ),
               ),
               Flexible(
                 child: _PasswordValidatorItem(
                   valid: hasNumber,
-                  icon: AegisIcons.circle_check,
+                  icon: AegisIcons.check_circle_fill,
                   requirement: '1 Angka',
                 ),
               ),
@@ -122,14 +122,14 @@ class _PasswordValidator extends StatelessWidget {
               Flexible(
                 child: _PasswordValidatorItem(
                   valid: hasUpperCase,
-                  icon: AegisIcons.circle_check,
+                  icon: AegisIcons.check_circle_fill,
                   requirement: '1 Huruf besar',
                 ),
               ),
               Flexible(
                 child: _PasswordValidatorItem(
                   valid: hasMinChar,
-                  icon: AegisIcons.circle_check,
+                  icon: AegisIcons.check_circle_fill,
                   requirement: 'Minimal 8 karakter',
                 ),
               ),

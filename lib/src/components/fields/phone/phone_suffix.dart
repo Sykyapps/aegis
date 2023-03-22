@@ -10,7 +10,7 @@ class PhoneSuffix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Icon(
-      AegisIcons.contacts_book,
+      AegisIcons.contact,
       size: 20.r,
       color: AegisColors.iconLowEmphasis,
     );
