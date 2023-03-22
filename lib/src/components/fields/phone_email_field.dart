@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_validator/form_validator.dart';
 
@@ -46,7 +47,11 @@ class SkPhoneEmailField extends HookWidget {
       validator: ValidationBuilder(requiredMessage: requiredMessage)
           .add(RegExpValidator.phoneEmailValidator)
           .build(),
-      inputFormatters: [PhoneFormatter()],
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(' '),
+        FilteringTextInputFormatter.deny(RegExpValidator.anyEmoticonRegExp),
+        PhoneFormatter(),
+      ],
     );
   }
 }

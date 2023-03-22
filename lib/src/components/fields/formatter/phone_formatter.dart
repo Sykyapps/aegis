@@ -16,6 +16,8 @@ class PhoneFormatter extends TextInputFormatter {
             RegExpValidator.showPhoneCode(oldText)) {
           if (newText.startsWith('+62') && newText.length >= 9) {
             newText = newText.replaceFirst('+62', '');
+          } else if (newText.startsWith('62') && newText.length >= 8) {
+            newText = newText.replaceFirst('62', '');
           } else if (newText.startsWith('0')) {
             newText = newText.replaceFirst('0', '');
           }
