@@ -15,20 +15,29 @@ const indonesiaCode = {
 };
 
 class PhonePrefix extends HookWidget {
-  const PhonePrefix({Key? key, this.phoneCodes, this.onSelected})
-      : super(key: key);
+  const PhonePrefix({
+    Key? key,
+    this.phoneCode,
+    this.phoneCodes,
+    this.onSelected,
+  }) : super(key: key);
 
+  final String? phoneCode;
   final List<Map<String, dynamic>>? phoneCodes;
   final Function(String)? onSelected;
 
-  Map<String, dynamic> get defaultCode =>
-      phoneCodes?.firstWhere((pc) => pc['phoneCode'] == '62',
-          orElse: () => indonesiaCode) ??
-      indonesiaCode;
+  Map<String, dynamic> getPhoneCode(String code) {
+    return phoneCodes?.firstWhere(
+          (pc) => pc['phoneCode'] == code,
+          orElse: () => indonesiaCode,
+        ) ??
+        indonesiaCode;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var selected = useState<Map<String, dynamic>>(defaultCode);
+    var selected =
+        useState<Map<String, dynamic>>(getPhoneCode(phoneCode ?? '62'));
 
     return InkWell(
       onTap: phoneCodes == null
@@ -80,6 +89,7 @@ class _PhoneCode extends StatelessWidget {
         SvgPicture.network(
           phoneCode?['flagUrl'],
           width: 25.r,
+          placeholderBuilder: (context) => const SizedBox(),
         ),
         SizedBox(width: 4.r),
         Text(

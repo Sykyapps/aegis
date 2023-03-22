@@ -15,6 +15,7 @@ class SkPhoneField extends HookWidget {
     this.errorMessage,
     this.requiredMessage,
     this.suffix,
+    this.phoneCode,
     this.phoneCodes,
     this.onCountrySelected,
   }) : super(key: key);
@@ -24,6 +25,7 @@ class SkPhoneField extends HookWidget {
   final String? errorMessage;
   final String? requiredMessage;
   final Widget? suffix;
+  final String? phoneCode;
   final List<Map<String, dynamic>>? phoneCodes;
   final Function(String)? onCountrySelected;
 
@@ -44,6 +46,7 @@ class SkPhoneField extends HookWidget {
       controller: controller,
       keyboardType: TextInputType.number,
       prefix: PhonePrefix(
+        phoneCode: phoneCode,
         phoneCodes: phoneCodes,
         onSelected: onCountrySelected,
       ),
