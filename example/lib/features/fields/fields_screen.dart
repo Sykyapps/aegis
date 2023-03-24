@@ -41,6 +41,13 @@ class FieldsScreen extends HookWidget {
               ),
               SizedBox(height: 20.r),
               SkSearchField(controller: basicCtrl),
+              SizedBox(height: 20.r),
+              SkNominalField(
+                controller: basicCtrl,
+                hintText: 'Rp100.000',
+                labelText: 'Jumlah Investasi (Minimal Rp100.000)',
+                onChanged: (value) {},
+              ),
             ],
           ),
         ),

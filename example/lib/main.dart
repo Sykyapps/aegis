@@ -1,7 +1,8 @@
-import 'package:aegis_app/core/injection/dependency_injection.dart';
-import 'package:aegis_app/core/navigation/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'core/injection/dependency_injection.dart';
+import 'core/navigation/router.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();

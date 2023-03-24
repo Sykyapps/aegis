@@ -5,3 +5,4 @@ export 'search_field.dart';
 export 'text_field.dart';
 export 'phone/phone_field.dart';
 export 'validators/validators.dart';
+export 'nominal_field.dart';
