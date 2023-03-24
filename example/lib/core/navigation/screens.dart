@@ -19,6 +19,8 @@ extension AegisScreenX on AegisScreen {
         return '/segmented-control';
       case AegisScreen.fields:
         return '/field';
+      case AegisScreen.button:
+        return '/button';
       default:
         return '/';
     }
@@ -34,6 +36,8 @@ extension AegisScreenX on AegisScreen {
         return 'segmentedControl';
       case AegisScreen.fields:
         return 'field';
+      case AegisScreen.button:
+        return 'button';
       default:
         return 'home';
     }
@@ -49,6 +53,8 @@ extension AegisScreenX on AegisScreen {
         return 'Segmented Control';
       case AegisScreen.fields:
         return 'Fields';
+      case AegisScreen.button:
+        return 'Button';
       default:
         return '';
     }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/bottomsheet/bottomsheet_screen.dart';
+import '../../features/button/button_screen.dart';
 import '../../features/fields/fields_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/segmented_control/segmented_control_screen.dart';
@@ -42,6 +43,13 @@ class AppRouter {
         path: AegisScreen.fields.path,
         builder: (context, state) {
           return const FieldsScreen();
+        },
+      ),
+      GoRoute(
+        name: AegisScreen.button.name,
+        path: AegisScreen.button.path,
+        builder: (context, state) {
+          return const ButtonScreen();
         },
       ),
     ],
