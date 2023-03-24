@@ -12,7 +12,9 @@ class SkPhoneField extends HookWidget {
     Key? key,
     required this.controller,
     this.enabled = true,
-    this.errorMessage,
+    this.labelText,
+    this.hintText,
+    this.errorText,
     this.validator,
     this.suffix,
     this.phoneCode,
@@ -22,7 +24,9 @@ class SkPhoneField extends HookWidget {
 
   final TextEditingController controller;
   final bool enabled;
-  final String? errorMessage;
+  final String? labelText;
+  final String? hintText;
+  final String? errorText;
   final Widget? suffix;
   final SkPhoneValidator? validator;
   final String? phoneCode;
@@ -40,9 +44,9 @@ class SkPhoneField extends HookWidget {
 
     return SkTextField(
       enabled: enabled,
-      labelText: 'Nomor Ponsel',
-      hintText: 'Masukkan nomor ponsel.',
-      errorText: errorMessage,
+      labelText: labelText ?? 'Nomor Ponsel',
+      hintText: hintText ?? 'Masukkan nomor ponsel.',
+      errorText: errorText,
       controller: controller,
       keyboardType: TextInputType.number,
       prefix: PhonePrefix(

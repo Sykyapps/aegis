@@ -13,15 +13,19 @@ class SkPasswordField extends HookWidget {
   const SkPasswordField({
     super.key,
     required this.controller,
+    this.labelText,
+    this.hintText,
+    this.errorText,
     this.showValidator = false,
     this.validator,
-    this.errorMessage,
   });
 
   final TextEditingController controller;
+  final String? labelText;
+  final String? hintText;
+  final String? errorText;
   final bool showValidator;
   final SkPasswordValidator? validator;
-  final String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +38,9 @@ class SkPasswordField extends HookWidget {
     return Column(
       children: [
         SkTextField(
-          labelText: 'Kata Sandi',
-          hintText: 'Masukkan kata sandi',
-          errorText: errorMessage,
+          labelText: labelText ?? 'Kata Sandi',
+          hintText: hintText ?? 'Masukkan kata sandi',
+          errorText: errorText,
           obscureText: obscureText.value,
           controller: controller,
           onChanged: (password) {

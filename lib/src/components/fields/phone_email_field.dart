@@ -12,15 +12,21 @@ class SkPhoneEmailField extends HookWidget {
   const SkPhoneEmailField({
     Key? key,
     required this.controller,
-    this.errorMessage,
+    this.labelText,
+    this.hintText,
+    this.errorText,
     this.validator,
+    this.phoneCode,
     this.phoneCodes,
     this.onCountrySelected,
   }) : super(key: key);
 
   final TextEditingController controller;
-  final String? errorMessage;
+  final String? labelText;
+  final String? hintText;
+  final String? errorText;
   final SkPhoneEmailValidator? validator;
+  final String? phoneCode;
   final List<Map<String, dynamic>>? phoneCodes;
   final Function(String)? onCountrySelected;
 
@@ -34,12 +40,16 @@ class SkPhoneEmailField extends HookWidget {
     }, [update]);
 
     return SkTextField(
-      labelText: 'Nomor Ponsel atau Email',
-      hintText: 'Masukkan nomor ponsel atau email.',
-      errorText: errorMessage,
+      labelText: labelText ?? 'Nomor Ponsel atau Email',
+      hintText: hintText ?? 'Masukkan nomor ponsel atau email.',
+      errorText: errorText,
       controller: controller,
       prefix: SkPhoneValidator.showPhoneCode(controller.text)
-          ? PhonePrefix(phoneCodes: phoneCodes, onSelected: onCountrySelected)
+          ? PhonePrefix(
+              phoneCode: phoneCode,
+              phoneCodes: phoneCodes,
+              onSelected: onCountrySelected,
+            )
           : null,
       suffix: SkPhoneValidator.showPhoneCode(controller.text)
           ? const PhoneSuffix()
