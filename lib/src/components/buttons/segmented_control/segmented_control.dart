@@ -333,6 +333,7 @@ class SkSegmentedControl<T> extends StatefulWidget {
     super.key,
     required this.children,
     required this.onValueChanged,
+    this.border,
     this.currentSegment,
     this.thumbColor = _kThumbColor,
     this.padding = _kHorizontalItemPadding,
@@ -425,6 +426,12 @@ class SkSegmentedControl<T> extends StatefulWidget {
   ///
   /// Must not be null. Defaults to EdgeInsets.symmetric(vertical: 2, horizontal: 3).
   final EdgeInsetsGeometry padding;
+
+  /// The border of SegmentedControl bounding box.
+  ///
+  /// The default value is a border with 1 px thickness and
+  /// [AegisColors.neutral200] color
+  final Border? border;
 
   @override
   State<SkSegmentedControl<T>> createState() => _SegmentedControlState<T>();
@@ -726,7 +733,7 @@ class _SegmentedControlState<T> extends State<SkSegmentedControl<T>>
         padding: widget.padding.resolve(Directionality.of(context)),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(_kCornerRadius)),
-          border: Border.all(color: AegisColors.neutral200),
+          border: widget.border ?? Border.all(color: AegisColors.neutral200),
           color: AegisColors.neutral100,
         ),
         child: AnimatedBuilder(
