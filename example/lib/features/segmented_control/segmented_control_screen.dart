@@ -12,7 +12,7 @@ class SegmentedControlScreen extends HookWidget {
     var productSegment = useState<int>(0);
     var authSegment = useState<int>(0);
     return Scaffold(
-      appBar: AppBar(title: Text(AegisScreen.segmentedControl.title),),
+      appBar: AppBar(title: Text(AegisScreen.segmentedControl.title)),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(20),
@@ -36,6 +36,23 @@ class SegmentedControlScreen extends HookWidget {
                   1: SkSegmentedControlItem(label: 'Register'),
                 },
                 onValueChanged: (value) => authSegment.value = value ?? 0,
+              ),
+              SizedBox(height: 20.r),
+              SkSegmentedControl(
+                currentSegment: authSegment.value,
+                onValueChanged: (value) => authSegment.value = value ?? 0,
+                border: Border.all(color: AegisColors.transparent),
+                padding: EdgeInsets.all(8.r),
+                children: {
+                  0: SkSegmentedControlItem(
+                    label: 'Tanpa Target',
+                    height: 32.h,
+                  ),
+                  1: SkSegmentedControlItem(
+                    label: 'Set Target',
+                    height: 32.h,
+                  ),
+                },
               ),
             ],
           ),
