@@ -12,6 +12,7 @@ class FieldsScreen extends HookWidget {
   Widget build(BuildContext context) {
     var basicCtrl = useTextEditingController();
     var phoneCtrl = useTextEditingController();
+    var tapCtrl = useTextEditingController();
 
     return Scaffold(
       backgroundColor: AegisColors.backgroundWhite,
@@ -38,6 +39,27 @@ class FieldsScreen extends HookWidget {
               SkPhoneEmailField(
                 controller: basicCtrl,
                 phoneCodes: phoneCodes,
+              ),
+              SizedBox(height: 20.r),
+              SkTapField(
+                controller: tapCtrl,
+                labelText: 'Target Tercapai',
+                hintText: 'Tentukan target tercapai',
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => Container(
+                      height: 200,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: SkButton(
+                        label: 'Set Text',
+                        onPressed: () => tapCtrl.text =
+                            tapCtrl.text.isEmpty ? 'Sample Tap Field' : '',
+                      ),
+                    ),
+                  );
+                },
               ),
               SizedBox(height: 20.r),
               SkSearchField(controller: basicCtrl),
