@@ -4,8 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../aegis.dart';
-import '../../../foundation.dart';
-import '../../../icons.dart';
 
 class SkSearchField extends HookWidget {
   const SkSearchField({
