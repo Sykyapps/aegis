@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../aegis.dart';
 import '../../../foundation.dart';
 import '../../../icons.dart';
 
@@ -34,6 +36,9 @@ class SkSearchField extends HookWidget {
       cursorHeight: 16.h,
       cursorWidth: 1.w,
       cursorColor: AegisColors.blue300,
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
+      ],
       decoration: InputDecoration(
         filled: true,
         fillColor: AegisColors.neutral100,
