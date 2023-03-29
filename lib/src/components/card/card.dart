@@ -9,6 +9,7 @@ class SkCard extends StatelessWidget {
   final Color backgroundColor;
   final EdgeInsetsGeometry? margin;
   final List<BoxShadow>? boxShadow;
+  final BoxBorder? border;
   final BorderRadiusGeometry? borderRadius;
 
   const SkCard({
@@ -18,6 +19,7 @@ class SkCard extends StatelessWidget {
     this.backgroundColor = AegisColors.neutral0,
     this.margin,
     this.boxShadow,
+    this.border,
     this.borderRadius,
   }) : super(key: key);
 
@@ -29,11 +31,12 @@ class SkCard extends StatelessWidget {
       margin: margin,
       decoration: BoxDecoration(
         color: backgroundColor,
-        border: Border.all(
-          color: AegisColors.neutral200,
-          width: 1.r,
-          strokeAlign: StrokeAlign.outside,
-        ),
+        border: border ??
+            Border.all(
+              color: AegisColors.neutral200,
+              width: 1.r,
+              strokeAlign: StrokeAlign.outside,
+            ),
         borderRadius: borderRadius ?? BorderRadius.circular(4).r,
         boxShadow: boxShadow,
       ),
