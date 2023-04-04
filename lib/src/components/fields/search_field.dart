@@ -11,11 +11,19 @@ class SkSearchField extends HookWidget {
     this.controller,
     this.hintText,
     this.onChanged,
+    this.style,
+    this.hintStyle,
+    this.prefixIcon,
+    this.cursorHeight,
   });
 
   final TextEditingController? controller;
   final String? hintText;
   final void Function(String)? onChanged;
+  final TextStyle? style;
+  final TextStyle? hintStyle;
+  final Widget? prefixIcon;
+  final double? cursorHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +38,9 @@ class SkSearchField extends HookWidget {
     return TextFormField(
       controller: ctrl,
       onChanged: onChanged,
-      style: AegisFont.bodyLarge.copyWith(color: AegisColors.neutral500),
-      cursorHeight: 16.h,
+      style:
+          style ?? AegisFont.bodyLarge.copyWith(color: AegisColors.neutral500),
+      cursorHeight: cursorHeight ?? 16.h,
       cursorWidth: 1.w,
       cursorColor: AegisColors.blue300,
       inputFormatters: [
@@ -50,10 +59,11 @@ class SkSearchField extends HookWidget {
         ),
         contentPadding: const EdgeInsets.symmetric(vertical: 8),
         hintText: hintText,
-        hintStyle: AegisFont.bodyLarge.copyWith(
-          color: AegisColors.neutral300,
-        ),
-        prefixIcon: const _SearchPrefix(),
+        hintStyle: hintStyle ??
+            AegisFont.bodyLarge.copyWith(
+              color: AegisColors.neutral300,
+            ),
+        prefixIcon: prefixIcon ?? const _SearchPrefix(),
         prefixIconConstraints: const BoxConstraints(),
         suffixIcon: ctrl.text.isNotEmpty
             ? _ClearButton(controller: ctrl, onChanged: onChanged)
@@ -71,7 +81,10 @@ class _SearchPrefix extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12).copyWith(right: 9),
-      child: const Icon(Icons.zoom_in, color: AegisColors.neutral300),
+      child: const Icon(
+        Icons.zoom_in,
+        color: AegisColors.neutral300,
+      ),
     );
   }
 }
