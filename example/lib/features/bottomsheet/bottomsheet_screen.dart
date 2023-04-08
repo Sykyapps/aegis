@@ -16,27 +16,49 @@ class BottomSheetScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Bottom Sheet')),
       body: Container(
-        alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 20).r,
-        child: SkButton(
-          label: 'Tap to open Bottom Sheet',
-          onPressed: () {
-            log('Button pressed');
-            var mq = MediaQuery.of(context);
-            showModalBottomSheet(
-              context: context,
-              // barrierColor: Colors.transparent,
-              backgroundColor: Colors.transparent,
-              isScrollControlled: true,
-              constraints: BoxConstraints(
-                maxHeight: mq.size.height - mq.viewPadding.top,
-              ),
-
-              builder: (context) {
-                return const SkBottomSheet();
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SkButton(
+              label: 'Basic Bottom Sheet',
+              onPressed: () {
+                SkBasicBottomSheet.show(
+                  context,
+                  title: 'Basic Bottom Sheet Panjang Banget',
+                  isExpandable: false,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                      4,
+                      (index) => SkButton(label: '$index'),
+                    ),
+                  ),
+                );
               },
-            );
-          },
+            ),
+            const SizedBox(height: 8),
+            SkButton(
+              label: 'Tap to open Bottom Sheet',
+              onPressed: () {
+                log('Button pressed');
+                var mq = MediaQuery.of(context);
+                showModalBottomSheet(
+                  context: context,
+                  // barrierColor: Colors.transparent,
+                  backgroundColor: Colors.transparent,
+                  isScrollControlled: true,
+                  constraints: BoxConstraints(
+                    maxHeight: mq.size.height - mq.viewPadding.top,
+                  ),
+
+                  builder: (context) {
+                    return const SkBottomSheet();
+                  },
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
