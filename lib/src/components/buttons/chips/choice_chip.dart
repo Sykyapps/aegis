@@ -6,13 +6,13 @@ import '../../../../aegis.dart';
 class SkChoiceChip extends StatelessWidget {
   const SkChoiceChip({
     Key? key,
-    required this.label,
+    this.label,
     required this.selected,
     required this.onSelected,
     this.child,
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final bool selected;
   final VoidCallback onSelected;
   final Widget? child;
@@ -20,7 +20,7 @@ class SkChoiceChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-      label: child ?? Text(label),
+      label: child ?? Text(label ?? ''),
       selected: selected,
       pressElevation: 0,
       onSelected: (_) => onSelected(),
