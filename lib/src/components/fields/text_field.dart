@@ -21,6 +21,8 @@ class SkTextField extends HookWidget {
     this.errorText,
     required this.labelText,
     this.hintText,
+    this.helperText,
+    this.helperStyle,
     this.obscureText = false,
     this.onChanged,
     this.controller,
@@ -38,6 +40,8 @@ class SkTextField extends HookWidget {
   final String? errorText;
   final String labelText;
   final String? hintText;
+  final String? helperText;
+  final TextStyle? helperStyle;
   final bool obscureText;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
@@ -179,6 +183,11 @@ class SkTextField extends HookWidget {
             errorStyle: AegisFont.bodyMedium.copyWith(
               color: AegisColors.red300,
             ),
+            helperText: helperText,
+            helperStyle: helperStyle ??
+                AegisFont.bodyMedium.copyWith(
+                  color: AegisColors.textPositive,
+                ),
             prefixIcon: prefix,
             prefixIconConstraints: const BoxConstraints(),
             suffixIcon: suffix ??
