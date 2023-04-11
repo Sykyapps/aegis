@@ -50,11 +50,11 @@ class ButtonScreen extends HookWidget {
               children: List.generate(_chipsItem.length, (index) {
                 var item = _chipsItem[index];
                 return SkChoiceChip(
-                  label: item.toString(),
                   selected: selectedChip.value == item.toString(),
                   onSelected: () {
                     selectedChip.value = item.toString();
                   },
+                  child: Text(item.toString()),
                 );
               }),
             )
