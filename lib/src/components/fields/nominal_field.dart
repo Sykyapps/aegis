@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../components.dart';
 import '../../../foundation.dart';
-import 'formatter/currency_formatter.dart';
+import '../../utils/currency_util.dart';
 
 class SkNominalField extends HookWidget {
   const SkNominalField({
@@ -53,7 +53,7 @@ class SkNominalField extends HookWidget {
               focusNode: fn,
               controller: ctrl,
               onChanged: (value) {
-                onChanged(CurrencyInputFormatter.parse(value));
+                onChanged(CurrencyUtil.parse(value).toString());
               },
               style: AegisFont.headlineSmall.copyWith(
                 color: AegisColors.neutral500,
