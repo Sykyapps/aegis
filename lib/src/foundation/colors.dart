@@ -57,6 +57,7 @@ class AegisColors {
 
   static const borderHighEmphasis = neutral200;
   static const borderLowEmphasis = neutral100;
+  static const borderNegative = red300;
 
   static const shadowEvelation1 = Color.fromRGBO(48, 49, 53, 0.16);
 }
