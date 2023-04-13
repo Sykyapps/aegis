@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MeasurementUtil {
   static Size measureWidget(Widget widget) {
@@ -15,7 +14,7 @@ class MeasurementUtil {
       debugShortDescription: '[root]',
       child: Directionality(
         textDirection: ui.TextDirection.ltr,
-        child: SizedBox(width: 1.sw, child: widget),
+        child: widget,
       ),
     ).attachToRenderTree(buildOwner);
     try {
