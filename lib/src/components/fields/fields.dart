@@ -7,4 +7,5 @@ export 'text_field.dart';
 export 'phone/phone_field.dart';
 export 'validators/validators.dart';
 export 'nominal_field.dart';
-export 'custom_currency_field.dart';
+export 'currency_box_field.dart';
+export 'currency_field.dart';

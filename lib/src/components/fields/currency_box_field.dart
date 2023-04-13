@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
 import '../../../foundation.dart';
 import '../card/card.dart';
 import 'formatter/currency_formatter.dart';
 
-class SkCustomCurrencyField extends FormField<String> {
+class SkCurrencyBoxField extends FormField<String> {
   final TextEditingController? controller;
 
-  SkCustomCurrencyField({
+  SkCurrencyBoxField({
     super.key,
     super.validator,
     super.autovalidateMode,
@@ -25,8 +24,8 @@ class SkCustomCurrencyField extends FormField<String> {
           builder: (FormFieldState<String> fieldState) {
             void onChangeHandler(String value) {
               var parsed = CurrencyInputFormatter.parse(value);
-              fieldState.didChange(parsed);
               if (onChanged != null) onChanged(parsed);
+              fieldState.didChange(parsed);
             }
 
             final InputDecoration effectiveDecoration =
@@ -68,9 +67,9 @@ class SkCustomCurrencyField extends FormField<String> {
                       ),
                       SizedBox(height: 4.r),
                     ],
-                    TextField(
+                    TextFormField(
                       focusNode: focusNode,
-                      controller: controller ?? TextEditingController(),
+                      controller: controller,
                       onChanged: onChangeHandler,
                       style: style ??
                           AegisFont.headlineSmall.copyWith(
@@ -85,27 +84,7 @@ class SkCustomCurrencyField extends FormField<String> {
                       ),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                        TextInputFormatter.withFunction(
-                          (oldValue, newValue) {
-                            if (newValue.selection.baseOffset == 0) {
-                              return newValue;
-                            }
-
-                            double value = double.parse(newValue.text);
-                            final fmt = NumberFormat.simpleCurrency(
-                              locale: 'id_ID',
-                              decimalDigits: 0,
-                            );
-
-                            final formattedValue = fmt.format(value);
-                            return newValue.copyWith(
-                              text: formattedValue,
-                              selection: TextSelection.collapsed(
-                                offset: formattedValue.length,
-                              ),
-                            );
-                          },
-                        )
+                        CurrencyInputFormatter(),
                       ],
                     ),
                   ],
