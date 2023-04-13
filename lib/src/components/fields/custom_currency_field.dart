@@ -13,6 +13,7 @@ class SkCustomCurrencyField extends FormField<String> {
   SkCustomCurrencyField({
     super.key,
     super.validator,
+    super.autovalidateMode,
     this.controller,
     String? labelText,
     String? hintText,
