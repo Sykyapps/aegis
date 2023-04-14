@@ -5,8 +5,9 @@ import '../../../foundation.dart';
 import '../../../icons.dart';
 
 class SkBackButton extends StatelessWidget {
-  const SkBackButton({Key? key, this.onPressed}) : super(key: key);
+  const SkBackButton({Key? key, this.color, this.onPressed}) : super(key: key);
 
+  final Color? color;
   final void Function()? onPressed;
 
   @override
@@ -17,7 +18,7 @@ class SkBackButton extends StatelessWidget {
       icon: Icon(
         AegisIcons.chevron_left,
         size: 22.r,
-        color: AegisColors.iconHighEmphasis,
+        color: color ?? AegisColors.iconHighEmphasis,
       ),
     );
   }
