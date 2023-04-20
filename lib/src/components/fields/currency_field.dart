@@ -1,4 +1,5 @@
 import 'package:aegis/src/components/fields/formatter/currency_formatter.dart';
+import 'package:aegis/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,7 +24,8 @@ class SkCurrencyField extends FormField<String> {
           validator: validator,
           builder: (FormFieldState<String> fieldState) {
             void onChangedHandler(String value) {
-              var parsed = CurrencyInputFormatter.parse(value);
+              if (value.isEmpty) return;
+              var parsed = CurrencyUtil.parse(value).toString();
               if (onChanged != null) onChanged(parsed);
               fieldState.didChange(parsed);
             }
