@@ -12,7 +12,7 @@ class CurrencyUtil {
     return formatter.format(value);
   }
 
-   static String compactFormat(dynamic value) {
+  static String compactFormat(dynamic value) {
     var formatter = NumberFormat.compactCurrency(
       locale: 'id',
       symbol: '',
@@ -33,6 +33,7 @@ class CurrencyUtil {
   }
 
   static double parse(String value) {
-    return formatter.parse(value).toDouble();
+    var clean = value.replaceAll(RegExp(r'[^0-9]'), '');
+    return formatter.parse(clean).toDouble();
   }
 }
