@@ -17,6 +17,7 @@ class SkTextField extends HookWidget {
   const SkTextField({
     super.key,
     this.enabled = true,
+    this.style,
     this.validator,
     this.errorText,
     required this.labelText,
@@ -35,6 +36,7 @@ class SkTextField extends HookWidget {
   });
 
   final bool enabled;
+  final TextStyle? style;
   final FocusNode? focusNode;
   final FormFieldValidator<String>? validator;
   final String? errorText;
@@ -131,7 +133,7 @@ class SkTextField extends HookWidget {
           controller: ctrl,
           onChanged: onChanged,
           validator: (value) => error.value = validator?.call(value),
-          style: AegisFont.bodyLarge.copyWith(
+          style: (style ?? AegisFont.bodyLarge).copyWith(
             color: enabled ? null : AegisColors.neutral300,
           ),
           obscureText: obscureText,
@@ -176,7 +178,7 @@ class SkTextField extends HookWidget {
             ),
             contentPadding: const EdgeInsets.symmetric(vertical: 8),
             hintText: hintText,
-            hintStyle: AegisFont.bodyLarge.copyWith(
+            hintStyle: (style ?? AegisFont.bodyLarge).copyWith(
               color: AegisColors.neutral300,
             ),
             errorText: error.value,
