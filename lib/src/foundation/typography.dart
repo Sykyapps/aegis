@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Consider to changes its class name to be AegisTextStyle?
 /// Also its file name to text_styles.dart
-class AegisFont { 
+class AegisFont {
   /// # Aegis Text Theme
   /// ---
   /// Available text styles:
@@ -13,6 +13,7 @@ class AegisFont {
   /// - Body Large
   /// - Body Medium
   /// - Body Small
+  /// - Small
   ///
   /// ## Usage
   /// ---
@@ -178,6 +179,31 @@ class AegisFont {
     fontFamily: 'Uni Neue',
     fontSize: 12.sp,
     height: 16 / 12,
+    fontWeight: FontWeight.w500,
+  );
+
+  /// # Small
+  /// ---
+  /// - Font Family: Uni Neue
+  /// - Font Size: 10
+  /// - Line Height: 14
+  /// - Font Weight: 500
+  ///
+  /// ## Usage
+  /// ---
+  /// Small Information, Label
+  /// ```dart
+  /// Text text = Text(
+  ///   'text',
+  ///   style: AegisFont.small.copyWith(
+  ///     color: Colors.black,
+  ///   ),
+  /// );
+  /// ```
+  static TextStyle small = TextStyle(
+    fontFamily: 'Uni Neue',
+    fontSize: 10.sp,
+    height: 14 / 10,
     fontWeight: FontWeight.w500,
   );
 }
