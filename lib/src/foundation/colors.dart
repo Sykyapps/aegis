@@ -52,7 +52,7 @@ class AegisColors {
   static const textPositive = green400;
 
   static const iconHighEmphasis = neutral500;
-  static const iconLowEmphasis = neutral300;
+  static const iconLowEmphasis = neutral400;
   static const iconDisabled = neutral200;
 
   static const borderHighEmphasis = neutral200;
