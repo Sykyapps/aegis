@@ -1,4 +1,5 @@
 export 'email_field.dart';
+export 'option_field.dart';
 export 'password_field.dart';
 export 'phone_email_field.dart';
 export 'search_field.dart';
