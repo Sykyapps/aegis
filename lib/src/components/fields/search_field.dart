@@ -82,7 +82,7 @@ class _SearchPrefix extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12).copyWith(right: 9),
       child: const Icon(
-        Icons.zoom_in,
+        AegisIcons.search,
         color: AegisColors.neutral300,
       ),
     );
