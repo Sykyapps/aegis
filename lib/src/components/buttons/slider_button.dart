@@ -11,6 +11,7 @@ class SkSliderButton extends StatefulWidget {
   final Color iconColor;
   final Widget sliderButtonContent;
   final BoxShadow? shadow;
+  final BoxShadow foregroundShadow;
   final String text;
   final TextStyle? textStyle;
   final VoidCallback onConfirmation;
@@ -31,6 +32,7 @@ class SkSliderButton extends StatefulWidget {
     this.foregroundColor = Colors.blueAccent,
     this.iconColor = Colors.white,
     this.shadow,
+    this.foregroundShadow = const BoxShadow(),
     this.sliderButtonContent = const Icon(
       Icons.chevron_right,
       color: Colors.white,
@@ -196,6 +198,7 @@ class SkSliderButtonState extends State<SkSliderButton> {
                 height: widget.height - widget.innerPadding * 2,
                 width: widget.height - widget.innerPadding * 2,
                 decoration: BoxDecoration(
+                  boxShadow: [widget.foregroundShadow],
                   borderRadius: widget.foregroundShape ??
                       BorderRadius.all(Radius.circular(widget.height / 2)),
                   color: widget.foregroundColor,
