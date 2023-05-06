@@ -89,9 +89,10 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
               shrinkWrap: true,
               slivers: [
                 _Header(
+                  title: title,
+                  searchLabel: searchHint,
                   controller: controller,
                   onChanged: onChanged,
-                  searchLabel: searchHint,
                 ),
                 if (filtered.value.isEmpty)
                   SliverToBoxAdapter(
@@ -166,11 +167,13 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
 class _Header extends StatelessWidget {
   const _Header({
     Key? key,
+    required this.title,
     required this.searchLabel,
     required this.controller,
     required this.onChanged,
   }) : super(key: key);
 
+  final String title;
   final String searchLabel;
   final TextEditingController controller;
   final Function(String) onChanged;
@@ -203,7 +206,7 @@ class _Header extends StatelessWidget {
                     AnimatedOpacity(
                       opacity: top <= 166 ? 1 : 0,
                       duration: const Duration(milliseconds: 300),
-                      child: _Title(title: searchLabel),
+                      child: _Title(title: title),
                     ),
                   ],
                 ),
@@ -212,7 +215,7 @@ class _Header extends StatelessWidget {
                   duration: const Duration(milliseconds: 300),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20).r,
-                    child: _Title(title: searchLabel),
+                    child: _Title(title: title),
                   ),
                 ),
               ],
