@@ -1,3 +1,4 @@
+import 'package:aegis/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,7 +24,8 @@ class SkCurrencyBoxField extends FormField<String> {
   }) : super(
           builder: (FormFieldState<String> fieldState) {
             void onChangeHandler(String value) {
-              var parsed = CurrencyInputFormatter.parse(value);
+              if (value.isEmpty) return;
+              var parsed = CurrencyUtil.parse(value).toString();
               if (onChanged != null) onChanged(parsed);
               fieldState.didChange(parsed);
             }
