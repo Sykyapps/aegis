@@ -195,6 +195,7 @@ class _Header extends StatelessWidget {
           var top = constraint.biggest.height;
           return FlexibleSpaceBar(
             expandedTitleScale: 1,
+            titlePadding: EdgeInsets.zero,
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
