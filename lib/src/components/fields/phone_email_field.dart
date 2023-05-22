@@ -11,6 +11,7 @@ import 'phone/phone_suffix.dart';
 class SkPhoneEmailField extends HookWidget {
   const SkPhoneEmailField({
     Key? key,
+    this.enabled = true,
     required this.controller,
     this.labelText,
     this.hintText,
@@ -21,6 +22,7 @@ class SkPhoneEmailField extends HookWidget {
     this.onCountrySelected,
   }) : super(key: key);
 
+  final bool enabled;
   final TextEditingController controller;
   final String? labelText;
   final String? hintText;
@@ -40,6 +42,7 @@ class SkPhoneEmailField extends HookWidget {
     }, [update]);
 
     return SkTextField(
+      enabled: enabled,
       labelText: labelText ?? 'Nomor Ponsel atau Email',
       hintText: hintText ?? 'Masukkan nomor ponsel atau email.',
       errorText: errorText,

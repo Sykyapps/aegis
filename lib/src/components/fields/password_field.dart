@@ -12,6 +12,7 @@ import 'validators/validators.dart';
 class SkPasswordField extends HookWidget {
   const SkPasswordField({
     super.key,
+    this.enabled = true,
     required this.controller,
     this.labelText,
     this.hintText,
@@ -20,6 +21,7 @@ class SkPasswordField extends HookWidget {
     this.validator,
   });
 
+  final bool enabled;
   final TextEditingController controller;
   final String? labelText;
   final String? hintText;
@@ -38,6 +40,7 @@ class SkPasswordField extends HookWidget {
     return Column(
       children: [
         SkTextField(
+          enabled: enabled,
           labelText: labelText ?? 'Kata Sandi',
           hintText: hintText ?? 'Masukkan kata sandi',
           errorText: errorText,

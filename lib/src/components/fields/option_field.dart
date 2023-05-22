@@ -28,7 +28,7 @@ class SkOptionField<T> extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var selected = useState<T?>(null);
+    var selected = useState<T?>(initial);
     var width = (MediaQuery.of(context).size.width / options.length) * 0.8;
 
     return Stack(
