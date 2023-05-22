@@ -5,54 +5,49 @@ import 'package:flutter_svg/svg.dart';
 import '../../../foundation.dart';
 
 class SkCheckbox extends StatelessWidget {
-  const SkCheckbox({Key? key, this.isActive = false}) : super(key: key);
+  const SkCheckbox({
+    Key? key,
+    this.isActive = false,
+    this.isCircle = true,
+    this.isValidated = false,
+  }) : super(key: key);
 
   final bool isActive;
+  final bool isCircle;
+  final bool isValidated;
 
   @override
   Widget build(BuildContext context) {
+    var backgroundColor = AegisColors.neutral0;
+    var foregroundColor = AegisColors.neutral0;
+    var borderColor = AegisColors.borderHighEmphasis;
+    var borderRadius = 2.r;
+
+    if (isActive) {
+      backgroundColor = AegisColors.blue300;
+      borderColor = AegisColors.transparent;
+      foregroundColor = AegisColors.neutral100;
+    } else if (isValidated) {
+      borderColor = AegisColors.red300;
+    }
+
+    if (isCircle) borderRadius = 20.r;
+
     return AnimatedSwitcher(
       duration: Duration.zero,
-      child: isActive ? const _ActiveCheckbox() : const _Checkbox(),
-    );
-  }
-}
-
-class _ActiveCheckbox extends StatelessWidget {
-  const _ActiveCheckbox({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 22.r,
-      width: 22.r,
-      padding: const EdgeInsets.symmetric(horizontal: 5).r,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: AegisColors.blue300,
-      ),
-      child: SvgPicture.asset(
-        'assets/svg/check.svg',
-        color: AegisColors.neutral100,
-        package: 'aegis',
-      ),
-    );
-  }
-}
-
-class _Checkbox extends StatelessWidget {
-  const _Checkbox({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 22.r,
-      width: 22.r,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: AegisColors.neutral0,
-        border: Border.all(
-          color: AegisColors.borderHighEmphasis,
+      child: Container(
+        height: 20.r,
+        width: 20.r,
+        padding: const EdgeInsets.symmetric(horizontal: 5).r,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          border: Border.all(color: borderColor),
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+        child: SvgPicture.asset(
+          'assets/svg/check.svg',
+          color: foregroundColor,
+          package: 'aegis',
         ),
       ),
     );
