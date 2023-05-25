@@ -17,7 +17,7 @@ class SkSliverAppBar extends StatelessWidget {
   final Widget? action;
   final double expandedHeight;
 
-  static final collapsedHeight = 62.r;
+  static const collapsedHeight = 64.0;
 
   @override
   Widget build(BuildContext context) {
