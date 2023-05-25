@@ -19,7 +19,7 @@ class SkOptionsBottomSheet<T> extends HookWidget {
   final String Function(T) getName;
 
   Future<T?> show(BuildContext context) {
-    var result = SkBasicBottomSheet.show<T>(
+    var result = SkExpandableBottomSheet.show<T>(
       context,
       title: title,
       isExpandable: false,

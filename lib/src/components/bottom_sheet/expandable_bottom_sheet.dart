@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../aegis.dart';
 
-class SkBasicBottomSheet extends HookWidget {
-  const SkBasicBottomSheet({
+class SkExpandableBottomSheet extends HookWidget {
+  const SkExpandableBottomSheet({
     super.key,
     this.title = '',
     this.isExpandable = true,
@@ -37,7 +37,7 @@ class SkBasicBottomSheet extends HookWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => SkBasicBottomSheet(
+      builder: (context) => SkExpandableBottomSheet(
         title: title,
         isExpandable: isExpandable,
         child: child,

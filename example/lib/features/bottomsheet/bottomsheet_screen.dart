@@ -23,7 +23,7 @@ class BottomSheetScreen extends StatelessWidget {
             SkButton(
               label: 'Basic Bottom Sheet',
               onPressed: () {
-                SkBasicBottomSheet.show(
+                SkExpandableBottomSheet.show(
                   context,
                   title: 'Basic Bottom Sheet Panjang Banget',
                   isExpandable: false,
