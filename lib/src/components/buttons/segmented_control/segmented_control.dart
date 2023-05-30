@@ -93,6 +93,8 @@ class _Segment<T> extends StatefulWidget {
     required this.pressed,
     required this.highlighted,
     required this.isDragging,
+    required this.textColor,
+    required this.highlightedTextColor,
   }) : super(key: key);
 
   final Widget child;
@@ -103,6 +105,9 @@ class _Segment<T> extends StatefulWidget {
   // Whether the thumb of the parent widget (CupertinoSlidingSegmentedControl)
   // is currently being dragged.
   final bool isDragging;
+
+  final Color textColor;
+  final Color highlightedTextColor;
 
   bool get shouldFadeoutContent => pressed && !highlighted;
   bool get shouldScaleContent => pressed && highlighted && isDragging;
@@ -171,8 +176,8 @@ class _SegmentState<T> extends State<_Segment<T>>
                   .style
                   .merge(AegisFont.bodySmall.copyWith(
                     color: widget.highlighted
-                        ? AegisColors.neutral500
-                        : AegisColors.neutral400,
+                        ? widget.highlightedTextColor
+                        : widget.textColor,
                     fontWeight: FontWeight.w700,
                   )),
               duration: _kHighlightAnimationDuration,
@@ -337,7 +342,9 @@ class SkSegmentedControl<T> extends StatefulWidget {
     this.currentSegment,
     this.thumbColor = _kThumbColor,
     this.padding = _kHorizontalItemPadding,
-    this.backgroundColor = CupertinoColors.tertiarySystemFill,
+    this.backgroundColor = AegisColors.neutral100,
+    this.textColor = AegisColors.neutral400,
+    this.higlightedTextColor = AegisColors.neutral500,
   })  : assert(children != null),
         assert(children.length >= 2),
         assert(padding != null),
@@ -411,7 +418,7 @@ class SkSegmentedControl<T> extends StatefulWidget {
 
   /// The color used to paint the rounded rect behind the [children] and the separators.
   ///
-  /// The default value is [CupertinoColors.tertiarySystemFill]. The background
+  /// The default value is [AegisColors.neutral100]. The background
   /// will not be painted if null is specified.
   final Color backgroundColor;
 
@@ -432,6 +439,9 @@ class SkSegmentedControl<T> extends StatefulWidget {
   /// The default value is a border with 1 px thickness and
   /// [AegisColors.neutral200] color
   final Border? border;
+
+  final Color textColor;
+  final Color higlightedTextColor;
 
   @override
   State<SkSegmentedControl<T>> createState() => _SegmentedControlState<T>();
@@ -704,6 +714,8 @@ class _SegmentedControlState<T> extends State<SkSegmentedControl<T>>
               highlighted: isHighlighted,
               pressed: pressed == entry.key,
               isDragging: isThumbDragging,
+              textColor: widget.textColor,
+              highlightedTextColor: widget.higlightedTextColor,
               child: entry.value,
             ),
           ),
@@ -734,7 +746,7 @@ class _SegmentedControlState<T> extends State<SkSegmentedControl<T>>
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(_kCornerRadius)),
           border: widget.border ?? Border.all(color: AegisColors.neutral200),
-          color: AegisColors.neutral100,
+          color: widget.backgroundColor,
         ),
         child: AnimatedBuilder(
           animation: thumbScaleAnimation,
