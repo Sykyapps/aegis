@@ -9,6 +9,7 @@ import 'fields.dart';
 class SkOptionField<T> extends HookWidget {
   const SkOptionField({
     super.key,
+    this.enabled = true,
     required this.controller,
     required this.labelText,
     this.initial,
@@ -18,6 +19,7 @@ class SkOptionField<T> extends HookWidget {
     this.onChanged,
   });
 
+  final bool enabled;
   final TextEditingController controller;
   final String labelText;
   final T? initial;
@@ -36,6 +38,7 @@ class SkOptionField<T> extends HookWidget {
       children: [
         IgnorePointer(
           child: SkTextField(
+            enabled: enabled,
             controller: controller,
             labelText: labelText,
             validator: validator,
@@ -52,10 +55,12 @@ class SkOptionField<T> extends HookWidget {
                         isActive: selected.value == option,
                         width: width,
                         label: getName(option),
-                        onPressed: () {
-                          selected.value = option;
-                          onChanged?.call(option);
-                        },
+                        onPressed: !enabled
+                            ? null
+                            : () {
+                                selected.value = option;
+                                onChanged?.call(option);
+                              },
                       ))
                   .toList(),
             ),
@@ -71,26 +76,33 @@ class _OptionItem extends StatelessWidget {
     Key? key,
     this.isActive = false,
     required this.label,
-    required this.onPressed,
+    this.onPressed,
     required this.width,
   }) : super(key: key);
 
   final bool isActive;
   final double width;
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
+    var enabled = onPressed != null;
     return InkWell(
       onTap: onPressed,
       child: SizedBox(
         width: width,
         child: Row(
           children: [
-            SkCheckbox(isActive: isActive),
+            SkCheckbox(isActive: isActive, isDisabled: !enabled),
             SizedBox(width: 8.r),
-            Text(label, style: AegisFont.bodyLarge),
+            Text(
+              label,
+              style: AegisFont.bodyLarge.copyWith(
+                color:
+                    enabled ? AegisColors.neutral500 : AegisColors.neutral300,
+              ),
+            ),
           ],
         ),
       ),

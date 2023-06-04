@@ -7,6 +7,7 @@ import 'fields.dart';
 class SkTapField extends StatelessWidget {
   const SkTapField({
     super.key,
+    this.enabled = true,
     required this.controller,
     required this.labelText,
     required this.onTap,
@@ -14,8 +15,8 @@ class SkTapField extends StatelessWidget {
     this.validator,
   });
 
+  final bool enabled;
   final TextEditingController controller;
-
   final String labelText;
   final String? hintText;
   final VoidCallback onTap;
@@ -25,16 +26,17 @@ class SkTapField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: onTap,
+      onTap: !enabled ? null : onTap,
       child: IgnorePointer(
         child: SkTextField(
+          enabled: enabled,
           controller: controller,
           labelText: labelText,
           hintText: hintText,
           validator: validator,
-          suffix: const Icon(
+          suffix: Icon(
             AegisIcons.chevron_down,
-            color: AegisColors.neutral400,
+            color: enabled ? AegisColors.neutral400 : AegisColors.neutral300,
           ),
         ),
       ),

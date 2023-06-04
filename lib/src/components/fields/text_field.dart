@@ -53,20 +53,19 @@ class SkTextField extends HookWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
 
+  SkFieldState get baseState =>
+      enabled ? SkFieldState.enabled : SkFieldState.disabled;
+
   @override
   Widget build(BuildContext context) {
     var fn = focusNode ?? useFocusNode();
     var ctrl = controller ?? useTextEditingController();
     var textUpdate = useValueListenable(ctrl);
     var fieldState = useState<SkFieldState>(
-      errorText == null
-          ? enabled
-              ? SkFieldState.enabled
-              : SkFieldState.disabled
-          : SkFieldState.error,
+      errorText == null ? baseState : SkFieldState.error,
     );
 
-    var getStateColor = useCallback(() {
+    Color getStateColor() {
       switch (fieldState.value) {
         case SkFieldState.error:
           return AegisColors.red300;
@@ -75,7 +74,7 @@ class SkTextField extends HookWidget {
         default:
           return AegisColors.neutral500;
       }
-    }, []);
+    }
 
     var error = useState<String?>(errorText);
 
@@ -85,7 +84,7 @@ class SkTextField extends HookWidget {
       if (fn.hasFocus) {
         fieldState.value = SkFieldState.focused;
       } else {
-        fieldState.value = SkFieldState.enabled;
+        fieldState.value = baseState;
       }
     }
 
@@ -93,7 +92,7 @@ class SkTextField extends HookWidget {
       if (error.value != null) {
         fieldState.value = SkFieldState.error;
       } else {
-        fieldState.value = SkFieldState.enabled;
+        fieldState.value = baseState;
       }
     }
 
@@ -115,6 +114,11 @@ class SkTextField extends HookWidget {
       error.value = errorText;
       return;
     }, [errorText]);
+
+    useEffect(() {
+      fieldState.value = baseState;
+      return;
+    }, [enabled]);
 
     return Column(
       mainAxisSize: MainAxisSize.min,

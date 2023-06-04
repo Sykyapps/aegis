@@ -10,11 +10,13 @@ class SkCheckbox extends StatelessWidget {
     this.isActive = false,
     this.isCircle = true,
     this.isValidated = false,
+    this.isDisabled = false,
   }) : super(key: key);
 
   final bool isActive;
   final bool isCircle;
   final bool isValidated;
+  final bool isDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class SkCheckbox extends StatelessWidget {
     var borderRadius = 2.r;
 
     if (isActive) {
-      backgroundColor = AegisColors.blue300;
+      backgroundColor = isDisabled ? AegisColors.blue200 : AegisColors.blue300;
       borderColor = AegisColors.transparent;
       foregroundColor = AegisColors.neutral100;
     } else if (isValidated) {
