@@ -7,9 +7,9 @@ class SkSliverAppBar extends StatelessWidget {
   const SkSliverAppBar({
     Key? key,
     required this.title,
-    required this.leading,
-    required this.action,
     required this.expandedHeight,
+    this.leading,
+    this.action,
   }) : super(key: key);
 
   final String title;
