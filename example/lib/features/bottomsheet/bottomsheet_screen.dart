@@ -53,9 +53,35 @@ class BottomSheetScreen extends StatelessWidget {
                   ),
 
                   builder: (context) {
-                    return const SkBottomSheet();
+                    return const _SkBottomSheet(
+                      child: SizedBox(),
+                    );
                   },
                 );
+              },
+            ),
+            const SizedBox(height: 8),
+            SkButton(
+              label: 'Tap to open Scrollable Bottom Sheet',
+              onPressed: () async {
+                log('Button pressed');
+
+                await SkBottomSheet(
+                  title: 'Title',
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 200,
+                        color: AegisColors.purple100,
+                      ),
+                      const TextField(),
+                      Container(
+                        height: 1000,
+                        color: AegisColors.purple200,
+                      ),
+                    ],
+                  ),
+                ).show(context);
               },
             ),
           ],
@@ -65,8 +91,8 @@ class BottomSheetScreen extends StatelessWidget {
   }
 }
 
-class SkBottomSheet extends StatelessWidget {
-  const SkBottomSheet({
+class _SkBottomSheet extends StatelessWidget {
+  const _SkBottomSheet({
     Key? key,
     this.child,
     this.useDraggableScrollableSheet = false,

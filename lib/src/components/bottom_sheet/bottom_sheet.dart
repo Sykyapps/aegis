@@ -13,25 +13,25 @@ class SkBottomSheet extends HookWidget {
     required this.child,
     this.title,
     this.backgroundImage,
+    this.barrierColor,
+    this.showHandle = true,
   }) : super(key: key);
 
   final bool useDraggableScrollableSheet;
   final String? title;
   final ImageProvider<Object>? backgroundImage;
   final Widget? child;
+  final Color? barrierColor;
+  final bool showHandle;
 
-  static void show(
-    BuildContext context, {
-    String? title,
-    Widget? child,
-  }) {
-    showModalBottomSheet(
+  Future<bool?> show(BuildContext context) {
+    return showModalBottomSheet<bool?>(
       context: context,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * .93,
       ),
       backgroundColor: AegisColors.transparent,
-      barrierColor: const Color.fromRGBO(4, 8, 22, 0.6),
+      barrierColor: barrierColor ?? const Color.fromRGBO(4, 8, 22, 0.6),
       isScrollControlled: true,
       builder: (context) {
         var mq = MediaQuery.of(context);
@@ -50,11 +50,7 @@ class SkBottomSheet extends HookWidget {
                 top: Radius.circular(16.r),
               ),
             ),
-            child: SkBottomSheet(
-              title: title,
-              // backgroundImage: backgroundImage,
-              child: child,
-            ),
+            child: this,
           ),
         );
       },
@@ -88,9 +84,7 @@ class SkBottomSheet extends HookWidget {
               : AegisColors.transparent,
           onChanged: (p0) {},
         ),
-        SliverToBoxAdapter(
-          child: child,
-        ),
+        SliverToBoxAdapter(child: child),
       ],
     );
   }
@@ -124,22 +118,8 @@ class _Header extends StatelessWidget {
       expandedHeight: title == null ? null : expandedHeight,
       backgroundColor: backgroundColor ?? AegisColors.neutral0,
       centerTitle: false,
-      titleSpacing: backgroundColor == AegisColors.transparent ? 0 : null,
-      title: backgroundColor == AegisColors.transparent
-          ? ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(8.r),
-                shape: const CircleBorder(),
-                backgroundColor: AegisColors.backgroundWhite,
-                foregroundColor: AegisColors.textHighEmphasis,
-              ),
-              child: Icon(
-                AegisIcons.close,
-                size: 16.r,
-              ),
-            )
-          : const _CloseButton(),
+      titleSpacing: 0,
+      title: const _CloseButton(),
       flexibleSpace: title == null
           ? null
           : LayoutBuilder(
@@ -153,27 +133,30 @@ class _Header extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Flexible(
-                        child: Padding(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
                           padding: EdgeInsets.symmetric(
                             horizontal: 20.r,
-                            vertical: 16.r,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const _CloseButton(),
-                              SizedBox(width: 16.r),
-                              Visibility(
-                                visible: top <= 75,
-                                maintainAnimation: true,
-                                maintainState: true,
-                                child: AnimatedOpacity(
-                                  opacity: top <= 75 ? 1 : 0,
-                                  duration: const Duration(milliseconds: 300),
-                                  child: Text(
-                                    title!,
-                                    style: AegisFont.headlineSmall.copyWith(
-                                      color: AegisColors.neutral500,
+                              // const _CloseButton(),
+                              SizedBox(width: 36.r),
+                              Expanded(
+                                child: Visibility(
+                                  visible: top <= 75,
+                                  maintainAnimation: true,
+                                  maintainState: true,
+                                  child: AnimatedOpacity(
+                                    opacity: top <= 75 ? 1 : 0,
+                                    duration: const Duration(milliseconds: 300),
+                                    child: Text(
+                                      title!,
+                                      textAlign: TextAlign.left,
+                                      style: AegisFont.headlineSmall.copyWith(
+                                        color: AegisColors.neutral500,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -226,13 +209,19 @@ class _CloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      constraints: const BoxConstraints(),
-      padding: EdgeInsets.zero,
-      iconSize: 24.sp,
-      color: AegisColors.iconHighEmphasis,
-      icon: const Icon(AegisIcons.close),
+    return ElevatedButton(
       onPressed: () => Navigator.of(context).pop(),
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.all(8.r),
+        shape: const CircleBorder(),
+        backgroundColor: AegisColors.backgroundWhite,
+        foregroundColor: AegisColors.textHighEmphasis,
+        elevation: 0,
+      ),
+      child: Icon(
+        AegisIcons.close,
+        size: 20.sp,
+      ),
     );
   }
 }
