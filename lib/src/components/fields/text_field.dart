@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
 import '../../../icons.dart';
+import 'validators/regexp.dart';
 
 enum SkFieldState {
   enabled,
@@ -145,7 +146,10 @@ class SkTextField extends HookWidget {
           cursorWidth: 1.w,
           cursorColor: AegisColors.blue300,
           keyboardType: keyboardType,
-          inputFormatters: inputFormatters,
+          inputFormatters: [
+            FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
+            ...?inputFormatters,
+          ],
           textCapitalization: textCapitalization,
           decoration: InputDecoration(
             isDense: true,
