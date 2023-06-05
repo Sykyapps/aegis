@@ -45,7 +45,7 @@ class SkOptionField<T> extends HookWidget {
           ),
         ),
         Positioned(
-          bottom: 8,
+          top: 30,
           child: Container(
             color: AegisColors.backgroundWhite,
             child: Wrap(
