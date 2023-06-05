@@ -86,7 +86,7 @@ class _OptionItem extends StatelessWidget {
                 ),
               ),
             ),
-            const SkCheckbox(),
+            SkCheckbox(isActive: isActive),
           ],
         ),
       ),

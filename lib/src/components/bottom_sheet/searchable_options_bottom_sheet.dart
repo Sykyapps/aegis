@@ -68,6 +68,10 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
           .toList();
     }
 
+    void unfocusOnScrolled() {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
+
     return BackdropFilter(
       filter: ImageFilter.blur(
         sigmaX: Shadow.convertRadiusToSigma(4),
@@ -103,42 +107,47 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                   )
                 else if (groupByAlphabet)
                   SliverFillRemaining(
-                    child: AzListView(
-                      data: grouped(),
-                      itemCount: grouped().length,
-                      itemBuilder: (context, index) {
-                        var f = grouped()[index];
-                        return Column(
-                          children: [
-                            Offstage(
-                              offstage: !f.isShowSuspension,
-                              child: _AzGroup(tag: f.getSuspensionTag()),
-                            ),
-                            _OptionItem(
-                              title: getLabel(f.data),
-                              imageUrl: getImage?.call(f.data),
-                              onPressed: () =>
-                                  Navigator.of(context).pop(f.data),
-                            ),
-                          ],
-                        );
+                    child: GestureDetector(
+                      onTapDown: (_) {
+                        FocusManager.instance.primaryFocus?.unfocus();
                       },
-                      indexBarOptions: IndexBarOptions(
-                        needRebuild: true,
-                        textStyle: AegisFont.small.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AegisColors.textHighEmphasis,
-                        ),
-                        indexHintAlignment: Alignment.centerRight,
-                        indexHintDecoration: BoxDecoration(
-                          color: AegisColors.blue300,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        indexHintWidth: 20,
-                        indexHintHeight: 20,
-                        indexHintTextStyle: AegisFont.small.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AegisColors.neutral0,
+                      child: AzListView(
+                        data: grouped(),
+                        itemCount: grouped().length,
+                        itemBuilder: (context, index) {
+                          var f = grouped()[index];
+                          return Column(
+                            children: [
+                              Offstage(
+                                offstage: !f.isShowSuspension,
+                                child: _AzGroup(tag: f.getSuspensionTag()),
+                              ),
+                              _OptionItem(
+                                title: getLabel(f.data),
+                                imageUrl: getImage?.call(f.data),
+                                onPressed: () =>
+                                    Navigator.of(context).pop(f.data),
+                              ),
+                            ],
+                          );
+                        },
+                        indexBarOptions: IndexBarOptions(
+                          needRebuild: true,
+                          textStyle: AegisFont.small.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AegisColors.textHighEmphasis,
+                          ),
+                          indexHintAlignment: Alignment.centerRight,
+                          indexHintDecoration: BoxDecoration(
+                            color: AegisColors.blue300,
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                          indexHintWidth: 20,
+                          indexHintHeight: 20,
+                          indexHintTextStyle: AegisFont.small.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AegisColors.neutral0,
+                          ),
                         ),
                       ),
                     ),
