@@ -26,7 +26,12 @@ class SkTapField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: !enabled ? null : onTap,
+      onTap: !enabled
+          ? null
+          : () {
+              FocusManager.instance.primaryFocus?.unfocus();
+              onTap();
+            },
       child: IgnorePointer(
         child: SkTextField(
           enabled: enabled,

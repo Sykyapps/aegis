@@ -68,10 +68,6 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
           .toList();
     }
 
-    void unfocusOnScrolled() {
-      FocusManager.instance.primaryFocus?.unfocus();
-    }
-
     return BackdropFilter(
       filter: ImageFilter.blur(
         sigmaX: Shadow.convertRadiusToSigma(4),
