@@ -54,6 +54,7 @@ class BottomSheetScreen extends StatelessWidget {
 
                   builder: (context) {
                     return const _SkBottomSheet(
+                      useDraggableScrollableSheet: false,
                       child: SizedBox(),
                     );
                   },
