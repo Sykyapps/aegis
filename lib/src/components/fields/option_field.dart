@@ -33,6 +33,11 @@ class SkOptionField<T> extends HookWidget {
     var selected = useState<T?>(initial);
     var width = (MediaQuery.of(context).size.width / options.length) * 0.8;
 
+    useEffect(() {
+      selected.value ??= initial;
+      return;
+    }, [initial]);
+
     return Stack(
       alignment: Alignment.bottomLeft,
       children: [
