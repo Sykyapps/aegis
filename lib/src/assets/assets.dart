@@ -21,4 +21,7 @@ class AegisAssets {
 
   // Photo
   static const photoPlaceholder = '$base/photo/photo_placeholder.png';
+
+  // Transaction
+  static const hourGlass = '$base/transaction/hourglass.png';
 }
