@@ -24,4 +24,6 @@ class AegisAssets {
 
   // Transaction
   static const hourGlass = '$base/transaction/hourglass.png';
+  static const switching = '$base/transaction/switching.png';
+  static const redemption = '$base/transaction/redemption.png';
 }
