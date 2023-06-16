@@ -9,7 +9,6 @@ import '../../../aegis.dart';
 class SkBottomSheet extends HookWidget {
   const SkBottomSheet({
     Key? key,
-    this.useDraggableScrollableSheet = false,
     required this.child,
     this.title,
     this.backgroundImage,
@@ -17,7 +16,6 @@ class SkBottomSheet extends HookWidget {
     this.showHandle = true,
   }) : super(key: key);
 
-  final bool useDraggableScrollableSheet;
   final String? title;
   final ImageProvider<Object>? backgroundImage;
   final Widget? child;
@@ -33,35 +31,15 @@ class SkBottomSheet extends HookWidget {
       backgroundColor: AegisColors.transparent,
       barrierColor: barrierColor ?? const Color.fromRGBO(4, 8, 22, 0.6),
       isScrollControlled: true,
-      builder: (context) {
-        var mq = MediaQuery.of(context);
-
-        return BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: Shadow.convertRadiusToSigma(2),
-            sigmaY: Shadow.convertRadiusToSigma(2),
-          ),
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            padding: EdgeInsets.only(bottom: mq.viewInsets.bottom),
-            decoration: BoxDecoration(
-              color: AegisColors.backgroundWhite,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(16.r),
-              ),
-            ),
-            child: this,
-          ),
-        );
-      },
+      builder: (context) => this,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    var textController = useTextEditingController();
     var scrollController = useScrollController();
     var isPinned = useState(false);
+    var mq = MediaQuery.of(context);
 
     useEffect(() {
       scrollController.addListener(() {
@@ -71,21 +49,35 @@ class SkBottomSheet extends HookWidget {
       return;
     }, [scrollController]);
 
-    return CustomScrollView(
-      controller: scrollController,
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
-      slivers: [
-        _Header(
-          title: title,
-          controller: textController,
-          backgroundColor: isPinned.value
-              ? AegisColors.backgroundWhite
-              : AegisColors.transparent,
-          onChanged: (p0) {},
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: Shadow.convertRadiusToSigma(2),
+        sigmaY: Shadow.convertRadiusToSigma(2),
+      ),
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        padding: EdgeInsets.only(bottom: mq.viewInsets.bottom),
+        decoration: BoxDecoration(
+          color: AegisColors.backgroundWhite,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(16.r),
+          ),
         ),
-        SliverToBoxAdapter(child: child),
-      ],
+        child: CustomScrollView(
+          controller: scrollController,
+          shrinkWrap: true,
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            _Header(
+              title: title,
+              backgroundColor: isPinned.value
+                  ? AegisColors.backgroundWhite
+                  : AegisColors.transparent,
+            ),
+            SliverToBoxAdapter(child: child),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -93,15 +85,11 @@ class SkBottomSheet extends HookWidget {
 class _Header extends StatelessWidget {
   const _Header({
     Key? key,
-    required this.controller,
-    required this.onChanged,
     this.title,
     this.backgroundColor,
   }) : super(key: key);
 
   final String? title;
-  final TextEditingController controller;
-  final Function(String) onChanged;
   final Color? backgroundColor;
 
   static final double height = 56.r;
@@ -188,18 +176,6 @@ class _Header extends StatelessWidget {
                 );
               },
             ),
-      // bottom: PreferredSize(
-      //   preferredSize: Size.fromHeight(height),
-      //   child: Container(
-      //     alignment: Alignment.center,
-      //     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20).r,
-      //     child: SkSearchField(
-      //       controller: controller,
-      //       hintText: 'Cari nama negara atau kode negara',
-      //       onChanged: onChanged,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
