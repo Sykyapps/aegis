@@ -26,7 +26,7 @@ class SkBottomSheet extends HookWidget {
     return showModalBottomSheet<bool?>(
       context: context,
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * .93,
+        maxHeight: 1.sh - ScreenUtil().statusBarHeight,
       ),
       backgroundColor: AegisColors.transparent,
       barrierColor: barrierColor ?? const Color.fromRGBO(4, 8, 22, 0.6),
@@ -54,28 +54,31 @@ class SkBottomSheet extends HookWidget {
         sigmaX: Shadow.convertRadiusToSigma(2),
         sigmaY: Shadow.convertRadiusToSigma(2),
       ),
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        padding: EdgeInsets.only(bottom: mq.viewInsets.bottom),
-        decoration: BoxDecoration(
-          color: AegisColors.backgroundWhite,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(16.r),
-          ),
-        ),
-        child: CustomScrollView(
-          controller: scrollController,
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          slivers: [
-            _Header(
-              title: title,
-              backgroundColor: isPinned.value
-                  ? AegisColors.backgroundWhite
-                  : AegisColors.transparent,
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          padding: EdgeInsets.only(bottom: mq.viewInsets.bottom),
+          decoration: BoxDecoration(
+            color: AegisColors.backgroundWhite,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(16.r),
             ),
-            SliverToBoxAdapter(child: child),
-          ],
+          ),
+          child: CustomScrollView(
+            controller: scrollController,
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            slivers: [
+              _Header(
+                title: title,
+                backgroundColor: isPinned.value
+                    ? AegisColors.backgroundWhite
+                    : AegisColors.transparent,
+              ),
+              SliverToBoxAdapter(child: child),
+            ],
+          ),
         ),
       ),
     );

@@ -95,29 +95,32 @@ class SkExpandableBottomSheet extends HookWidget {
               ),
             ),
           ),
-          Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(
-              borderRadius:
-                  BorderRadius.only(topLeft: radius, topRight: radius),
-              color: AegisColors.neutral0,
-            ),
-            child: DraggableScrollableSheet(
-              expand: false,
-              snap: true,
-              initialChildSize: sheetSize,
-              minChildSize: minSize,
-              maxChildSize: maxSize,
-              builder: (context, scrollController) {
-                return CustomScrollView(
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  slivers: [
-                    _Header(title: title, expandedHeight: expandedHeight),
-                    SliverToBoxAdapter(child: child),
-                  ],
-                );
-              },
+          GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(
+                borderRadius:
+                    BorderRadius.only(topLeft: radius, topRight: radius),
+                color: AegisColors.neutral0,
+              ),
+              child: DraggableScrollableSheet(
+                expand: false,
+                snap: true,
+                initialChildSize: sheetSize,
+                minChildSize: minSize,
+                maxChildSize: maxSize,
+                builder: (context, scrollController) {
+                  return CustomScrollView(
+                    controller: scrollController,
+                    shrinkWrap: true,
+                    slivers: [
+                      _Header(title: title, expandedHeight: expandedHeight),
+                      SliverToBoxAdapter(child: child),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ],
