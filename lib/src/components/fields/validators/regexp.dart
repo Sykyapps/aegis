@@ -11,7 +11,7 @@ class SkRegExp {
 
   // Email
   static final email = RegExp(
-    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9\-\_]+\.[a-zA-Z]{2,}$",
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9\-\_]+\.[a-zA-Z.]{2,}$",
   );
 
   // Phone
