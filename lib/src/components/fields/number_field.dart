@@ -1,14 +1,14 @@
-import 'package:aegis/src/components/fields/formatter/currency_formatter.dart';
-import 'package:aegis/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:number_text_input_formatter/number_text_input_formatter.dart';
 
-import '../../../foundation.dart';
+import '../../foundation/colors.dart';
+import '../../foundation/typography.dart';
 
-class SkCurrencyField extends FormField<String> {
+class SkNumberField extends FormField<String> {
   final TextEditingController? controller;
-  SkCurrencyField({
+  SkNumberField({
     super.key,
     this.controller,
     FocusNode? focusNode,
@@ -25,7 +25,8 @@ class SkCurrencyField extends FormField<String> {
           builder: (FormFieldState<String> fieldState) {
             void onChangedHandler(String value) {
               if (value.isEmpty) return;
-              var parsed = CurrencyUtil.parse(value).toString();
+              var cleaned = value.replaceAll('.', '').replaceAll(',', '.');
+              var parsed = double.tryParse(cleaned).toString();
               if (onChanged != null) onChanged(parsed);
               fieldState.didChange(parsed);
             }
@@ -98,8 +99,26 @@ class SkCurrencyField extends FormField<String> {
                     color: AegisColors.textHighEmphasis,
                   ),
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    CurrencyInputFormatter(),
+                    NumberTextInputFormatter(
+                      decimalSeparator: ',',
+                      groupDigits: 3,
+                      decimalDigits: 4,
+                      groupSeparator: '.',
+                      allowNegative: false,
+                      fixNumber: true,
+                      overrideDecimalPoint: false,
+                      insertDecimalPoint: false,
+                      insertDecimalDigits: false,
+                    ),
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      if (newValue.text.isEmpty) {
+                        return newValue.copyWith(
+                          text: '0',
+                          selection: const TextSelection.collapsed(offset: 1),
+                        );
+                      }
+                      return newValue;
+                    }),
                   ],
                 ),
               ],
