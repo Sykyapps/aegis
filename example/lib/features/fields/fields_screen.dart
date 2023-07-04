@@ -21,56 +21,63 @@ class FieldsScreen extends HookWidget {
         title: Text(AegisScreen.fields.title),
       ),
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SkTextField(
-                controller: basicCtrl,
-                labelText: 'Text Field',
-              ),
-              SizedBox(height: 20.r),
-              SkPhoneField(
-                controller: phoneCtrl,
-                phoneCodes: phoneCodes,
-              ),
-              SizedBox(height: 20.r),
-              SkPhoneEmailField(
-                controller: basicCtrl,
-                phoneCodes: phoneCodes,
-              ),
-              SizedBox(height: 20.r),
-              SkTapField(
-                controller: tapCtrl,
-                labelText: 'Target Tercapai',
-                hintText: 'Tentukan target tercapai',
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => Container(
-                      height: 200,
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: SkButton(
-                        label: 'Set Text',
-                        onPressed: () => tapCtrl.text =
-                            tapCtrl.text.isEmpty ? 'Sample Tap Field' : '',
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SkTextField(
+                  controller: basicCtrl,
+                  labelText: 'Text Field',
+                ),
+                SizedBox(height: 20.r),
+                SkPhoneField(
+                  controller: phoneCtrl,
+                  phoneCodes: phoneCodes,
+                ),
+                SizedBox(height: 20.r),
+                SkPhoneEmailField(
+                  controller: basicCtrl,
+                  phoneCodes: phoneCodes,
+                ),
+                SizedBox(height: 20.r),
+                SkTapField(
+                  controller: tapCtrl,
+                  labelText: 'Target Tercapai',
+                  hintText: 'Tentukan target tercapai',
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => Container(
+                        height: 200,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: SkButton(
+                          label: 'Set Text',
+                          onPressed: () => tapCtrl.text =
+                              tapCtrl.text.isEmpty ? 'Sample Tap Field' : '',
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 20.r),
-              SkSearchField(controller: basicCtrl),
-              SizedBox(height: 20.r),
-              SkNominalField(
-                controller: basicCtrl,
-                hintText: 'Rp100.000',
-                labelText: 'Jumlah Investasi (Minimal Rp100.000)',
-                onChanged: (value) {},
-              ),
-            ],
+                    );
+                  },
+                ),
+                SizedBox(height: 20.r),
+                SkSearchField(controller: basicCtrl),
+                SizedBox(height: 20.r),
+                SkNominalField(
+                  controller: basicCtrl,
+                  hintText: 'Rp100.000',
+                  labelText: 'Jumlah Investasi (Minimal Rp100.000)',
+                  onChanged: (value) {},
+                ),
+                SizedBox(height: 20.r),
+                SkNumberField(
+                  labelText: 'Number field',
+                  onChanged: (value) {},
+                ),
+              ],
+            ),
           ),
         ),
       ),
