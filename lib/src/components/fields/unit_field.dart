@@ -17,14 +17,21 @@ class SkUnitField extends FormField<String> {
     String? labelText,
     ValueChanged<String>? onChanged,
     FormFieldValidator<String?>? validator,
+    FormFieldSetter<String>? onSaved,
   }) : super(
           autovalidateMode: autovalidateMode,
           validator: validator,
+          onSaved: onSaved,
           builder: (FormFieldState<String> fieldState) {
             void onChangedHandler(String value) {
-              if (value.isEmpty) return;
-              var parsed = value.replaceAll('.', ',');
-              if (onChanged != null) onChanged(parsed);
+              if (onChanged == null) return;
+
+              String parsed = '';
+
+              if (value.isNotEmpty) {
+                parsed = value.replaceAll('.', ',');
+              }
+              onChanged(parsed);
               fieldState.didChange(parsed);
             }
 
