@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:number_text_input_formatter/number_text_input_formatter.dart';
 
@@ -19,15 +18,23 @@ class SkNumberField extends FormField<String> {
     String? labelText,
     ValueChanged<String>? onChanged,
     FormFieldValidator<String?>? validator,
+    FormFieldSetter<String>? onSaved,
   }) : super(
           autovalidateMode: autovalidateMode,
           validator: validator,
+          onSaved: onSaved,
           builder: (FormFieldState<String> fieldState) {
             void onChangedHandler(String value) {
-              if (value.isEmpty) return;
-              var cleaned = value.replaceAll('.', '').replaceAll(',', '.');
-              var parsed = double.tryParse(cleaned).toString();
-              if (onChanged != null) onChanged(parsed);
+              if (onChanged == null) return;
+
+              String parsed = '';
+
+              if (value.isNotEmpty) {
+                var cleaned = value.replaceAll('.', '').replaceAll(',', '.');
+                parsed = double.tryParse(cleaned).toString();
+              }
+
+              onChanged(parsed);
               fieldState.didChange(parsed);
             }
 
@@ -110,15 +117,6 @@ class SkNumberField extends FormField<String> {
                       insertDecimalPoint: false,
                       insertDecimalDigits: false,
                     ),
-                    TextInputFormatter.withFunction((oldValue, newValue) {
-                      if (newValue.text.isEmpty) {
-                        return newValue.copyWith(
-                          text: '0',
-                          selection: const TextSelection.collapsed(offset: 1),
-                        );
-                      }
-                      return newValue;
-                    }),
                   ],
                 ),
               ],
