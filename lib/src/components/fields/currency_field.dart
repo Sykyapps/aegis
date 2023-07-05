@@ -19,14 +19,22 @@ class SkCurrencyField extends FormField<String> {
     String? labelText,
     ValueChanged<String>? onChanged,
     FormFieldValidator<String?>? validator,
+    FormFieldSetter<String>? onSaved,
   }) : super(
           autovalidateMode: autovalidateMode,
           validator: validator,
+          onSaved: onSaved,
           builder: (FormFieldState<String> fieldState) {
             void onChangedHandler(String value) {
-              if (value.isEmpty) return;
-              var parsed = CurrencyUtil.parse(value).toString();
-              if (onChanged != null) onChanged(parsed);
+              if (onChanged == null) return;
+
+              String parsed = '';
+
+              if (value.isNotEmpty) {
+                parsed = CurrencyUtil.parse(value).toString();
+              }
+
+              onChanged(parsed);
               fieldState.didChange(parsed);
             }
 
