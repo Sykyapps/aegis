@@ -91,7 +91,8 @@ class SkNumberField extends FormField<String> {
                     style: effectiveDecoration.labelStyle,
                   ),
                 TextFormField(
-                  keyboardType: TextInputType.number,
+                  // TODO: iOS keyboard only show period `.` options
+                  keyboardType: TextInputType.text,
                   controller: controller,
                   cursorColor: AegisColors.blue300,
                   cursorWidth: 1.r,
