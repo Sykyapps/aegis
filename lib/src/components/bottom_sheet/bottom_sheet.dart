@@ -14,6 +14,7 @@ class SkBottomSheet extends HookWidget {
     this.backgroundImage,
     this.barrierColor,
     this.showHandle = true,
+    this.hasBottomNav = false,
   }) : super(key: key);
 
   final String? title;
@@ -21,12 +22,18 @@ class SkBottomSheet extends HookWidget {
   final Widget? child;
   final Color? barrierColor;
   final bool showHandle;
+  final bool hasBottomNav;
 
   Future<bool?> show(BuildContext context) {
     return showModalBottomSheet<bool?>(
       context: context,
       constraints: BoxConstraints(
-        maxHeight: 1.sh - ScreenUtil().statusBarHeight,
+        maxHeight: hasBottomNav
+            ? 1.sh -
+                ScreenUtil().statusBarHeight -
+                ScreenUtil().bottomBarHeight -
+                kBottomNavigationBarHeight
+            : 1.sh - ScreenUtil().statusBarHeight,
       ),
       backgroundColor: AegisColors.transparent,
       barrierColor: barrierColor ?? const Color.fromRGBO(4, 8, 22, 0.6),
