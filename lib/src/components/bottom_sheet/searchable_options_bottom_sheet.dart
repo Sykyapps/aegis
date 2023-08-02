@@ -23,12 +23,14 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     this.trailingButton,
     this.actionButton,
     this.disableUnfocusBehavior = false,
+    this.emptyImage,
   });
 
   final String title;
   final String searchHint;
   final String emptyTitle;
   final String emptyDescription;
+  final String? emptyImage;
   final List<T> options;
   final String Function(T) getLabel;
   final String? Function(T)? getImage;
@@ -105,6 +107,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                 if (filtered.value.isEmpty)
                   SliverToBoxAdapter(
                     child: _Empty(
+                      emptyImage: emptyImage,
                       title: emptyTitle,
                       description: emptyDescription,
                     ),
@@ -304,11 +307,16 @@ class _Title extends StatelessWidget {
 }
 
 class _Empty extends StatelessWidget {
-  const _Empty({Key? key, required this.title, required this.description})
-      : super(key: key);
+  const _Empty({
+    Key? key,
+    required this.title,
+    required this.description,
+    this.emptyImage,
+  }) : super(key: key);
 
   final String title;
   final String description;
+  final String? emptyImage;
 
   @override
   Widget build(BuildContext context) {
@@ -316,6 +324,13 @@ class _Empty extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
+          if (emptyImage != null)
+            Container(
+              width: 66,
+              height: 56,
+              margin: const EdgeInsets.all(8),
+              child: Image.asset(emptyImage!),
+            ),
           Text(
             title,
             style: AegisFont.bodyLarge.copyWith(
