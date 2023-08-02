@@ -85,10 +85,123 @@ class BottomSheetScreen extends StatelessWidget {
                 ).show(context);
               },
             ),
+            const SizedBox(height: 8),
+            SkButton(
+              label: 'Tap to open Searchable Bottom Sheet',
+              onPressed: () async {
+                log('Button pressed');
+
+                await SkSearchableOptionsBottomSheet<String>(
+                  title: 'Undang Teman',
+                  searchHint: 'Cari nama kontak ataupun nomor ponsel',
+                  emptyTitle: 'Kontak Tidak Ditemukan',
+                  emptyDescription:
+                      'Coba periksa atau ganti kata kunci yang ingin kamu cari.',
+                  options: const [
+                    'Calvin Andhika',
+                    'Bukan Siapa Siapa',
+                    'dddsss',
+                    'jjj',
+                    'hhhh',
+                    'asd',
+                    'bsd',
+                    'dddsss',
+                    'jjj',
+                    'hhhh',
+                    'asd',
+                    'bsd',
+                    'dddsss',
+                    'jjj',
+                    'hhhh',
+                  ],
+                  groupByAlphabet: true,
+                  getLabel: (p0) => p0,
+                  getImage: (p0) => '',
+                  getSubtitle: (p0) => p0,
+                  trailingButton: const _Button(isSelected: true),
+                  actionButton: const _ActionButton(),
+                  disableUnfocusBehavior: true,
+                ).show(context);
+              },
+            ),
           ],
         ),
       ),
     );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerRight,
+          color: AegisColors.neutral100,
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+          child: Text(
+            '1 dari 10 diundang',
+            style: AegisFont.bodyMedium.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+          child: SkButton(
+            label: 'Undang',
+            onPressed: () {},
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Button extends StatelessWidget {
+  const _Button({
+    Key? key,
+    this.isSelected = false,
+  }) : super(key: key);
+
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return isSelected
+        ? SkIconButton(
+            width: 100,
+            title: 'Diundang',
+            iconSize: 17,
+            textStyle: AegisFont.bodySmall.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AegisColors.neutral300,
+            ),
+            foregroundColor: AegisColors.neutral300,
+            backgroundColor: AegisColors.neutral0,
+            border: const BorderSide(color: AegisColors.neutral200),
+            icon: AegisIcons.check,
+            onPressed: () {},
+          )
+        : SkIconButton(
+            width: 100,
+            title: 'Undang',
+            iconSize: 17,
+            textStyle: AegisFont.bodySmall.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AegisColors.purple300,
+            ),
+            border: const BorderSide(color: AegisColors.purple100),
+            foregroundColor: AegisColors.purple300,
+            backgroundColor: AegisColors.purple100,
+            icon: AegisIcons.add,
+            onPressed: () {},
+          );
   }
 }
 

@@ -14,6 +14,8 @@ class SkIconButton extends StatelessWidget {
   final BorderSide border;
   final bool isLoading;
   final int width;
+  final double? iconSize;
+  final TextStyle? textStyle;
 
   const SkIconButton({
     super.key,
@@ -26,6 +28,8 @@ class SkIconButton extends StatelessWidget {
     this.border = const BorderSide(color: AegisColors.neutral200),
     this.width = 125,
     this.isLoading = false,
+    this.iconSize,
+    this.textStyle,
   });
 
   factory SkIconButton.primary({
@@ -53,14 +57,21 @@ class SkIconButton extends StatelessWidget {
       child: ElevatedButton.icon(
         icon: isLoading
             ? SkLoadingAnimation(color: foregroundColor)
-            : Icon(icon, color: foregroundColor),
+            : Icon(
+                icon,
+                color: foregroundColor,
+                size: iconSize,
+              ),
         label: isLoading
             ? const SizedBox()
             : Text(
                 title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AegisFont.bodyMedium.copyWith(color: foregroundColor),
+                style: textStyle ??
+                    AegisFont.bodyMedium.copyWith(
+                      color: foregroundColor,
+                    ),
               ),
         style: ElevatedButton.styleFrom(
           padding: padding,

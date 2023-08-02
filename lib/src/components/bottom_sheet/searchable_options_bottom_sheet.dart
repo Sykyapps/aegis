@@ -17,8 +17,12 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     required this.options,
     required this.getLabel,
     this.getImage,
-    this.groupByAlphabet = false,
     this.getTag,
+    this.getSubtitle,
+    this.groupByAlphabet = false,
+    this.trailingButton,
+    this.actionButton,
+    this.disableUnfocusBehavior = false,
   });
 
   final String title;
@@ -28,8 +32,12 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final List<T> options;
   final String Function(T) getLabel;
   final String? Function(T)? getImage;
-  final bool groupByAlphabet;
   final String? Function(T)? getTag;
+  final String? Function(T)? getSubtitle;
+  final bool groupByAlphabet;
+  final Widget? trailingButton;
+  final Widget? actionButton;
+  final bool disableUnfocusBehavior;
 
   static const radius = Radius.circular(16);
 
@@ -103,49 +111,63 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                   )
                 else if (groupByAlphabet)
                   SliverFillRemaining(
-                    child: GestureDetector(
-                      onTapDown: (_) {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                      },
-                      child: AzListView(
-                        data: grouped(),
-                        itemCount: grouped().length,
-                        itemBuilder: (context, index) {
-                          var f = grouped()[index];
-                          return Column(
-                            children: [
-                              Offstage(
-                                offstage: !f.isShowSuspension,
-                                child: _AzGroup(tag: f.getSuspensionTag()),
+                    hasScrollBody: true,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTapDown: (_) {
+                              if (disableUnfocusBehavior) return;
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            child: AzListView(
+                              data: grouped(),
+                              itemCount: grouped().length,
+                              itemBuilder: (context, index) {
+                                var f = grouped()[index];
+                                return Column(
+                                  children: [
+                                    Offstage(
+                                      offstage: !f.isShowSuspension,
+                                      child:
+                                          _AzGroup(tag: f.getSuspensionTag()),
+                                    ),
+                                    _OptionItem(
+                                      title: getLabel(f.data),
+                                      subtitle: getSubtitle?.call(f.data),
+                                      imageUrl: getImage?.call(f.data),
+                                      onPressed: () {
+                                        if (disableUnfocusBehavior) return;
+                                        Navigator.of(context).pop(f.data);
+                                      },
+                                      button: trailingButton,
+                                    ),
+                                  ],
+                                );
+                              },
+                              indexBarOptions: IndexBarOptions(
+                                needRebuild: true,
+                                textStyle: AegisFont.small.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AegisColors.textHighEmphasis,
+                                ),
+                                indexHintAlignment: Alignment.centerRight,
+                                indexHintDecoration: BoxDecoration(
+                                  color: AegisColors.blue300,
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                                indexHintWidth: 20,
+                                indexHintHeight: 20,
+                                indexHintTextStyle: AegisFont.small.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AegisColors.neutral0,
+                                ),
                               ),
-                              _OptionItem(
-                                title: getLabel(f.data),
-                                imageUrl: getImage?.call(f.data),
-                                onPressed: () =>
-                                    Navigator.of(context).pop(f.data),
-                              ),
-                            ],
-                          );
-                        },
-                        indexBarOptions: IndexBarOptions(
-                          needRebuild: true,
-                          textStyle: AegisFont.small.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AegisColors.textHighEmphasis,
-                          ),
-                          indexHintAlignment: Alignment.centerRight,
-                          indexHintDecoration: BoxDecoration(
-                            color: AegisColors.blue300,
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                          indexHintWidth: 20,
-                          indexHintHeight: 20,
-                          indexHintTextStyle: AegisFont.small.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AegisColors.neutral0,
+                            ),
                           ),
                         ),
-                      ),
+                        if (actionButton != null) actionButton!
+                      ],
                     ),
                   )
                 else
@@ -155,7 +177,10 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                           .map((f) => _OptionItem(
                                 title: getLabel(f),
                                 imageUrl: getImage?.call(f),
-                                onPressed: () => Navigator.of(context).pop(f),
+                                onPressed: () {
+                                  if (disableUnfocusBehavior) return;
+                                  Navigator.of(context).pop(f);
+                                },
                               ))
                           .toList(),
                     ),
@@ -315,13 +340,17 @@ class _OptionItem extends StatelessWidget {
   const _OptionItem({
     Key? key,
     required this.title,
+    this.subtitle,
     this.imageUrl,
     required this.onPressed,
+    this.button,
   }) : super(key: key);
 
   final String title;
+  final String? subtitle;
   final String? imageUrl;
   final VoidCallback onPressed;
+  final Widget? button;
 
   @override
   Widget build(BuildContext context) {
@@ -334,37 +363,123 @@ class _OptionItem extends StatelessWidget {
       ),
       child: ListTile(
         dense: true,
-        leading: imageUrl == null ? null : _Image(imageUrl: imageUrl!),
+        leading:
+            imageUrl == null ? null : _Image(imageUrl: imageUrl!, title: title),
         title: Text(
           title,
           style: AegisFont.bodyMedium.copyWith(
             color: AegisColors.textHighEmphasis,
+            fontWeight: subtitle != null ? FontWeight.w700 : null,
           ),
         ),
+        subtitle: subtitle != null
+            ? Text(
+                subtitle!,
+                style: AegisFont.bodySmall.copyWith(
+                  color: AegisColors.textHighEmphasis,
+                ),
+              )
+            : null,
         contentPadding: const EdgeInsets.symmetric(vertical: 8).r,
         onTap: onPressed,
+        trailing: button,
       ),
     );
   }
 }
 
 class _Image extends StatelessWidget {
-  const _Image({Key? key, required this.imageUrl}) : super(key: key);
+  const _Image({
+    Key? key,
+    required this.imageUrl,
+    this.title = '',
+  }) : super(key: key);
 
   final String imageUrl;
+  final String title;
+
+  String abbr(String text) =>
+      text.split(' ').map((word) => word[0].toUpperCase()).take(3).join();
+
+  @override
+  Widget build(BuildContext context) {
+    return imageUrl.isEmpty
+        ? _DisplayName(title: abbr(title))
+        : Container(
+            height: 28.r,
+            width: 56.r,
+            decoration: BoxDecoration(
+              border: Border.all(color: AegisColors.borderHighEmphasis),
+              borderRadius: BorderRadius.circular(4).r,
+            ),
+            child: Image.network(imageUrl, width: 25.r),
+          );
+  }
+}
+
+class _DisplayName extends StatelessWidget {
+  const _DisplayName({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 28.r,
-      width: 56.r,
+      height: 40.w,
+      width: 40.w,
       decoration: BoxDecoration(
-        border: Border.all(color: AegisColors.borderHighEmphasis),
-        borderRadius: BorderRadius.circular(4).r,
+        borderRadius: BorderRadius.circular(100.w),
+        gradient: const LinearGradient(
+          colors: [
+            Color.fromRGBO(52, 173, 239, 1),
+            Color.fromRGBO(103, 86, 240, 1),
+          ],
+        ),
       ),
-      child: imageUrl.isEmpty
-          ? const SizedBox()
-          : Image.network(imageUrl, width: 25.r),
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Positioned(
+            top: 37.w,
+            left: -6.w,
+            child: Container(
+              height: 36.w,
+              width: 36.w,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 12.w,
+                  color: const Color.fromRGBO(255, 255, 255, 0.16),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: -22.w,
+            left: 20.w,
+            child: Container(
+              height: 44.w,
+              width: 44.w,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 12.w,
+                  color: const Color.fromRGBO(255, 255, 255, 0.16),
+                ),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Text(
+            title,
+            style: AegisFont.bodyLarge.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AegisColors.backgroundWhite,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
