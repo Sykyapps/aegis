@@ -413,8 +413,12 @@ class _Image extends StatelessWidget {
   final String imageUrl;
   final String title;
 
-  String abbr(String text) =>
-      text.split(' ').map((word) => word[0].toUpperCase()).take(3).join();
+  String abbr(String text) => text
+      .split(' ')
+      .where((word) => word != '')
+      .map((word) => word[0].toUpperCase())
+      .take(3)
+      .join();
 
   @override
   Widget build(BuildContext context) {
