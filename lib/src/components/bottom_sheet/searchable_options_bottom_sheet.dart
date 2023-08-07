@@ -24,6 +24,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     this.actionButton,
     this.disableUnfocusBehavior = false,
     this.emptyImage,
+    this.selectedNumbers,
   });
 
   final String title;
@@ -37,9 +38,10 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final String? Function(T)? getTag;
   final String? Function(T)? getSubtitle;
   final bool groupByAlphabet;
-  final Widget? trailingButton;
+  final Widget? Function(T)? trailingButton;
   final Widget? actionButton;
   final bool disableUnfocusBehavior;
+  final ValueNotifier<List<String>>? selectedNumbers;
 
   static const radius = Radius.circular(16);
 
@@ -78,121 +80,131 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
           .toList();
     }
 
-    return BackdropFilter(
-      filter: ImageFilter.blur(
-        sigmaX: Shadow.convertRadiusToSigma(4),
-        sigmaY: Shadow.convertRadiusToSigma(4),
-      ),
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
-          color: AegisColors.neutral0,
-        ),
-        child: DraggableScrollableSheet(
-          expand: false,
-          maxChildSize: .93,
-          initialChildSize: .93,
-          builder: (context, scrollController) {
-            return CustomScrollView(
-              controller: scrollController,
-              shrinkWrap: true,
-              slivers: [
-                _Header(
-                  title: title,
-                  searchLabel: searchHint,
-                  controller: controller,
-                  onChanged: onChanged,
-                ),
-                if (filtered.value.isEmpty)
-                  SliverToBoxAdapter(
-                    child: _Empty(
-                      emptyImage: emptyImage,
-                      title: emptyTitle,
-                      description: emptyDescription,
+    return HookBuilder(
+      builder: (context) {
+        useValueListenable<List<String>>(
+          selectedNumbers ?? useValueNotifier(<String>[]),
+        );
+
+        return BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: Shadow.convertRadiusToSigma(4),
+            sigmaY: Shadow.convertRadiusToSigma(4),
+          ),
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(
+              borderRadius:
+                  BorderRadius.only(topLeft: radius, topRight: radius),
+              color: AegisColors.neutral0,
+            ),
+            child: DraggableScrollableSheet(
+              expand: false,
+              maxChildSize: .93,
+              initialChildSize: .93,
+              builder: (context, scrollController) {
+                return CustomScrollView(
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  slivers: [
+                    _Header(
+                      title: title,
+                      searchLabel: searchHint,
+                      controller: controller,
+                      onChanged: onChanged,
                     ),
-                  )
-                else if (groupByAlphabet)
-                  SliverFillRemaining(
-                    hasScrollBody: true,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTapDown: (_) {
-                              if (disableUnfocusBehavior) return;
-                              FocusManager.instance.primaryFocus?.unfocus();
-                            },
-                            child: AzListView(
-                              data: grouped(),
-                              itemCount: grouped().length,
-                              itemBuilder: (context, index) {
-                                var f = grouped()[index];
-                                return Column(
-                                  children: [
-                                    Offstage(
-                                      offstage: !f.isShowSuspension,
-                                      child:
-                                          _AzGroup(tag: f.getSuspensionTag()),
+                    if (filtered.value.isEmpty)
+                      SliverToBoxAdapter(
+                        child: _Empty(
+                          emptyImage: emptyImage,
+                          title: emptyTitle,
+                          description: emptyDescription,
+                        ),
+                      )
+                    else if (groupByAlphabet)
+                      SliverFillRemaining(
+                        hasScrollBody: true,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTapDown: (_) {
+                                  if (disableUnfocusBehavior) return;
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                },
+                                child: AzListView(
+                                  data: grouped(),
+                                  itemCount: grouped().length,
+                                  itemBuilder: (context, index) {
+                                    var f = grouped()[index];
+                                    return Column(
+                                      children: [
+                                        Offstage(
+                                          offstage: !f.isShowSuspension,
+                                          child: _AzGroup(
+                                              tag: f.getSuspensionTag()),
+                                        ),
+                                        _OptionItem(
+                                          title: getLabel(f.data),
+                                          subtitle: getSubtitle?.call(f.data),
+                                          imageUrl: getImage?.call(f.data),
+                                          onPressed: () {
+                                            if (disableUnfocusBehavior) return;
+                                            Navigator.of(context).pop(f.data);
+                                          },
+                                          button: trailingButton?.call(f.data),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  indexBarOptions: IndexBarOptions(
+                                    needRebuild: true,
+                                    textStyle: AegisFont.small.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: AegisColors.textHighEmphasis,
                                     ),
-                                    _OptionItem(
-                                      title: getLabel(f.data),
-                                      subtitle: getSubtitle?.call(f.data),
-                                      imageUrl: getImage?.call(f.data),
-                                      onPressed: () {
-                                        if (disableUnfocusBehavior) return;
-                                        Navigator.of(context).pop(f.data);
-                                      },
-                                      button: trailingButton,
+                                    indexHintAlignment: Alignment.centerRight,
+                                    indexHintDecoration: BoxDecoration(
+                                      color: AegisColors.blue300,
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
-                                  ],
-                                );
-                              },
-                              indexBarOptions: IndexBarOptions(
-                                needRebuild: true,
-                                textStyle: AegisFont.small.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: AegisColors.textHighEmphasis,
-                                ),
-                                indexHintAlignment: Alignment.centerRight,
-                                indexHintDecoration: BoxDecoration(
-                                  color: AegisColors.blue300,
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
-                                indexHintWidth: 20,
-                                indexHintHeight: 20,
-                                indexHintTextStyle: AegisFont.small.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: AegisColors.neutral0,
+                                    indexHintWidth: 20,
+                                    indexHintHeight: 20,
+                                    indexHintTextStyle:
+                                        AegisFont.small.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: AegisColors.neutral0,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                            if (actionButton != null) actionButton!
+                          ],
                         ),
-                        if (actionButton != null) actionButton!
-                      ],
-                    ),
-                  )
-                else
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      filtered.value
-                          .map((f) => _OptionItem(
-                                title: getLabel(f),
-                                imageUrl: getImage?.call(f),
-                                onPressed: () {
-                                  if (disableUnfocusBehavior) return;
-                                  Navigator.of(context).pop(f);
-                                },
-                              ))
-                          .toList(),
-                    ),
-                  ),
-              ],
-            );
-          },
-        ),
-      ),
+                      )
+                    else
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          filtered.value
+                              .map((f) => _OptionItem(
+                                    title: getLabel(f),
+                                    imageUrl: getImage?.call(f),
+                                    onPressed: () {
+                                      if (disableUnfocusBehavior) return;
+                                      Navigator.of(context).pop(f);
+                                    },
+                                  ))
+                              .toList(),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
