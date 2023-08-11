@@ -112,7 +112,7 @@ class BottomSheetScreen extends HookWidget {
                   getLabel: (p0) => p0.name,
                   getImage: (p0) => '',
                   getSubtitle: (p0) => p0.phone,
-                  selectedNumbers: selectedNumbers,
+                  selectedItems: selectedNumbers,
                   trailingButton: (p0) {
                     void addPhone(bool add) {
                       List<String> temp = List.from(selectedNumbers.value);

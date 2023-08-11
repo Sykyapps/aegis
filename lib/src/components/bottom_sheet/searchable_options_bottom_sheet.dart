@@ -24,7 +24,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     this.actionButton,
     this.disableUnfocusBehavior = false,
     this.emptyImage,
-    this.selectedNumbers,
+    this.selectedItems,
   });
 
   final String title;
@@ -41,7 +41,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final Widget? Function(T)? trailingButton;
   final Widget? actionButton;
   final bool disableUnfocusBehavior;
-  final ValueNotifier<List<String>>? selectedNumbers;
+  final ValueNotifier<List<dynamic>>? selectedItems;
 
   static const radius = Radius.circular(16);
 
@@ -82,8 +82,8 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
 
     return HookBuilder(
       builder: (context) {
-        useValueListenable<List<String>>(
-          selectedNumbers ?? useValueNotifier(<String>[]),
+        useValueListenable<List<dynamic>>(
+          selectedItems ?? useValueNotifier(<dynamic>[]),
         );
 
         return BackdropFilter(
