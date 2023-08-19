@@ -16,19 +16,22 @@ class SkLoadingAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitThreeBounce(
-      size: size.sp,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(2),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(500),
-              color: color,
+    return ConstrainedBox(
+      constraints: BoxConstraints.tight(Size.fromRadius(size.sp)),
+      child: SpinKitThreeBounce(
+        size: size.sp,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.all(2),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(500),
+                color: color,
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
