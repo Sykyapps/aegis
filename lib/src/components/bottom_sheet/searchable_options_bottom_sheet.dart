@@ -92,6 +92,9 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
             sigmaY: Shadow.convertRadiusToSigma(4),
           ),
           child: Container(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
               borderRadius:
@@ -104,6 +107,8 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
               initialChildSize: .93,
               builder: (context, scrollController) {
                 return CustomScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   controller: scrollController,
                   shrinkWrap: true,
                   slivers: [

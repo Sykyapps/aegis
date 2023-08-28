@@ -180,7 +180,8 @@ class _ActionButton extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
+        Container(
+          color: AegisColors.neutral0,
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
           child: SkButton(
             label: 'Undang',
