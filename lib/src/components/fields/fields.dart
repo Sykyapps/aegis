@@ -12,3 +12,4 @@ export 'currency_box_field.dart';
 export 'currency_field.dart';
 export 'unit_field.dart';
 export 'number_field.dart';
+export 'calculator_field.dart';
