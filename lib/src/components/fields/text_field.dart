@@ -1,3 +1,4 @@
+import 'package:aegis/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -34,6 +35,8 @@ class SkTextField extends HookWidget {
     this.keyboardType,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.none,
+    this.tooltipTitle,
+    this.tooltipContent,
   });
 
   final bool enabled;
@@ -53,6 +56,8 @@ class SkTextField extends HookWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
+  final String? tooltipTitle;
+  final String? tooltipContent;
 
   SkFieldState get baseState =>
       enabled ? SkFieldState.enabled : SkFieldState.disabled;
@@ -125,12 +130,40 @@ class SkTextField extends HookWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          labelText,
-          style: AegisFont.bodyMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            color: getStateColor(),
-          ),
+        Row(
+          children: [
+            Text(
+              labelText,
+              style: AegisFont.bodyMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: getStateColor(),
+              ),
+            ),
+            tooltipTitle != null && tooltipContent != null
+                ? GestureDetector(
+                    onTap: () async {
+                      SkBottomSheet(
+                        title: tooltipTitle,
+                        child: Container(
+                          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          child: Text(
+                            tooltipContent!,
+                            style: AegisFont.bodyMedium,
+                          ),
+                        ),
+                      ).show(context);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 5),
+                      child: Icon(
+                        AegisIcons.information_fill,
+                        color: AegisColors.neutral300,
+                        size: 15,
+                      ),
+                    ),
+                  )
+                : const SizedBox()
+          ],
         ),
         TextFormField(
           enabled: enabled,

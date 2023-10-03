@@ -76,6 +76,12 @@ class FieldsScreen extends HookWidget {
                   labelText: 'Number field',
                   onChanged: (value) {},
                 ),
+                const SkCalculatorField(
+                  label: 'Masukan Usia Anda',
+                  prefixTitle: 'Rp',
+                  tooltipTitle: 'Nabung Reksadana',
+                  tooltipContent: 'Mudah cepat dan tidak menyusahkan loh',
+                ),
               ],
             ),
           ),
