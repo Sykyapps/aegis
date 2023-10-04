@@ -13,6 +13,7 @@ class SkCalculatorField extends StatelessWidget {
     this.hintText,
     this.tooltipTitle,
     this.tooltipContent,
+    this.validator,
     required this.label,
   });
 
@@ -23,6 +24,19 @@ class SkCalculatorField extends StatelessWidget {
   final String? hintText;
   final String? tooltipTitle;
   final String? tooltipContent;
+  final String? Function(String?)? validator;
+
+  const SkCalculatorField.currency({
+    super.key,
+    this.suffixTitle,
+    this.prefixTitle = 'Rp',
+    this.controller,
+    this.hintText,
+    this.tooltipTitle,
+    this.tooltipContent,
+    this.validator,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +47,7 @@ class SkCalculatorField extends StatelessWidget {
       tooltipTitle: tooltipTitle,
       tooltipContent: tooltipContent,
       keyboardType: TextInputType.number,
+      validator: validator,
       inputFormatters: prefixTitle != null
           ? [
               FilteringTextInputFormatter.digitsOnly,
