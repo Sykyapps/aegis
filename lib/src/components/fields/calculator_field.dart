@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../aegis.dart';
+import 'formatter/decimal_text_input_formatter.dart';
 
 class SkCalculatorField extends StatelessWidget {
   const SkCalculatorField({
@@ -14,6 +15,7 @@ class SkCalculatorField extends StatelessWidget {
     this.tooltipTitle,
     this.tooltipContent,
     this.validator,
+    this.isDecimal = false,
     required this.label,
   });
 
@@ -25,6 +27,7 @@ class SkCalculatorField extends StatelessWidget {
   final String? tooltipTitle;
   final String? tooltipContent;
   final String? Function(String?)? validator;
+  final bool isDecimal;
 
   const SkCalculatorField.currency({
     super.key,
@@ -35,6 +38,7 @@ class SkCalculatorField extends StatelessWidget {
     this.tooltipTitle,
     this.tooltipContent,
     this.validator,
+    this.isDecimal = false,
     required this.label,
   });
 
@@ -46,14 +50,18 @@ class SkCalculatorField extends StatelessWidget {
       controller: controller,
       tooltipTitle: tooltipTitle,
       tooltipContent: tooltipContent,
-      keyboardType: TextInputType.number,
+      keyboardType: isDecimal
+          ? const TextInputType.numberWithOptions(decimal: true)
+          : TextInputType.number,
       validator: validator,
       inputFormatters: prefixTitle != null
           ? [
               FilteringTextInputFormatter.digitsOnly,
               ThousandsSeparatorInputFormatter(),
             ]
-          : [FilteringTextInputFormatter.digitsOnly],
+          : isDecimal
+              ? [DecimalTextInputFormatter(decimalRange: 2)]
+              : [FilteringTextInputFormatter.digitsOnly],
       prefix: prefixTitle != null
           ? Container(
               height: 28,

@@ -78,9 +78,10 @@ class FieldsScreen extends HookWidget {
                 ),
                 const SkCalculatorField(
                   label: 'Masukan Usia Anda',
-                  prefixTitle: 'Rp',
+                  suffixTitle: 'Tahun',
                   tooltipTitle: 'Nabung Reksadana',
                   tooltipContent: 'Mudah cepat dan tidak menyusahkan loh',
+                  isDecimal: true,
                 ),
               ],
             ),
