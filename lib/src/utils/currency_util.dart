@@ -12,10 +12,10 @@ class CurrencyUtil {
     return formatter.format(value);
   }
 
-  static String compactFormat(dynamic value) {
+  static String compactFormat(dynamic value, {bool withCurrency = false}) {
     var formatter = NumberFormat.compactCurrency(
       locale: 'id',
-      symbol: '',
+      symbol: withCurrency ? 'Rp' : '',
       decimalDigits: 2,
     );
     return formatter.format(value).replaceAll(RegExp(r'\s+'), '');
