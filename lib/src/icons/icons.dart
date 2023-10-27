@@ -66,8 +66,8 @@ class AegisIcons {
   static const grid_on = _AegisIconsData(0xf12d, 'grid_on');
   static const heart_fill = _AegisIconsData(0xf12e, 'heart_fill');
   static const heart = _AegisIconsData(0xf12f, 'heart');
-  static const home_2 = _AegisIconsData(0xf130, 'home_2');
-  static const home_fill = _AegisIconsData(0xf131, 'home_fill');
+  static const home_fill = _AegisIconsData(0xf130, 'home_fill');
+  static const home_line = _AegisIconsData(0xf131, 'home_line');
   static const home = _AegisIconsData(0xf132, 'home');
   static const information_fill = _AegisIconsData(0xf133, 'information_fill');
   static const information = _AegisIconsData(0xf134, 'information');
@@ -156,8 +156,8 @@ class AegisIcons {
     'grid_on': grid_on,
     'heart_fill': heart_fill,
     'heart': heart,
-    'home_2': home_2,
     'home_fill': home_fill,
+    'home_line': home_line,
     'home': home,
     'information_fill': information_fill,
     'information': information,
