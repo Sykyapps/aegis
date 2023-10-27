@@ -30,12 +30,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  icon_font_generator: ^3.2.0
 
 flutter:
   fonts:
     - family: AegisIcons
-      fonts: 
+      fonts:
         - asset: lib/fonts/aegis_icons/AegisIcons.ttf
+    - family: AegisIconsDev
+      fonts:
+        - asset: lib/fonts/aegis_icons/AegisIconsDev.ttf
     - family: Uni Neue
       fonts:
         - asset: lib/fonts/uni_neue/UniNeue-Regular.otf
