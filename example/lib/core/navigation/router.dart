@@ -1,3 +1,4 @@
+import 'package:aegis_app/features/icons/icons_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -50,6 +51,13 @@ class AppRouter {
         path: AegisScreen.button.path,
         builder: (context, state) {
           return const ButtonScreen();
+        },
+      ),
+      GoRoute(
+        name: AegisScreen.icons.name,
+        path: AegisScreen.icons.path,
+        builder: (context, state) {
+          return const IconsScreen();
         },
       ),
     ],

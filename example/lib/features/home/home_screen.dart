@@ -48,6 +48,14 @@ class HomeScreen extends StatelessWidget {
               ns.push(AegisScreen.button.path);
             },
           ),
+          ListTile(
+            title: Text(AegisScreen.icons.title),
+            trailing: const Icon(Icons.arrow_right_rounded),
+            onTap: () {
+              /// Go to [IconsScreen]
+              ns.push(AegisScreen.icons.path);
+            },
+          ),
         ],
       ),
     );
