@@ -50,4 +50,11 @@ flutter:
           style: italic
 
   assets:
-    - assets/svg/
+    - lib/assets/tutorials/
+    - lib/assets/illustrations/
+    - lib/assets/illustrations/media/
+    - lib/assets/illustrations/photo/
+    - lib/assets/illustrations/referral/
+    - lib/assets/illustrations/transaction/
+    - lib/assets/illustrations/verification/
+    - lib/assets/svg/system/
