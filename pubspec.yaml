@@ -58,3 +58,4 @@ flutter:
     - lib/assets/illustrations/transaction/
     - lib/assets/illustrations/verification/
     - lib/assets/svg/system/
+    - assets/svg/
