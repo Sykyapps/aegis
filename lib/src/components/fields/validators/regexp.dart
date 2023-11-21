@@ -2,6 +2,7 @@ class SkRegExp {
   // Basic
   static final anyAlphabet = RegExp(r'[A-Za-z]');
   static final anyDigit = RegExp(r'\d');
+  static final onlyDigit = RegExp(r'^\d+$');
   static final anyNonDigit = RegExp(r'\D');
   static final anyLowerCase = RegExp('^(.*?[a-z]){1,}');
   static final anyUpperCase = RegExp('^(.*?[A-Z]){1,}');
