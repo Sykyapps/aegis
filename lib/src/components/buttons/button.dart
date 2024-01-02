@@ -9,6 +9,7 @@ class SkButton extends HookWidget {
   const SkButton({
     required this.label,
     this.isLoading = false,
+    this.loadingColor = AegisColors.neutral100,
     this.bgColor,
     this.textStyle,
     this.onPressed,
@@ -19,6 +20,7 @@ class SkButton extends HookWidget {
   final String label;
   final bool isLoading;
   final Color? bgColor;
+  final Color loadingColor;
   final TextStyle? textStyle;
   final VoidCallback? onPressed;
   final double? elevation;
@@ -38,7 +40,7 @@ class SkButton extends HookWidget {
       ),
       onPressed: isLoading ? () {} : onPressed,
       child: isLoading
-          ? const SkLoadingAnimation()
+          ? SkLoadingAnimation(color: loadingColor)
           : Text(label, style: textStyle),
     );
   }
