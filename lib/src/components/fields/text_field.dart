@@ -226,6 +226,7 @@ class SkTextField extends HookWidget {
             errorStyle: AegisFont.bodyMedium.copyWith(
               color: AegisColors.red300,
             ),
+            errorMaxLines: 2,
             helperText: helperText,
             helperStyle: helperStyle ??
                 AegisFont.bodyMedium.copyWith(
