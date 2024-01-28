@@ -47,6 +47,9 @@ class SkPhoneEmailField extends HookWidget {
       hintText: hintText ?? 'Masukkan nomor ponsel atau email.',
       errorText: errorText,
       controller: controller,
+      keyboardType: SkPhoneValidator.showPhoneCode(controller.text)
+          ? TextInputType.number
+          : TextInputType.text,
       prefix: SkPhoneValidator.showPhoneCode(controller.text)
           ? PhonePrefix(
               phoneCode: phoneCode,
