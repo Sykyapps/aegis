@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
 import '../../../icons.dart';
-import 'validators/regexp.dart';
 
 enum SkFieldState {
   enabled,
