@@ -161,21 +161,24 @@ class _Header extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 12),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 8),
-                    const _CloseButton(),
-                    if (title.isNotEmpty)
-                      Expanded(
-                        child: AnimatedOpacity(
-                          opacity: isCollapsed ? 1 : 0,
-                          duration: const Duration(milliseconds: 300),
-                          child: _CollapsedTitle(title: title),
+                SkSemantics(
+                  label: 'Collapsed Title Group',
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 8),
+                      const _CloseButton(),
+                      if (title.isNotEmpty)
+                        Expanded(
+                          child: AnimatedOpacity(
+                            opacity: isCollapsed ? 1 : 0,
+                            duration: const Duration(milliseconds: 300),
+                            child: _CollapsedTitle(title: title),
+                          ),
                         ),
-                      ),
-                    const SizedBox(width: 8),
-                  ],
+                      const SizedBox(width: 8),
+                    ],
+                  ),
                 ),
                 if (title.isNotEmpty)
                   Visibility(
@@ -209,6 +212,7 @@ class _CloseButton extends StatelessWidget {
       icon: const Icon(
         AegisIcons.close,
         color: AegisColors.iconHighEmphasis,
+        semanticLabel: 'Close Button',
       ),
       onPressed: () => Navigator.of(context).pop(),
     );

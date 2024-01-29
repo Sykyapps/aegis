@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../foundation.dart';
+import '../semantics/semantics.dart';
 
 class SkCheckbox extends StatelessWidget {
   const SkCheckbox({
@@ -37,19 +38,22 @@ class SkCheckbox extends StatelessWidget {
 
     return AnimatedSwitcher(
       duration: Duration.zero,
-      child: Container(
-        height: 20.r,
-        width: 20.r,
-        padding: const EdgeInsets.symmetric(horizontal: 5).r,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          border: Border.all(color: borderColor),
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: SvgPicture.asset(
-          'assets/svg/check.svg',
-          color: foregroundColor,
-          package: 'aegis',
+      child: SkSemantics(
+        label: 'Checkbox',
+        child: Container(
+          height: 20.r,
+          width: 20.r,
+          padding: const EdgeInsets.symmetric(horizontal: 5).r,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            border: Border.all(color: borderColor),
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          child: SvgPicture.asset(
+            'assets/svg/check.svg',
+            color: foregroundColor,
+            package: 'aegis',
+          ),
         ),
       ),
     );
