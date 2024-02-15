@@ -20,6 +20,7 @@ class SkPhoneEmailField extends HookWidget {
     this.phoneCode,
     this.phoneCodes,
     this.onCountrySelected,
+    this.scrollPadding = const EdgeInsets.all(20),
   }) : super(key: key);
 
   final bool enabled;
@@ -31,6 +32,7 @@ class SkPhoneEmailField extends HookWidget {
   final String? phoneCode;
   final List<Map<String, dynamic>>? phoneCodes;
   final Function(String)? onCountrySelected;
+  final EdgeInsets scrollPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class SkPhoneEmailField extends HookWidget {
       hintText: hintText ?? 'Masukkan nomor ponsel atau email.',
       errorText: errorText,
       controller: controller,
+      scrollPadding: scrollPadding,
       keyboardType: SkPhoneValidator.showPhoneCode(controller.text)
           ? TextInputType.number
           : TextInputType.text,

@@ -36,6 +36,7 @@ class SkTextField extends HookWidget {
     this.textCapitalization = TextCapitalization.none,
     this.tooltipTitle,
     this.tooltipContent,
+    this.scrollPadding = const EdgeInsets.all(20.0),
   });
 
   final bool enabled;
@@ -57,6 +58,7 @@ class SkTextField extends HookWidget {
   final TextCapitalization textCapitalization;
   final String? tooltipTitle;
   final String? tooltipContent;
+  final EdgeInsets scrollPadding;
 
   SkFieldState get baseState =>
       enabled ? SkFieldState.enabled : SkFieldState.disabled;
@@ -183,6 +185,7 @@ class SkTextField extends HookWidget {
             ...?inputFormatters,
           ],
           textCapitalization: textCapitalization,
+          scrollPadding: scrollPadding,
           decoration: InputDecoration(
             isDense: true,
             enabled: enabled,
