@@ -14,34 +14,78 @@ class SkButton extends HookWidget {
     this.textStyle,
     this.onPressed,
     this.elevation = 0,
+    this.size,
+    this.padding,
+    this.stretch = true,
     super.key,
   });
 
   final String label;
   final bool isLoading;
+  final bool stretch;
   final Color? bgColor;
   final Color loadingColor;
   final TextStyle? textStyle;
   final VoidCallback? onPressed;
   final double? elevation;
+  final Size? size;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: bgColor ?? AegisColors.purple300,
-        disabledBackgroundColor: AegisColors.neutral100,
-        disabledForegroundColor: AegisColors.textDisabled,
-        textStyle: AegisFont.bodyLarge.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-        minimumSize: Size.fromHeight(48.h),
-        elevation: elevation,
+    var minimumSize = size ?? Size.fromHeight(48.r);
+
+    double? width;
+    if (minimumSize.width.isFinite) width = minimumSize.width;
+    if (stretch) width = double.infinity;
+
+    return ConstrainedBox(
+      constraints: BoxConstraints.tightFor(
+        height: minimumSize.height,
+        width: width,
       ),
-      onPressed: isLoading ? () {} : onPressed,
-      child: isLoading
-          ? SkLoadingAnimation(color: loadingColor)
-          : Text(label, style: textStyle),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: bgColor ?? AegisColors.purple300,
+          disabledBackgroundColor: AegisColors.neutral100,
+          disabledForegroundColor: AegisColors.textDisabled,
+          textStyle: AegisFont.bodyLarge.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+          elevation: elevation,
+          padding: padding,
+        ),
+        onPressed: isLoading ? () {} : onPressed,
+        child: isLoading
+            ? SkLoadingAnimation(color: loadingColor)
+            : Text(label, style: textStyle),
+      ),
+    );
+  }
+
+  static SkButton small({
+    required label,
+    bool isLoading = false,
+    Color? bgColor,
+    Color loadingColor = AegisColors.neutral100,
+    TextStyle? textStyle,
+    VoidCallback? onPressed,
+    double elevation = 0,
+    Size? size,
+    bool stretch = true,
+  }) {
+    return SkButton(
+      label: label,
+      onPressed: onPressed,
+      bgColor: bgColor,
+      elevation: elevation,
+      isLoading: isLoading,
+      loadingColor: loadingColor,
+      size: size ?? Size.fromHeight(29.r),
+      textStyle: textStyle ??
+          AegisFont.bodySmall.copyWith(fontWeight: FontWeight.bold),
+      padding: EdgeInsets.symmetric(horizontal: 12.r),
+      stretch: stretch,
     );
   }
 }
