@@ -8,6 +8,7 @@ class SkScaffold extends StatelessWidget {
   final Color backgroundColor;
   final Widget? bottomNavigationBar;
   final List<Widget>? persistentFooterButtons;
+  final bool? resizeToAvoidBottomInset;
 
   const SkScaffold({
     Key? key,
@@ -16,6 +17,7 @@ class SkScaffold extends StatelessWidget {
     this.backgroundColor = AegisColors.neutral0,
     this.bottomNavigationBar,
     this.persistentFooterButtons,
+    this.resizeToAvoidBottomInset,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class SkScaffold extends StatelessWidget {
           body: body,
           persistentFooterButtons: persistentFooterButtons,
           bottomNavigationBar: bottomNavigationBar,
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         ),
       ),
     );
