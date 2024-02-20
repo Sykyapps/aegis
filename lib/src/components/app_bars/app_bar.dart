@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
 import '../buttons/back_button.dart';
@@ -39,6 +40,8 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AegisColors.transparent,
       foregroundColor: AegisColors.textHighEmphasis,
       automaticallyImplyLeading: showLeading,
+      leadingWidth: 60.w,
+      titleSpacing: 0,
       leading: !showLeading
           ? null
           : leading ??
