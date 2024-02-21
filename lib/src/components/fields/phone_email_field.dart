@@ -50,9 +50,6 @@ class SkPhoneEmailField extends HookWidget {
       errorText: errorText,
       controller: controller,
       scrollPadding: scrollPadding,
-      keyboardType: SkPhoneValidator.showPhoneCode(controller.text)
-          ? TextInputType.number
-          : TextInputType.text,
       prefix: SkPhoneValidator.showPhoneCode(controller.text)
           ? PhonePrefix(
               phoneCode: phoneCode,
