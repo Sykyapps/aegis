@@ -23,7 +23,7 @@ class PhoneFormatter extends TextInputFormatter {
 
     if (!SkPhoneValidator.showPhoneCode(newText)) return newValue;
 
-    return TextEditingValue(
+    return newValue.copyWith(
       text: newText,
       selection: TextSelection.collapsed(offset: newText.length),
     );
