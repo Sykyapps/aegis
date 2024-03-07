@@ -42,42 +42,44 @@ class SkOptionField<T> extends HookWidget {
       return;
     }, [initial]);
 
-    return Stack(
-      alignment: Alignment.bottomLeft,
-      children: [
-        IgnorePointer(
-          child: SkTextField(
-            focusNode: focusNode,
-            enabled: enabled,
-            controller: controller,
-            labelText: labelText,
-            validator: validator,
-            readOnly: readOnly,
-          ),
-        ),
-        Positioned(
-          top: 30,
-          child: Container(
-            color: AegisColors.backgroundWhite,
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              children: options
-                  .map((option) => _OptionItem(
-                        isActive: selected.value == option,
-                        width: width,
-                        label: getName(option),
-                        onPressed: !enabled
-                            ? null
-                            : () {
-                                selected.value = option;
-                                onChanged?.call(option);
-                              },
-                      ))
-                  .toList(),
+    return Focus(
+      focusNode: focusNode,
+      child: Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          IgnorePointer(
+            child: SkTextField(
+              enabled: enabled,
+              controller: controller,
+              labelText: labelText,
+              validator: validator,
+              readOnly: readOnly,
             ),
           ),
-        ),
-      ],
+          Positioned(
+            top: 30,
+            child: Container(
+              color: AegisColors.backgroundWhite,
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                children: options
+                    .map((option) => _OptionItem(
+                          isActive: selected.value == option,
+                          width: width,
+                          label: getName(option),
+                          onPressed: !enabled
+                              ? null
+                              : () {
+                                  selected.value = option;
+                                  onChanged?.call(option);
+                                },
+                        ))
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

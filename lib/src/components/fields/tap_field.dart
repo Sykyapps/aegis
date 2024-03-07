@@ -29,29 +29,32 @@ class SkTapField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: !enabled
-          ? null
-          : () {
-              FocusManager.instance.primaryFocus?.unfocus();
-              onTap();
-            },
-      child: SkSemantics(
-        label: 'Dropdown - $labelText',
-        child: IgnorePointer(
-          child: SkTextField(
-            readOnly: readOnly,
-            focusNode: focusNode,
-            enabled: enabled,
-            controller: controller,
-            labelText: labelText,
-            hintText: hintText,
-            validator: validator,
-            suffix: Icon(
-              AegisIcons.chevron_down,
-              color: enabled ? AegisColors.neutral400 : AegisColors.neutral300,
-              semanticLabel: 'Dropdown - $hintText',
+    return Focus(
+      focusNode: focusNode,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: !enabled
+            ? null
+            : () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                onTap();
+              },
+        child: SkSemantics(
+          label: 'Dropdown - $labelText',
+          child: IgnorePointer(
+            child: SkTextField(
+              readOnly: readOnly,
+              enabled: enabled,
+              controller: controller,
+              labelText: labelText,
+              hintText: hintText,
+              validator: validator,
+              suffix: Icon(
+                AegisIcons.chevron_down,
+                color:
+                    enabled ? AegisColors.neutral400 : AegisColors.neutral300,
+                semanticLabel: 'Dropdown - $hintText',
+              ),
             ),
           ),
         ),
