@@ -36,7 +36,7 @@ class SkTextField extends HookWidget {
     this.textCapitalization = TextCapitalization.none,
     this.tooltipTitle,
     this.tooltipContent,
-    this.scrollPadding = const EdgeInsets.all(20.0),
+    this.scrollPadding = const EdgeInsets.all(30.0),
     this.readOnly = false,
   });
 
