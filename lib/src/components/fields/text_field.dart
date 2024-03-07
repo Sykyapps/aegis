@@ -37,6 +37,7 @@ class SkTextField extends HookWidget {
     this.tooltipTitle,
     this.tooltipContent,
     this.scrollPadding = const EdgeInsets.all(20.0),
+    this.readOnly = false,
   });
 
   final bool enabled;
@@ -59,6 +60,7 @@ class SkTextField extends HookWidget {
   final String? tooltipTitle;
   final String? tooltipContent;
   final EdgeInsets scrollPadding;
+  final bool readOnly;
 
   SkFieldState get baseState =>
       enabled ? SkFieldState.enabled : SkFieldState.disabled;
@@ -171,6 +173,7 @@ class SkTextField extends HookWidget {
           focusNode: fn,
           controller: ctrl,
           onChanged: onChanged,
+          readOnly: readOnly,
           validator: (value) => error.value = validator?.call(value),
           style: (style ?? AegisFont.bodyLarge).copyWith(
             color: enabled ? null : AegisColors.neutral300,

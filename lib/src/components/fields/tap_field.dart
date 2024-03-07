@@ -15,6 +15,7 @@ class SkTapField extends StatelessWidget {
     this.hintText,
     this.validator,
     this.focusNode,
+    this.readOnly = false,
   });
 
   final bool enabled;
@@ -24,6 +25,7 @@ class SkTapField extends StatelessWidget {
   final VoidCallback onTap;
   final FormFieldValidator<String>? validator;
   final FocusNode? focusNode;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class SkTapField extends StatelessWidget {
         label: 'Dropdown - $labelText',
         child: IgnorePointer(
           child: SkTextField(
+            readOnly: readOnly,
             focusNode: focusNode,
             enabled: enabled,
             controller: controller,

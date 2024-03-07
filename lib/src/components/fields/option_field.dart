@@ -18,6 +18,7 @@ class SkOptionField<T> extends HookWidget {
     this.validator,
     this.onChanged,
     this.focusNode,
+    this.readOnly = false,
   });
 
   final bool enabled;
@@ -29,6 +30,7 @@ class SkOptionField<T> extends HookWidget {
   final FormFieldValidator<String>? validator;
   final void Function(T)? onChanged;
   final FocusNode? focusNode;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class SkOptionField<T> extends HookWidget {
             controller: controller,
             labelText: labelText,
             validator: validator,
+            readOnly: readOnly,
           ),
         ),
         Positioned(
