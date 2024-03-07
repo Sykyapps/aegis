@@ -17,6 +17,7 @@ class SkOptionField<T> extends HookWidget {
     required this.getName,
     this.validator,
     this.onChanged,
+    this.focusNode,
   });
 
   final bool enabled;
@@ -27,6 +28,7 @@ class SkOptionField<T> extends HookWidget {
   final String Function(T) getName;
   final FormFieldValidator<String>? validator;
   final void Function(T)? onChanged;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class SkOptionField<T> extends HookWidget {
       children: [
         IgnorePointer(
           child: SkTextField(
+            focusNode: focusNode,
             enabled: enabled,
             controller: controller,
             labelText: labelText,
