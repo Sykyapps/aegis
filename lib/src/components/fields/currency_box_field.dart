@@ -49,7 +49,7 @@ class SkCurrencyBoxField extends FormField<String> {
                     ? AegisColors.red300
                     : AegisColors.neutral200,
                 width: 1.r,
-                strokeAlign: StrokeAlign.outside,
+                strokeAlign: BorderSide.strokeAlignOutside,
               ),
               backgroundColor: AegisColors.neutral100,
               body: Padding(
