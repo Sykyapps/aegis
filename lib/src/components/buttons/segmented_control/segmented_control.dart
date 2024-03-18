@@ -767,7 +767,7 @@ class _SegmentedControlState<T> extends State<SkSegmentedControl<T>>
 }
 
 class _SegmentedControlRenderWidget<T> extends MultiChildRenderObjectWidget {
-  _SegmentedControlRenderWidget({
+  const _SegmentedControlRenderWidget({
     super.key,
     super.children,
     required this.highlightedIndex,
