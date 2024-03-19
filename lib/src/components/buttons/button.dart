@@ -46,9 +46,11 @@ class SkButton extends HookWidget {
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          foregroundColor: AegisColors.neutral0,
           backgroundColor: bgColor ?? AegisColors.purple300,
           disabledBackgroundColor: AegisColors.neutral100,
           disabledForegroundColor: AegisColors.textDisabled,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           textStyle: AegisFont.bodyLarge.copyWith(
             fontWeight: FontWeight.bold,
           ),

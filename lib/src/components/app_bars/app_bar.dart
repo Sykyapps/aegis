@@ -39,6 +39,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: titleTextStyle,
       backgroundColor: AegisColors.transparent,
       foregroundColor: AegisColors.textHighEmphasis,
+      surfaceTintColor: AegisColors.transparent,
       automaticallyImplyLeading: showLeading,
       leadingWidth: 60.w,
       titleSpacing: 0,

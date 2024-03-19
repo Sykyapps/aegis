@@ -27,6 +27,7 @@ class SkChoiceChip extends StatelessWidget {
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       padding: EdgeInsets.symmetric(vertical: 6.r, horizontal: 12.r),
       labelPadding: EdgeInsets.zero,
+      checkmarkColor: AegisColors.neutral0,
       backgroundColor: AegisColors.backgroundWhite,
       selectedColor: AegisColors.blue300,
       labelStyle: AegisFont.bodyMedium.copyWith(
