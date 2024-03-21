@@ -20,6 +20,8 @@ class SkPhoneField extends HookWidget {
     this.phoneCode,
     this.phoneCodes,
     this.onCountrySelected,
+    this.focusNode,
+    this.validatorBuilder,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -32,6 +34,8 @@ class SkPhoneField extends HookWidget {
   final String? phoneCode;
   final List<Map<String, dynamic>>? phoneCodes;
   final Function(String)? onCountrySelected;
+  final FocusNode? focusNode;
+  final String? Function(String?)? validatorBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,7 @@ class SkPhoneField extends HookWidget {
     }, [update]);
 
     return SkTextField(
+      focusNode: focusNode,
       enabled: enabled,
       labelText: labelText ?? 'Nomor Ponsel',
       hintText: hintText ?? 'Masukkan nomor ponsel.',
@@ -55,9 +60,10 @@ class SkPhoneField extends HookWidget {
         onSelected: onCountrySelected,
       ),
       suffix: suffix ?? const PhoneSuffix(),
-      validator: ValidationBuilder(requiredMessage: validator?.required)
-          .add((value) => validator?.validate(value))
-          .build(),
+      validator: validatorBuilder ??
+          ValidationBuilder(requiredMessage: validator?.required)
+              .add((value) => validator?.validate(value))
+              .build(),
       inputFormatters: [PhoneFormatter()],
     );
   }

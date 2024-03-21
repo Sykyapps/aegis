@@ -19,6 +19,8 @@ class SkPasswordField extends HookWidget {
     this.errorText,
     this.showValidator = false,
     this.validator,
+    this.focusNode,
+    this.validatorBuilder,
   });
 
   final bool enabled;
@@ -28,6 +30,8 @@ class SkPasswordField extends HookWidget {
   final String? errorText;
   final bool showValidator;
   final SkPasswordValidator? validator;
+  final FocusNode? focusNode;
+  final String? Function(String?)? validatorBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,7 @@ class SkPasswordField extends HookWidget {
     return Column(
       children: [
         SkTextField(
+          focusNode: focusNode,
           enabled: enabled,
           labelText: labelText ?? 'Kata Sandi',
           hintText: hintText ?? 'Masukkan kata sandi',
@@ -70,9 +75,11 @@ class SkPasswordField extends HookWidget {
             FilteringTextInputFormatter.deny(' '),
             FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
           ],
-          validator: ValidationBuilder(requiredMessage: validator?.required)
-              .add((value) => showValidator ? validator?.validate(value) : null)
-              .build(),
+          validator: validatorBuilder ??
+              ValidationBuilder(requiredMessage: validator?.required)
+                  .add((value) =>
+                      showValidator ? validator?.validate(value) : null)
+                  .build(),
         ),
         if (showValidator)
           _PasswordValidator(

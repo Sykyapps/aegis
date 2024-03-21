@@ -15,6 +15,8 @@ class SkEmailField extends HookWidget {
     this.errorText,
     this.validator,
     this.suffix,
+    this.focusNode,
+    this.validatorBuilder,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -24,6 +26,8 @@ class SkEmailField extends HookWidget {
   final String? errorText;
   final Widget? suffix;
   final SkEmailValidator? validator;
+  final FocusNode? focusNode;
+  final String? Function(String?)? validatorBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +39,17 @@ class SkEmailField extends HookWidget {
     }, [update]);
 
     return SkTextField(
+      focusNode: focusNode,
       enabled: enabled,
       controller: controller,
       labelText: labelText ?? 'Alamat email',
       hintText: hintText ?? 'Masukkan alamat email',
       errorText: errorText,
       suffix: suffix,
-      validator: ValidationBuilder(requiredMessage: validator?.required)
-          .add((value) => validator?.validate(value))
-          .build(),
+      validator: validatorBuilder ??
+          ValidationBuilder(requiredMessage: validator?.required)
+              .add((value) => validator?.validate(value))
+              .build(),
     );
   }
 }
