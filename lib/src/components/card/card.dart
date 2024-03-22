@@ -35,7 +35,7 @@ class SkCard extends StatelessWidget {
             Border.all(
               color: AegisColors.neutral200,
               width: 1.r,
-              strokeAlign: StrokeAlign.outside,
+              strokeAlign: BorderSide.strokeAlignOutside,
             ),
         borderRadius: borderRadius ?? BorderRadius.circular(4).r,
         boxShadow: boxShadow,

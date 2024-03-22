@@ -26,6 +26,7 @@ class SkSliverAppBar extends StatelessWidget {
       elevation: 0,
       scrolledUnderElevation: 4,
       shadowColor: AegisColors.shadowEvelation1,
+      surfaceTintColor: AegisColors.transparent,
       automaticallyImplyLeading: false,
       toolbarHeight: collapsedHeight,
       expandedHeight: expandedHeight,
