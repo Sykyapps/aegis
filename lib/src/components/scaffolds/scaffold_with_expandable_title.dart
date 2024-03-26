@@ -11,10 +11,12 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     required this.slivers,
     required this.title,
     this.subtitle,
+    this.leadingIcon,
   });
 
   final String title;
   final String? subtitle;
+  final IconData? leadingIcon;
   final List<Widget> slivers;
 
   @override
@@ -53,9 +55,9 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
               leading: IconButton(
                 constraints: const BoxConstraints(),
                 padding: EdgeInsets.zero,
-                iconSize: 24.sp,
+                iconSize: 20.sp,
                 color: AegisColors.iconHighEmphasis,
-                icon: const Icon(AegisIcons.chevron_left),
+                icon: Icon(leadingIcon ?? AegisIcons.chevron_left),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               flexibleSpace: LayoutBuilder(
