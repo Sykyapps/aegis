@@ -33,6 +33,7 @@ class SkChoiceChip extends StatelessWidget {
       labelStyle: AegisFont.bodyMedium.copyWith(
         color: selected ? AegisColors.backgroundWhite : AegisColors.neutral500,
       ),
+      showCheckmark: false,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.r),
           side: BorderSide(
