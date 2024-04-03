@@ -12,12 +12,14 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.leadingIcon,
+    this.bottomNavigationBar,
   });
 
   final String title;
   final String? subtitle;
   final IconData? leadingIcon;
   final List<Widget> slivers;
+  final Widget? bottomNavigationBar;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +117,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
         },
         body: CustomScrollView(slivers: slivers),
       ),
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
