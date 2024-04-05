@@ -1,11 +1,9 @@
-import 'package:aegis/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../foundation.dart';
-import '../../../icons.dart';
+import '../../../aegis.dart';
 
 enum SkFieldState {
   enabled,
@@ -38,6 +36,7 @@ class SkTextField extends HookWidget {
     this.tooltipContent,
     this.scrollPadding = const EdgeInsets.all(30.0),
     this.readOnly = false,
+    this.semanticLabel,
   });
 
   final bool enabled;
@@ -61,6 +60,7 @@ class SkTextField extends HookWidget {
   final String? tooltipContent;
   final EdgeInsets scrollPadding;
   final bool readOnly;
+  final String? semanticLabel;
 
   SkFieldState get baseState =>
       enabled ? SkFieldState.enabled : SkFieldState.disabled;
@@ -168,82 +168,85 @@ class SkTextField extends HookWidget {
                 : const SizedBox()
           ],
         ),
-        TextFormField(
-          enabled: enabled,
-          focusNode: fn,
-          controller: ctrl,
-          onChanged: onChanged,
-          readOnly: readOnly,
-          validator: (value) => error.value = validator?.call(value),
-          style: (style ?? AegisFont.bodyLarge).copyWith(
-            color: enabled ? null : AegisColors.neutral300,
-          ),
-          obscureText: obscureText,
-          cursorHeight: 24.h,
-          cursorWidth: 1.w,
-          cursorColor: AegisColors.blue300,
-          keyboardType: keyboardType,
-          inputFormatters: [
-            FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
-            ...?inputFormatters,
-          ],
-          textCapitalization: textCapitalization,
-          scrollPadding: scrollPadding,
-          decoration: InputDecoration(
-            isDense: true,
+        SkSemantics(
+          label: semanticLabel ?? labelText,
+          child: TextFormField(
             enabled: enabled,
-            focusedBorder: const UnderlineInputBorder(
-              borderRadius: BorderRadius.zero,
-              borderSide: BorderSide(
-                color: AegisColors.blue300,
-              ),
+            focusNode: fn,
+            controller: ctrl,
+            onChanged: onChanged,
+            readOnly: readOnly,
+            validator: (value) => error.value = validator?.call(value),
+            style: (style ?? AegisFont.bodyLarge).copyWith(
+              color: enabled ? null : AegisColors.neutral300,
             ),
-            focusedErrorBorder: const UnderlineInputBorder(
-              borderRadius: BorderRadius.zero,
-              borderSide: BorderSide(
-                color: AegisColors.red300,
-              ),
-            ),
-            enabledBorder: const UnderlineInputBorder(
-              borderRadius: BorderRadius.zero,
-              borderSide: BorderSide(
-                color: AegisColors.neutral200,
-              ),
-            ),
-            disabledBorder: const UnderlineInputBorder(
-              borderRadius: BorderRadius.zero,
-              borderSide: BorderSide(
-                color: AegisColors.neutral200,
-              ),
-            ),
-            errorBorder: const UnderlineInputBorder(
-              borderRadius: BorderRadius.zero,
-              borderSide: BorderSide(
-                color: AegisColors.red300,
-              ),
-            ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 8),
-            hintText: hintText,
-            hintStyle: (style ?? AegisFont.bodyLarge).copyWith(
-              color: AegisColors.neutral300,
-            ),
-            errorText: error.value,
-            errorStyle: AegisFont.bodyMedium.copyWith(
-              color: AegisColors.red300,
-            ),
-            errorMaxLines: 2,
-            helperText: helperText,
-            helperStyle: helperStyle ??
-                AegisFont.bodyMedium.copyWith(
-                  color: AegisColors.textPositive,
+            obscureText: obscureText,
+            cursorHeight: 24.h,
+            cursorWidth: 1.w,
+            cursorColor: AegisColors.blue300,
+            keyboardType: keyboardType,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
+              ...?inputFormatters,
+            ],
+            textCapitalization: textCapitalization,
+            scrollPadding: scrollPadding,
+            decoration: InputDecoration(
+              isDense: true,
+              enabled: enabled,
+              focusedBorder: const UnderlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(
+                  color: AegisColors.blue300,
                 ),
-            prefixIcon: prefix,
-            prefixIconConstraints: const BoxConstraints(),
-            suffixIcon: suffix ??
-                (fn.hasFocus && ctrl.text.isNotEmpty
-                    ? _ClearButton(controller: ctrl)
-                    : null),
-            suffixIconConstraints: const BoxConstraints(),
+              ),
+              focusedErrorBorder: const UnderlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(
+                  color: AegisColors.red300,
+                ),
+              ),
+              enabledBorder: const UnderlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(
+                  color: AegisColors.neutral200,
+                ),
+              ),
+              disabledBorder: const UnderlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(
+                  color: AegisColors.neutral200,
+                ),
+              ),
+              errorBorder: const UnderlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(
+                  color: AegisColors.red300,
+                ),
+              ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 8),
+              hintText: hintText,
+              hintStyle: (style ?? AegisFont.bodyLarge).copyWith(
+                color: AegisColors.neutral300,
+              ),
+              errorText: error.value,
+              errorStyle: AegisFont.bodyMedium.copyWith(
+                color: AegisColors.red300,
+              ),
+              errorMaxLines: 2,
+              helperText: helperText,
+              helperStyle: helperStyle ??
+                  AegisFont.bodyMedium.copyWith(
+                    color: AegisColors.textPositive,
+                  ),
+              prefixIcon: prefix,
+              prefixIconConstraints: const BoxConstraints(),
+              suffixIcon: suffix ??
+                  (fn.hasFocus && ctrl.text.isNotEmpty
+                      ? _ClearButton(controller: ctrl)
+                      : null),
+              suffixIconConstraints: const BoxConstraints(),
+            ),
           ),
         ),
       ],
