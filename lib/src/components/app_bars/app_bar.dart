@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
@@ -16,6 +17,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onLeadingPressed,
     this.actions,
     this.elevation = 0,
+    this.systemOverlayStyle,
   });
 
   final String title;
@@ -27,6 +29,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function()? onLeadingPressed;
   final List<Widget>? actions;
   final double elevation;
+  final SystemUiOverlayStyle? systemOverlayStyle;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -52,6 +55,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
       actions: actions,
       elevation: elevation,
+      systemOverlayStyle: systemOverlayStyle ?? SystemUiOverlayStyle.dark,
     );
   }
 }
