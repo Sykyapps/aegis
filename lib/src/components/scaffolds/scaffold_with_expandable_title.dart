@@ -13,6 +13,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     this.subtitle,
     this.leadingIcon,
     this.bottomNavigationBar,
+    this.additionalHeader,
   });
 
   final String title;
@@ -20,6 +21,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   final IconData? leadingIcon;
   final List<Widget> slivers;
   final Widget? bottomNavigationBar;
+  final Widget? additionalHeader;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,15 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
         headerSliverBuilder: (_, __) {
           double topSpace = 8.r;
           double toolbarHeight = 48.r;
+          double additionalHeight = 0;
+
+          if (additionalHeader != null) {
+            Size additionalSize =
+                MeasurementUtil.measureWidget(additionalHeader!);
+            additionalHeight = additionalSize.height;
+          }
+
+          double collapsedHeight = toolbarHeight + additionalHeight;
 
           Size expandedWidgetSize = MeasurementUtil.measureWidget(
             SizedBox(
@@ -44,13 +55,13 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
           double expandedTitleHeight = expandedWidgetSize.height;
 
           double totalExpandedHeight =
-              toolbarHeight + expandedTitleHeight + topSpace;
+              collapsedHeight + expandedTitleHeight + topSpace;
 
           return [
             SliverAppBar(
               pinned: true,
               floating: true,
-              collapsedHeight: toolbarHeight,
+              collapsedHeight: collapsedHeight,
               toolbarHeight: toolbarHeight,
               expandedHeight: totalExpandedHeight,
               backgroundColor: AegisColors.backgroundWhite,
@@ -93,7 +104,13 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
                             toolbarHeight: toolbarHeight,
                             title: title,
                             opacity: opacity,
-                          )
+                            bottom: additionalHeight,
+                          ),
+                          if (additionalHeader != null)
+                            Positioned(
+                              bottom: 0,
+                              child: additionalHeader!,
+                            ),
                         ],
                       ),
                     ),
@@ -104,7 +121,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
             if (subtitle != null)
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(20.w, 4.w, 20.w, 28.w),
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 28).w,
                   child: Text(
                     subtitle!,
                     style: AegisFont.bodyMedium.copyWith(
@@ -127,17 +144,20 @@ class _AppBarTitle extends StatelessWidget {
   final double opacity;
   final String title;
   final bool isExpand;
+  final double? bottom;
 
   static _AppBarTitle expanded({
     required double toolbarHeight,
     required String title,
     required double opacity,
+    double? bottom,
   }) {
     return _AppBarTitle._(
       toolbarHeight: toolbarHeight,
       opacity: opacity,
       title: title,
       isExpand: true,
+      bottom: bottom,
     );
   }
 
@@ -159,13 +179,14 @@ class _AppBarTitle extends StatelessWidget {
     required this.title,
     required this.isExpand,
     required this.opacity,
+    this.bottom,
   });
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
       top: isExpand ? null : 0,
-      bottom: isExpand ? 0 : null,
+      bottom: bottom ?? (isExpand ? 0 : null),
       left: isExpand ? 20.r : 60.r,
       height: isExpand ? null : toolbarHeight,
       width: 1.sw - (isExpand ? 40.r : 120.r),
