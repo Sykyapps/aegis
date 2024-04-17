@@ -21,6 +21,7 @@ class SkPasswordField extends HookWidget {
     this.validator,
     this.focusNode,
     this.validatorBuilder,
+    this.scrollPadding = const EdgeInsets.all(20),
   });
 
   final bool enabled;
@@ -32,6 +33,7 @@ class SkPasswordField extends HookWidget {
   final SkPasswordValidator? validator;
   final FocusNode? focusNode;
   final String? Function(String?)? validatorBuilder;
+  final EdgeInsets scrollPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class SkPasswordField extends HookWidget {
           errorText: errorText,
           obscureText: obscureText.value,
           controller: controller,
+          scrollPadding: scrollPadding,
           onChanged: (password) {
             if (!showValidator) return;
 
