@@ -14,6 +14,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     this.leadingIcon,
     this.bottomNavigationBar,
     this.additionalHeader,
+    this.scrollController,
   });
 
   final String title;
@@ -22,11 +23,13 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   final List<Widget> slivers;
   final Widget? bottomNavigationBar;
   final Widget? additionalHeader;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+        controller: scrollController,
         headerSliverBuilder: (_, __) {
           double topSpace = 8.r;
           double toolbarHeight = 48.r;
