@@ -29,6 +29,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.4.9
+  flutter_gen_runner: ^5.4.0
   flutter_lints: ^2.0.0
   icon_font_generator: ^3.2.0
 
@@ -59,3 +61,27 @@ flutter:
     - lib/assets/illustrations/verification/
     - lib/assets/svg/system/
     - assets/svg/
+    - assets/svg/system/
+    - assets/illustrations/
+    - assets/illustrations/media/
+    - assets/illustrations/photo/
+    - assets/illustrations/referral/
+    - assets/illustrations/transaction/
+    - assets/illustrations/verification/
+    - assets/tutorials/
+
+flutter_gen:
+  output: lib/src/generated/
+
+  assets:
+    outputs:
+      package_parameter_enabled: true
+      style: snake-case
+      class_name: AegisAssetsPro
+    exclude: [lib/assets/]
+
+  fonts:
+    enabled: false
+
+  colors:
+    enabled: false
