@@ -9,8 +9,8 @@
 
 import 'package:flutter/widgets.dart';
 
-class AegisAssetsPro {
-  AegisAssetsPro._();
+class AegisAssets {
+  AegisAssets._();
 
   static const String package = 'aegis';
 
