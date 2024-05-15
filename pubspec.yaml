@@ -52,14 +52,6 @@ flutter:
           style: italic
 
   assets:
-    - lib/assets/tutorials/
-    - lib/assets/illustrations/
-    - lib/assets/illustrations/media/
-    - lib/assets/illustrations/photo/
-    - lib/assets/illustrations/referral/
-    - lib/assets/illustrations/transaction/
-    - lib/assets/illustrations/verification/
-    - lib/assets/svg/system/
     - assets/svg/
     - assets/svg/system/
     - assets/illustrations/
@@ -78,7 +70,7 @@ flutter_gen:
       package_parameter_enabled: true
       style: snake-case
       class_name: AegisAssets
-    exclude: [lib/assets/**, assets/**.png]
+    exclude: [assets/**.png]
 
   fonts:
     enabled: false
