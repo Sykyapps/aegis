@@ -28,10 +28,12 @@ Icon(
 ### Assets
 
 #### Usage
-Always add line `package: 'aegis'` 
+
+Always add line `package: 'aegis'`
+
 ```dart
 Image.asset(
-  AegisAssets.phone,
+  AegisAssets.illustrations_transaction_hourglass.path,
   package: 'aegis',
 ),
 ```
