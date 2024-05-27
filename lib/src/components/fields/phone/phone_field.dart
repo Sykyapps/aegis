@@ -22,6 +22,8 @@ class SkPhoneField extends HookWidget {
     this.onCountrySelected,
     this.focusNode,
     this.validatorBuilder,
+    this.helperText,
+    this.helperStyle,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -36,6 +38,8 @@ class SkPhoneField extends HookWidget {
   final Function(String)? onCountrySelected;
   final FocusNode? focusNode;
   final String? Function(String?)? validatorBuilder;
+  final String? helperText;
+  final TextStyle? helperStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +56,8 @@ class SkPhoneField extends HookWidget {
       labelText: labelText ?? 'Nomor Ponsel',
       hintText: hintText ?? 'Masukkan nomor ponsel.',
       errorText: errorText,
+      helperText: helperText,
+      helperStyle: helperStyle,
       controller: controller,
       keyboardType: TextInputType.number,
       prefix: PhonePrefix(
