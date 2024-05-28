@@ -72,6 +72,6 @@ class AegisAssets {
   // static const sucor = '$base/sucor.png';
   static const switch_porto = '$base/switch_porto.png';
   static const transaction_time = '$base/transaction_time.png';
+  static const wallet_in_blue = '$base/wallet_in_blue.png';
   // static const verified = '$base/verified.png';
-
 }
