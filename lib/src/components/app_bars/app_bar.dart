@@ -18,6 +18,8 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.elevation = 0,
     this.systemOverlayStyle,
+    this.titleSpacing = 0,
+    this.bottom,
   });
 
   final String title;
@@ -30,9 +32,13 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final double elevation;
   final SystemUiOverlayStyle? systemOverlayStyle;
+  final double titleSpacing;
+  final PreferredSizeWidget? bottom;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(
+        kToolbarHeight + (bottom?.preferredSize.height ?? 0),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +51,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: AegisColors.transparent,
       automaticallyImplyLeading: showLeading,
       leadingWidth: 60.w,
-      titleSpacing: 0,
+      titleSpacing: titleSpacing,
       leading: !showLeading
           ? null
           : leading ??
@@ -56,6 +62,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       elevation: elevation,
       systemOverlayStyle: systemOverlayStyle ?? SystemUiOverlayStyle.dark,
+      bottom: bottom,
     );
   }
 }
