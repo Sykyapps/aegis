@@ -24,6 +24,7 @@ class SkPhoneField extends HookWidget {
     this.validatorBuilder,
     this.helperText,
     this.helperStyle,
+    this.showSuffix = false,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -40,6 +41,7 @@ class SkPhoneField extends HookWidget {
   final String? Function(String?)? validatorBuilder;
   final String? helperText;
   final TextStyle? helperStyle;
+  final bool showSuffix;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class SkPhoneField extends HookWidget {
         phoneCodes: phoneCodes,
         onSelected: onCountrySelected,
       ),
-      suffix: suffix ?? const PhoneSuffix(),
+      suffix: showSuffix ? suffix ?? const PhoneSuffix() : null,
       validator: validatorBuilder ??
           ValidationBuilder(requiredMessage: validator?.required)
               .add((value) => validator?.validate(value))
