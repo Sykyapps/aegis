@@ -26,6 +26,7 @@ class SkPhoneField extends HookWidget {
     this.helperStyle,
     this.showSuffix = false,
     this.scrollPadding = const EdgeInsets.all(30.0),
+    this.onChanged,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -44,6 +45,7 @@ class SkPhoneField extends HookWidget {
   final TextStyle? helperStyle;
   final bool showSuffix;
   final EdgeInsets scrollPadding;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +66,7 @@ class SkPhoneField extends HookWidget {
       helperStyle: helperStyle,
       controller: controller,
       scrollPadding: scrollPadding,
+      onChanged: onChanged,
       keyboardType: TextInputType.number,
       prefix: PhonePrefix(
         phoneCode: phoneCode,
