@@ -15,6 +15,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     this.bottomNavigationBar,
     this.additionalHeader,
     this.scrollController,
+    this.onLoadMore,
   });
 
   final String title;
@@ -24,6 +25,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final Widget? additionalHeader;
   final ScrollController? scrollController;
+  final VoidCallback? onLoadMore;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +137,13 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
               ),
           ];
         },
-        body: CustomScrollView(slivers: slivers),
+        body: _InfiniteScrollView(
+          onLoadMore: onLoadMore,
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: slivers,
+          ),
+        ),
       ),
       bottomNavigationBar: bottomNavigationBar,
     );
@@ -207,6 +215,35 @@ class _AppBarTitle extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _InfiniteScrollView extends StatelessWidget {
+  const _InfiniteScrollView({
+    required this.child,
+    this.onLoadMore,
+  });
+
+  final VoidCallback? onLoadMore;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (onLoadMore == null) return child;
+
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification.depth != 0) return true;
+
+        var metrics = notification.metrics;
+        if (metrics.pixels == metrics.maxScrollExtent) {
+          onLoadMore?.call();
+        }
+
+        return true;
+      },
+      child: child,
     );
   }
 }
