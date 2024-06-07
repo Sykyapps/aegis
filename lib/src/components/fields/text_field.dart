@@ -37,6 +37,7 @@ class SkTextField extends HookWidget {
     this.scrollPadding = const EdgeInsets.all(30.0),
     this.readOnly = false,
     this.semanticLabel,
+    this.onTapOutside,
   });
 
   final bool enabled;
@@ -61,6 +62,7 @@ class SkTextField extends HookWidget {
   final EdgeInsets scrollPadding;
   final bool readOnly;
   final String? semanticLabel;
+  final Function(PointerDownEvent)? onTapOutside;
 
   SkFieldState get baseState =>
       enabled ? SkFieldState.enabled : SkFieldState.disabled;
@@ -175,6 +177,7 @@ class SkTextField extends HookWidget {
             focusable: true,
             identifier: semanticLabel ?? labelText,
             child: TextFormField(
+              onTapOutside: onTapOutside,
               enabled: enabled,
               focusNode: fn,
               controller: ctrl,

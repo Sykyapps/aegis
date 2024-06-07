@@ -27,6 +27,7 @@ class SkPhoneField extends HookWidget {
     this.showSuffix = false,
     this.scrollPadding = const EdgeInsets.all(30.0),
     this.onChanged,
+    this.onTapOutside,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -46,6 +47,7 @@ class SkPhoneField extends HookWidget {
   final bool showSuffix;
   final EdgeInsets scrollPadding;
   final Function(String)? onChanged;
+  final Function(PointerDownEvent)? onTapOutside;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,7 @@ class SkPhoneField extends HookWidget {
     }, [update]);
 
     return SkTextField(
+      onTapOutside: onTapOutside,
       focusNode: focusNode,
       enabled: enabled,
       labelText: labelText ?? 'Nomor Ponsel',
