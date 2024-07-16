@@ -11,6 +11,7 @@ class SkSearchField extends HookWidget {
     this.controller,
     this.hintText,
     this.onChanged,
+    this.onSubmitted,
     this.style,
     this.hintStyle,
     this.prefixIcon,
@@ -19,6 +20,7 @@ class SkSearchField extends HookWidget {
   final TextEditingController? controller;
   final String? hintText;
   final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
   final TextStyle? style;
   final TextStyle? hintStyle;
   final Widget? prefixIcon;
@@ -36,6 +38,7 @@ class SkSearchField extends HookWidget {
     return TextFormField(
       controller: ctrl,
       onChanged: onChanged,
+      onFieldSubmitted: onSubmitted,
       style:
           style ?? AegisFont.bodyLarge.copyWith(color: AegisColors.neutral500),
       cursorHeight: 24.h,
