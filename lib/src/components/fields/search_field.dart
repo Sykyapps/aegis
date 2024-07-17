@@ -44,6 +44,7 @@ class SkSearchField extends HookWidget {
       cursorHeight: 24.h,
       cursorWidth: 1.w,
       cursorColor: AegisColors.blue300,
+      textInputAction: TextInputAction.search,
       inputFormatters: [
         FilteringTextInputFormatter.deny(SkRegExp.anyEmoticon),
       ],
