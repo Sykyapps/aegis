@@ -141,6 +141,16 @@ class BottomSheetScreen extends HookWidget {
                   },
                   actionButton: const _ActionButton(),
                   disableUnfocusBehavior: true,
+                  trailing: Container(
+                    padding: const EdgeInsets.all(10),
+                    color: AegisColors.red300,
+                    child: Text(
+                      'Trailing Widget',
+                      style: AegisFont.bodyMedium.copyWith(
+                        color: AegisColors.neutral0,
+                      ),
+                    ),
+                  ),
                 ).show(context);
 
                 selectedNumbers.value = [];

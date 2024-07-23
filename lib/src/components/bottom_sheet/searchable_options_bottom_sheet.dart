@@ -25,6 +25,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     this.disableUnfocusBehavior = false,
     this.emptyImage,
     this.selectedItems,
+    this.trailing,
   });
 
   final String title;
@@ -42,6 +43,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final Widget? actionButton;
   final bool disableUnfocusBehavior;
   final ValueNotifier<List<dynamic>>? selectedItems;
+  final Widget? trailing;
 
   static const radius = Radius.circular(16);
 
@@ -117,6 +119,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                       searchLabel: searchHint,
                       controller: controller,
                       onChanged: onChanged,
+                      trailing: trailing,
                     ),
                     if (filtered.value.isEmpty)
                       SliverToBoxAdapter(
@@ -221,12 +224,14 @@ class _Header extends StatelessWidget {
     required this.searchLabel,
     required this.controller,
     required this.onChanged,
+    this.trailing,
   }) : super(key: key);
 
   final String title;
   final String searchLabel;
   final TextEditingController controller;
   final Function(String) onChanged;
+  final Widget? trailing;
 
   static final double height = 64.r;
   static final double expandedHeight = 156.r;
@@ -254,11 +259,17 @@ class _Header extends StatelessWidget {
                   children: [
                     const SizedBox(width: 8),
                     const _CloseButton(),
-                    AnimatedOpacity(
-                      opacity: top <= 166 ? 1 : 0,
-                      duration: const Duration(milliseconds: 300),
-                      child: _Title(title: title),
+                    Expanded(
+                      child: AnimatedOpacity(
+                        opacity: top <= 166 ? 1 : 0,
+                        duration: const Duration(milliseconds: 300),
+                        child: _Title(title: title),
+                      ),
                     ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 20),
+                      child: trailing,
+                    )
                   ],
                 ),
                 AnimatedOpacity(
