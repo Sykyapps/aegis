@@ -14,237 +14,237 @@ class AegisAssets {
 
   static const String package = 'aegis';
 
-  /// File path: assets/illustrations/account.png
+  /// File path: assets/illustrations/account.webp
   static const AssetGenImage illustrations_account =
-      AssetGenImage('assets/illustrations/account.png');
+      AssetGenImage('assets/illustrations/account.webp');
 
-  /// File path: assets/illustrations/account_2.png
+  /// File path: assets/illustrations/account_2.webp
   static const AssetGenImage illustrations_account_2 =
-      AssetGenImage('assets/illustrations/account_2.png');
+      AssetGenImage('assets/illustrations/account_2.webp');
 
-  /// File path: assets/illustrations/cut_off_end_time.png
+  /// File path: assets/illustrations/cut_off_end_time.webp
   static const AssetGenImage illustrations_cut_off_end_time =
-      AssetGenImage('assets/illustrations/cut_off_end_time.png');
+      AssetGenImage('assets/illustrations/cut_off_end_time.webp');
 
-  /// File path: assets/illustrations/cut_off_start_time.png
+  /// File path: assets/illustrations/cut_off_start_time.webp
   static const AssetGenImage illustrations_cut_off_start_time =
-      AssetGenImage('assets/illustrations/cut_off_start_time.png');
+      AssetGenImage('assets/illustrations/cut_off_start_time.webp');
 
-  /// File path: assets/illustrations/dictionary_blue.png
+  /// File path: assets/illustrations/dictionary_blue.webp
   static const AssetGenImage illustrations_dictionary_blue =
-      AssetGenImage('assets/illustrations/dictionary_blue.png');
+      AssetGenImage('assets/illustrations/dictionary_blue.webp');
 
-  /// File path: assets/illustrations/dictionary_red.png
+  /// File path: assets/illustrations/dictionary_red.webp
   static const AssetGenImage illustrations_dictionary_red =
-      AssetGenImage('assets/illustrations/dictionary_red.png');
+      AssetGenImage('assets/illustrations/dictionary_red.webp');
 
-  /// File path: assets/illustrations/empty_general_ghost.png
+  /// File path: assets/illustrations/empty_general_ghost.webp
   static const AssetGenImage illustrations_empty_general_ghost =
-      AssetGenImage('assets/illustrations/empty_general_ghost.png');
+      AssetGenImage('assets/illustrations/empty_general_ghost.webp');
 
-  /// File path: assets/illustrations/empty_general_leaves.png
+  /// File path: assets/illustrations/empty_general_leaves.webp
   static const AssetGenImage illustrations_empty_general_leaves =
-      AssetGenImage('assets/illustrations/empty_general_leaves.png');
+      AssetGenImage('assets/illustrations/empty_general_leaves.webp');
 
-  /// File path: assets/illustrations/go_to_pdp_1.png
+  /// File path: assets/illustrations/go_to_pdp_1.webp
   static const AssetGenImage illustrations_go_to_pdp_1 =
-      AssetGenImage('assets/illustrations/go_to_pdp_1.png');
+      AssetGenImage('assets/illustrations/go_to_pdp_1.webp');
 
-  /// File path: assets/illustrations/go_to_pdp_2.png
+  /// File path: assets/illustrations/go_to_pdp_2.webp
   static const AssetGenImage illustrations_go_to_pdp_2 =
-      AssetGenImage('assets/illustrations/go_to_pdp_2.png');
+      AssetGenImage('assets/illustrations/go_to_pdp_2.webp');
 
-  /// File path: assets/illustrations/how_to_buy.png
+  /// File path: assets/illustrations/how_to_buy.webp
   static const AssetGenImage illustrations_how_to_buy =
-      AssetGenImage('assets/illustrations/how_to_buy.png');
+      AssetGenImage('assets/illustrations/how_to_buy.webp');
 
-  /// File path: assets/illustrations/how_to_create_porto.png
+  /// File path: assets/illustrations/how_to_create_porto.webp
   static const AssetGenImage illustrations_how_to_create_porto =
-      AssetGenImage('assets/illustrations/how_to_create_porto.png');
+      AssetGenImage('assets/illustrations/how_to_create_porto.webp');
 
-  /// File path: assets/illustrations/how_to_sell.png
+  /// File path: assets/illustrations/how_to_sell.webp
   static const AssetGenImage illustrations_how_to_sell =
-      AssetGenImage('assets/illustrations/how_to_sell.png');
+      AssetGenImage('assets/illustrations/how_to_sell.webp');
 
-  /// File path: assets/illustrations/how_to_switch.png
+  /// File path: assets/illustrations/how_to_switch.webp
   static const AssetGenImage illustrations_how_to_switch =
-      AssetGenImage('assets/illustrations/how_to_switch.png');
+      AssetGenImage('assets/illustrations/how_to_switch.webp');
 
-  /// File path: assets/illustrations/how_to_switch_2.png
+  /// File path: assets/illustrations/how_to_switch_2.webp
   static const AssetGenImage illustrations_how_to_switch_2 =
-      AssetGenImage('assets/illustrations/how_to_switch_2.png');
+      AssetGenImage('assets/illustrations/how_to_switch_2.webp');
 
-  /// File path: assets/illustrations/index_benchmark.png
+  /// File path: assets/illustrations/index_benchmark.webp
   static const AssetGenImage illustrations_index_benchmark =
-      AssetGenImage('assets/illustrations/index_benchmark.png');
+      AssetGenImage('assets/illustrations/index_benchmark.webp');
 
-  /// File path: assets/illustrations/lock.png
+  /// File path: assets/illustrations/lock.webp
   static const AssetGenImage illustrations_lock =
-      AssetGenImage('assets/illustrations/lock.png');
+      AssetGenImage('assets/illustrations/lock.webp');
 
-  /// File path: assets/illustrations/media/email.png
+  /// File path: assets/illustrations/media/email.webp
   static const AssetGenImage illustrations_media_email =
-      AssetGenImage('assets/illustrations/media/email.png');
+      AssetGenImage('assets/illustrations/media/email.webp');
 
-  /// File path: assets/illustrations/media/phone.png
+  /// File path: assets/illustrations/media/phone.webp
   static const AssetGenImage illustrations_media_phone =
-      AssetGenImage('assets/illustrations/media/phone.png');
+      AssetGenImage('assets/illustrations/media/phone.webp');
 
-  /// File path: assets/illustrations/media/sms.png
+  /// File path: assets/illustrations/media/sms.webp
   static const AssetGenImage illustrations_media_sms =
-      AssetGenImage('assets/illustrations/media/sms.png');
+      AssetGenImage('assets/illustrations/media/sms.webp');
 
-  /// File path: assets/illustrations/media/website.png
+  /// File path: assets/illustrations/media/website.webp
   static const AssetGenImage illustrations_media_website =
-      AssetGenImage('assets/illustrations/media/website.png');
+      AssetGenImage('assets/illustrations/media/website.webp');
 
-  /// File path: assets/illustrations/media/whatsapp.png
+  /// File path: assets/illustrations/media/whatsapp.webp
   static const AssetGenImage illustrations_media_whatsapp =
-      AssetGenImage('assets/illustrations/media/whatsapp.png');
+      AssetGenImage('assets/illustrations/media/whatsapp.webp');
 
-  /// File path: assets/illustrations/move_porto.png
+  /// File path: assets/illustrations/move_porto.webp
   static const AssetGenImage illustrations_move_porto =
-      AssetGenImage('assets/illustrations/move_porto.png');
+      AssetGenImage('assets/illustrations/move_porto.webp');
 
-  /// File path: assets/illustrations/no_nabung_rutin.png
+  /// File path: assets/illustrations/no_nabung_rutin.webp
   static const AssetGenImage illustrations_no_nabung_rutin =
-      AssetGenImage('assets/illustrations/no_nabung_rutin.png');
+      AssetGenImage('assets/illustrations/no_nabung_rutin.webp');
 
-  /// File path: assets/illustrations/no_transaction_1.png
+  /// File path: assets/illustrations/no_transaction_1.webp
   static const AssetGenImage illustrations_no_transaction_1 =
-      AssetGenImage('assets/illustrations/no_transaction_1.png');
+      AssetGenImage('assets/illustrations/no_transaction_1.webp');
 
-  /// File path: assets/illustrations/no_transaction_2.png
+  /// File path: assets/illustrations/no_transaction_2.webp
   static const AssetGenImage illustrations_no_transaction_2 =
-      AssetGenImage('assets/illustrations/no_transaction_2.png');
+      AssetGenImage('assets/illustrations/no_transaction_2.webp');
 
-  /// File path: assets/illustrations/no_watchlist.png
+  /// File path: assets/illustrations/no_watchlist.webp
   static const AssetGenImage illustrations_no_watchlist =
-      AssetGenImage('assets/illustrations/no_watchlist.png');
+      AssetGenImage('assets/illustrations/no_watchlist.webp');
 
-  /// File path: assets/illustrations/not_found.png
+  /// File path: assets/illustrations/not_found.webp
   static const AssetGenImage illustrations_not_found =
-      AssetGenImage('assets/illustrations/not_found.png');
+      AssetGenImage('assets/illustrations/not_found.webp');
 
-  /// File path: assets/illustrations/notification.png
+  /// File path: assets/illustrations/notification.webp
   static const AssetGenImage illustrations_notification =
-      AssetGenImage('assets/illustrations/notification.png');
+      AssetGenImage('assets/illustrations/notification.webp');
 
-  /// File path: assets/illustrations/ojk.png
+  /// File path: assets/illustrations/ojk.webp
   static const AssetGenImage illustrations_ojk =
-      AssetGenImage('assets/illustrations/ojk.png');
+      AssetGenImage('assets/illustrations/ojk.webp');
 
-  /// File path: assets/illustrations/photo/photo_placeholder.png
+  /// File path: assets/illustrations/photo/photo_placeholder.webp
   static const AssetGenImage illustrations_photo_photo_placeholder =
-      AssetGenImage('assets/illustrations/photo/photo_placeholder.png');
+      AssetGenImage('assets/illustrations/photo/photo_placeholder.webp');
 
-  /// File path: assets/illustrations/redemption.png
+  /// File path: assets/illustrations/redemption.webp
   static const AssetGenImage illustrations_redemption =
-      AssetGenImage('assets/illustrations/redemption.png');
+      AssetGenImage('assets/illustrations/redemption.webp');
 
-  /// File path: assets/illustrations/redemption_time.png
+  /// File path: assets/illustrations/redemption_time.webp
   static const AssetGenImage illustrations_redemption_time =
-      AssetGenImage('assets/illustrations/redemption_time.png');
+      AssetGenImage('assets/illustrations/redemption_time.webp');
 
-  /// File path: assets/illustrations/redemption_time_1.png
+  /// File path: assets/illustrations/redemption_time_1.webp
   static const AssetGenImage illustrations_redemption_time_1 =
-      AssetGenImage('assets/illustrations/redemption_time_1.png');
+      AssetGenImage('assets/illustrations/redemption_time_1.webp');
 
-  /// File path: assets/illustrations/referral.png
+  /// File path: assets/illustrations/referral.webp
   static const AssetGenImage illustrations_referral =
-      AssetGenImage('assets/illustrations/referral.png');
+      AssetGenImage('assets/illustrations/referral.webp');
 
-  /// File path: assets/illustrations/referral/referral_reward.png
+  /// File path: assets/illustrations/referral/referral_reward.webp
   static const AssetGenImage illustrations_referral_referral_reward =
-      AssetGenImage('assets/illustrations/referral/referral_reward.png');
+      AssetGenImage('assets/illustrations/referral/referral_reward.webp');
 
-  /// File path: assets/illustrations/referral_code.png
+  /// File path: assets/illustrations/referral_code.webp
   static const AssetGenImage illustrations_referral_code =
-      AssetGenImage('assets/illustrations/referral_code.png');
+      AssetGenImage('assets/illustrations/referral_code.webp');
 
-  /// File path: assets/illustrations/registration.png
+  /// File path: assets/illustrations/registration.webp
   static const AssetGenImage illustrations_registration =
-      AssetGenImage('assets/illustrations/registration.png');
+      AssetGenImage('assets/illustrations/registration.webp');
 
-  /// File path: assets/illustrations/reksa_dana_intro.png
+  /// File path: assets/illustrations/reksa_dana_intro.webp
   static const AssetGenImage illustrations_reksa_dana_intro =
-      AssetGenImage('assets/illustrations/reksa_dana_intro.png');
+      AssetGenImage('assets/illustrations/reksa_dana_intro.webp');
 
-  /// File path: assets/illustrations/return_history.png
+  /// File path: assets/illustrations/return_history.webp
   static const AssetGenImage illustrations_return_history =
-      AssetGenImage('assets/illustrations/return_history.png');
+      AssetGenImage('assets/illustrations/return_history.webp');
 
-  /// File path: assets/illustrations/sayakaya.png
+  /// File path: assets/illustrations/sayakaya.webp
   static const AssetGenImage illustrations_sayakaya =
-      AssetGenImage('assets/illustrations/sayakaya.png');
+      AssetGenImage('assets/illustrations/sayakaya.webp');
 
-  /// File path: assets/illustrations/sayakaya_recommendation.png
+  /// File path: assets/illustrations/sayakaya_recommendation.webp
   static const AssetGenImage illustrations_sayakaya_recommendation =
-      AssetGenImage('assets/illustrations/sayakaya_recommendation.png');
+      AssetGenImage('assets/illustrations/sayakaya_recommendation.webp');
 
-  /// File path: assets/illustrations/select_manually_1.png
+  /// File path: assets/illustrations/select_manually_1.webp
   static const AssetGenImage illustrations_select_manually_1 =
-      AssetGenImage('assets/illustrations/select_manually_1.png');
+      AssetGenImage('assets/illustrations/select_manually_1.webp');
 
-  /// File path: assets/illustrations/select_manually_2.png
+  /// File path: assets/illustrations/select_manually_2.webp
   static const AssetGenImage illustrations_select_manually_2 =
-      AssetGenImage('assets/illustrations/select_manually_2.png');
+      AssetGenImage('assets/illustrations/select_manually_2.webp');
 
-  /// File path: assets/illustrations/statistic.png
+  /// File path: assets/illustrations/statistic.webp
   static const AssetGenImage illustrations_statistic =
-      AssetGenImage('assets/illustrations/statistic.png');
+      AssetGenImage('assets/illustrations/statistic.webp');
 
-  /// File path: assets/illustrations/subscription.png
+  /// File path: assets/illustrations/subscription.webp
   static const AssetGenImage illustrations_subscription =
-      AssetGenImage('assets/illustrations/subscription.png');
+      AssetGenImage('assets/illustrations/subscription.webp');
 
-  /// File path: assets/illustrations/sucor.png
+  /// File path: assets/illustrations/sucor.webp
   static const AssetGenImage illustrations_sucor =
-      AssetGenImage('assets/illustrations/sucor.png');
+      AssetGenImage('assets/illustrations/sucor.webp');
 
-  /// File path: assets/illustrations/switch_porto.png
+  /// File path: assets/illustrations/switch_porto.webp
   static const AssetGenImage illustrations_switch_porto =
-      AssetGenImage('assets/illustrations/switch_porto.png');
+      AssetGenImage('assets/illustrations/switch_porto.webp');
 
-  /// File path: assets/illustrations/transaction/hourglass.png
+  /// File path: assets/illustrations/transaction/hourglass.webp
   static const AssetGenImage illustrations_transaction_hourglass =
-      AssetGenImage('assets/illustrations/transaction/hourglass.png');
+      AssetGenImage('assets/illustrations/transaction/hourglass.webp');
 
-  /// File path: assets/illustrations/transaction/redemption.png
+  /// File path: assets/illustrations/transaction/redemption.webp
   static const AssetGenImage illustrations_transaction_redemption =
-      AssetGenImage('assets/illustrations/transaction/redemption.png');
+      AssetGenImage('assets/illustrations/transaction/redemption.webp');
 
-  /// File path: assets/illustrations/transaction/switching.png
+  /// File path: assets/illustrations/transaction/switching.webp
   static const AssetGenImage illustrations_transaction_switching =
-      AssetGenImage('assets/illustrations/transaction/switching.png');
+      AssetGenImage('assets/illustrations/transaction/switching.webp');
 
-  /// File path: assets/illustrations/transaction_time.png
+  /// File path: assets/illustrations/transaction_time.webp
   static const AssetGenImage illustrations_transaction_time =
-      AssetGenImage('assets/illustrations/transaction_time.png');
+      AssetGenImage('assets/illustrations/transaction_time.webp');
 
-  /// File path: assets/illustrations/verification/coin.png
+  /// File path: assets/illustrations/verification/coin.webp
   static const AssetGenImage illustrations_verification_coin =
-      AssetGenImage('assets/illustrations/verification/coin.png');
+      AssetGenImage('assets/illustrations/verification/coin.webp');
 
-  /// File path: assets/illustrations/verification/lock.png
+  /// File path: assets/illustrations/verification/lock.webp
   static const AssetGenImage illustrations_verification_lock =
-      AssetGenImage('assets/illustrations/verification/lock.png');
+      AssetGenImage('assets/illustrations/verification/lock.webp');
 
-  /// File path: assets/illustrations/verification/ojk.png
+  /// File path: assets/illustrations/verification/ojk.webp
   static const AssetGenImage illustrations_verification_ojk =
-      AssetGenImage('assets/illustrations/verification/ojk.png');
+      AssetGenImage('assets/illustrations/verification/ojk.webp');
 
-  /// File path: assets/illustrations/verification/sucor.png
+  /// File path: assets/illustrations/verification/sucor.webp
   static const AssetGenImage illustrations_verification_sucor =
-      AssetGenImage('assets/illustrations/verification/sucor.png');
+      AssetGenImage('assets/illustrations/verification/sucor.webp');
 
-  /// File path: assets/illustrations/verification/verified.png
+  /// File path: assets/illustrations/verification/verified.webp
   static const AssetGenImage illustrations_verification_verified =
-      AssetGenImage('assets/illustrations/verification/verified.png');
+      AssetGenImage('assets/illustrations/verification/verified.webp');
 
-  /// File path: assets/illustrations/verified.png
+  /// File path: assets/illustrations/verified.webp
   static const AssetGenImage illustrations_verified =
-      AssetGenImage('assets/illustrations/verified.png');
+      AssetGenImage('assets/illustrations/verified.webp');
 
   /// File path: assets/svg/check.svg
   static const String svg_check = 'packages/aegis/assets/svg/check.svg';
@@ -601,185 +601,185 @@ class AegisAssets {
   static const String svg_system_verified =
       'packages/aegis/assets/svg/system/verified.svg';
 
-  /// File path: assets/tutorials/add_to_watchlist_1.png
+  /// File path: assets/tutorials/add_to_watchlist_1.webp
   static const AssetGenImage tutorials_add_to_watchlist_1 =
-      AssetGenImage('assets/tutorials/add_to_watchlist_1.png');
+      AssetGenImage('assets/tutorials/add_to_watchlist_1.webp');
 
-  /// File path: assets/tutorials/add_to_watchlist_2.png
+  /// File path: assets/tutorials/add_to_watchlist_2.webp
   static const AssetGenImage tutorials_add_to_watchlist_2 =
-      AssetGenImage('assets/tutorials/add_to_watchlist_2.png');
+      AssetGenImage('assets/tutorials/add_to_watchlist_2.webp');
 
-  /// File path: assets/tutorials/add_to_watchlist_3.png
+  /// File path: assets/tutorials/add_to_watchlist_3.webp
   static const AssetGenImage tutorials_add_to_watchlist_3 =
-      AssetGenImage('assets/tutorials/add_to_watchlist_3.png');
+      AssetGenImage('assets/tutorials/add_to_watchlist_3.webp');
 
-  /// File path: assets/tutorials/add_to_watchlist_4.png
+  /// File path: assets/tutorials/add_to_watchlist_4.webp
   static const AssetGenImage tutorials_add_to_watchlist_4 =
-      AssetGenImage('assets/tutorials/add_to_watchlist_4.png');
+      AssetGenImage('assets/tutorials/add_to_watchlist_4.webp');
 
-  /// File path: assets/tutorials/add_to_watchlist_5.png
+  /// File path: assets/tutorials/add_to_watchlist_5.webp
   static const AssetGenImage tutorials_add_to_watchlist_5 =
-      AssetGenImage('assets/tutorials/add_to_watchlist_5.png');
+      AssetGenImage('assets/tutorials/add_to_watchlist_5.webp');
 
-  /// File path: assets/tutorials/buy_1.png
+  /// File path: assets/tutorials/buy_1.webp
   static const AssetGenImage tutorials_buy_1 =
-      AssetGenImage('assets/tutorials/buy_1.png');
+      AssetGenImage('assets/tutorials/buy_1.webp');
 
-  /// File path: assets/tutorials/buy_2.png
+  /// File path: assets/tutorials/buy_2.webp
   static const AssetGenImage tutorials_buy_2 =
-      AssetGenImage('assets/tutorials/buy_2.png');
+      AssetGenImage('assets/tutorials/buy_2.webp');
 
-  /// File path: assets/tutorials/buy_3.png
+  /// File path: assets/tutorials/buy_3.webp
   static const AssetGenImage tutorials_buy_3 =
-      AssetGenImage('assets/tutorials/buy_3.png');
+      AssetGenImage('assets/tutorials/buy_3.webp');
 
-  /// File path: assets/tutorials/buy_4.png
+  /// File path: assets/tutorials/buy_4.webp
   static const AssetGenImage tutorials_buy_4 =
-      AssetGenImage('assets/tutorials/buy_4.png');
+      AssetGenImage('assets/tutorials/buy_4.webp');
 
-  /// File path: assets/tutorials/buy_5.png
+  /// File path: assets/tutorials/buy_5.webp
   static const AssetGenImage tutorials_buy_5 =
-      AssetGenImage('assets/tutorials/buy_5.png');
+      AssetGenImage('assets/tutorials/buy_5.webp');
 
-  /// File path: assets/tutorials/buy_6.png
+  /// File path: assets/tutorials/buy_6.webp
   static const AssetGenImage tutorials_buy_6 =
-      AssetGenImage('assets/tutorials/buy_6.png');
+      AssetGenImage('assets/tutorials/buy_6.webp');
 
-  /// File path: assets/tutorials/buy_7.png
+  /// File path: assets/tutorials/buy_7.webp
   static const AssetGenImage tutorials_buy_7 =
-      AssetGenImage('assets/tutorials/buy_7.png');
+      AssetGenImage('assets/tutorials/buy_7.webp');
 
-  /// File path: assets/tutorials/create_account_1.png
+  /// File path: assets/tutorials/create_account_1.webp
   static const AssetGenImage tutorials_create_account_1 =
-      AssetGenImage('assets/tutorials/create_account_1.png');
+      AssetGenImage('assets/tutorials/create_account_1.webp');
 
-  /// File path: assets/tutorials/create_account_10.png
+  /// File path: assets/tutorials/create_account_10.webp
   static const AssetGenImage tutorials_create_account_10 =
-      AssetGenImage('assets/tutorials/create_account_10.png');
+      AssetGenImage('assets/tutorials/create_account_10.webp');
 
-  /// File path: assets/tutorials/create_account_2.png
+  /// File path: assets/tutorials/create_account_2.webp
   static const AssetGenImage tutorials_create_account_2 =
-      AssetGenImage('assets/tutorials/create_account_2.png');
+      AssetGenImage('assets/tutorials/create_account_2.webp');
 
-  /// File path: assets/tutorials/create_account_3.png
+  /// File path: assets/tutorials/create_account_3.webp
   static const AssetGenImage tutorials_create_account_3 =
-      AssetGenImage('assets/tutorials/create_account_3.png');
+      AssetGenImage('assets/tutorials/create_account_3.webp');
 
-  /// File path: assets/tutorials/create_account_4.png
+  /// File path: assets/tutorials/create_account_4.webp
   static const AssetGenImage tutorials_create_account_4 =
-      AssetGenImage('assets/tutorials/create_account_4.png');
+      AssetGenImage('assets/tutorials/create_account_4.webp');
 
-  /// File path: assets/tutorials/create_account_5.png
+  /// File path: assets/tutorials/create_account_5.webp
   static const AssetGenImage tutorials_create_account_5 =
-      AssetGenImage('assets/tutorials/create_account_5.png');
+      AssetGenImage('assets/tutorials/create_account_5.webp');
 
-  /// File path: assets/tutorials/create_account_6.png
+  /// File path: assets/tutorials/create_account_6.webp
   static const AssetGenImage tutorials_create_account_6 =
-      AssetGenImage('assets/tutorials/create_account_6.png');
+      AssetGenImage('assets/tutorials/create_account_6.webp');
 
-  /// File path: assets/tutorials/create_account_7.png
+  /// File path: assets/tutorials/create_account_7.webp
   static const AssetGenImage tutorials_create_account_7 =
-      AssetGenImage('assets/tutorials/create_account_7.png');
+      AssetGenImage('assets/tutorials/create_account_7.webp');
 
-  /// File path: assets/tutorials/create_account_8.png
+  /// File path: assets/tutorials/create_account_8.webp
   static const AssetGenImage tutorials_create_account_8 =
-      AssetGenImage('assets/tutorials/create_account_8.png');
+      AssetGenImage('assets/tutorials/create_account_8.webp');
 
-  /// File path: assets/tutorials/create_account_9.png
+  /// File path: assets/tutorials/create_account_9.webp
   static const AssetGenImage tutorials_create_account_9 =
-      AssetGenImage('assets/tutorials/create_account_9.png');
+      AssetGenImage('assets/tutorials/create_account_9.webp');
 
-  /// File path: assets/tutorials/referral_1.png
+  /// File path: assets/tutorials/referral_1.webp
   static const AssetGenImage tutorials_referral_1 =
-      AssetGenImage('assets/tutorials/referral_1.png');
+      AssetGenImage('assets/tutorials/referral_1.webp');
 
-  /// File path: assets/tutorials/referral_2.png
+  /// File path: assets/tutorials/referral_2.webp
   static const AssetGenImage tutorials_referral_2 =
-      AssetGenImage('assets/tutorials/referral_2.png');
+      AssetGenImage('assets/tutorials/referral_2.webp');
 
-  /// File path: assets/tutorials/referral_3.png
+  /// File path: assets/tutorials/referral_3.webp
   static const AssetGenImage tutorials_referral_3 =
-      AssetGenImage('assets/tutorials/referral_3.png');
+      AssetGenImage('assets/tutorials/referral_3.webp');
 
-  /// File path: assets/tutorials/referral_4.png
+  /// File path: assets/tutorials/referral_4.webp
   static const AssetGenImage tutorials_referral_4 =
-      AssetGenImage('assets/tutorials/referral_4.png');
+      AssetGenImage('assets/tutorials/referral_4.webp');
 
-  /// File path: assets/tutorials/referral_5.png
+  /// File path: assets/tutorials/referral_5.webp
   static const AssetGenImage tutorials_referral_5 =
-      AssetGenImage('assets/tutorials/referral_5.png');
+      AssetGenImage('assets/tutorials/referral_5.webp');
 
-  /// File path: assets/tutorials/referral_6.png
+  /// File path: assets/tutorials/referral_6.webp
   static const AssetGenImage tutorials_referral_6 =
-      AssetGenImage('assets/tutorials/referral_6.png');
+      AssetGenImage('assets/tutorials/referral_6.webp');
 
-  /// File path: assets/tutorials/sell_1.png
+  /// File path: assets/tutorials/sell_1.webp
   static const AssetGenImage tutorials_sell_1 =
-      AssetGenImage('assets/tutorials/sell_1.png');
+      AssetGenImage('assets/tutorials/sell_1.webp');
 
-  /// File path: assets/tutorials/sell_2.png
+  /// File path: assets/tutorials/sell_2.webp
   static const AssetGenImage tutorials_sell_2 =
-      AssetGenImage('assets/tutorials/sell_2.png');
+      AssetGenImage('assets/tutorials/sell_2.webp');
 
-  /// File path: assets/tutorials/sell_3.png
+  /// File path: assets/tutorials/sell_3.webp
   static const AssetGenImage tutorials_sell_3 =
-      AssetGenImage('assets/tutorials/sell_3.png');
+      AssetGenImage('assets/tutorials/sell_3.webp');
 
-  /// File path: assets/tutorials/sell_4.png
+  /// File path: assets/tutorials/sell_4.webp
   static const AssetGenImage tutorials_sell_4 =
-      AssetGenImage('assets/tutorials/sell_4.png');
+      AssetGenImage('assets/tutorials/sell_4.webp');
 
-  /// File path: assets/tutorials/sell_5.png
+  /// File path: assets/tutorials/sell_5.webp
   static const AssetGenImage tutorials_sell_5 =
-      AssetGenImage('assets/tutorials/sell_5.png');
+      AssetGenImage('assets/tutorials/sell_5.webp');
 
-  /// File path: assets/tutorials/sell_6.png
+  /// File path: assets/tutorials/sell_6.webp
   static const AssetGenImage tutorials_sell_6 =
-      AssetGenImage('assets/tutorials/sell_6.png');
+      AssetGenImage('assets/tutorials/sell_6.webp');
 
-  /// File path: assets/tutorials/shared_goal_1.png
+  /// File path: assets/tutorials/shared_goal_1.webp
   static const AssetGenImage tutorials_shared_goal_1 =
-      AssetGenImage('assets/tutorials/shared_goal_1.png');
+      AssetGenImage('assets/tutorials/shared_goal_1.webp');
 
-  /// File path: assets/tutorials/shared_goal_2.png
+  /// File path: assets/tutorials/shared_goal_2.webp
   static const AssetGenImage tutorials_shared_goal_2 =
-      AssetGenImage('assets/tutorials/shared_goal_2.png');
+      AssetGenImage('assets/tutorials/shared_goal_2.webp');
 
-  /// File path: assets/tutorials/shared_goal_3.png
+  /// File path: assets/tutorials/shared_goal_3.webp
   static const AssetGenImage tutorials_shared_goal_3 =
-      AssetGenImage('assets/tutorials/shared_goal_3.png');
+      AssetGenImage('assets/tutorials/shared_goal_3.webp');
 
-  /// File path: assets/tutorials/shared_goal_4.png
+  /// File path: assets/tutorials/shared_goal_4.webp
   static const AssetGenImage tutorials_shared_goal_4 =
-      AssetGenImage('assets/tutorials/shared_goal_4.png');
+      AssetGenImage('assets/tutorials/shared_goal_4.webp');
 
-  /// File path: assets/tutorials/shared_goal_5.png
+  /// File path: assets/tutorials/shared_goal_5.webp
   static const AssetGenImage tutorials_shared_goal_5 =
-      AssetGenImage('assets/tutorials/shared_goal_5.png');
+      AssetGenImage('assets/tutorials/shared_goal_5.webp');
 
-  /// File path: assets/tutorials/switching_1.png
+  /// File path: assets/tutorials/switching_1.webp
   static const AssetGenImage tutorials_switching_1 =
-      AssetGenImage('assets/tutorials/switching_1.png');
+      AssetGenImage('assets/tutorials/switching_1.webp');
 
-  /// File path: assets/tutorials/switching_2.png
+  /// File path: assets/tutorials/switching_2.webp
   static const AssetGenImage tutorials_switching_2 =
-      AssetGenImage('assets/tutorials/switching_2.png');
+      AssetGenImage('assets/tutorials/switching_2.webp');
 
-  /// File path: assets/tutorials/switching_3.png
+  /// File path: assets/tutorials/switching_3.webp
   static const AssetGenImage tutorials_switching_3 =
-      AssetGenImage('assets/tutorials/switching_3.png');
+      AssetGenImage('assets/tutorials/switching_3.webp');
 
-  /// File path: assets/tutorials/switching_4.png
+  /// File path: assets/tutorials/switching_4.webp
   static const AssetGenImage tutorials_switching_4 =
-      AssetGenImage('assets/tutorials/switching_4.png');
+      AssetGenImage('assets/tutorials/switching_4.webp');
 
-  /// File path: assets/tutorials/switching_5.png
+  /// File path: assets/tutorials/switching_5.webp
   static const AssetGenImage tutorials_switching_5 =
-      AssetGenImage('assets/tutorials/switching_5.png');
+      AssetGenImage('assets/tutorials/switching_5.webp');
 
-  /// File path: assets/tutorials/switching_6.png
+  /// File path: assets/tutorials/switching_6.webp
   static const AssetGenImage tutorials_switching_6 =
-      AssetGenImage('assets/tutorials/switching_6.png');
+      AssetGenImage('assets/tutorials/switching_6.webp');
 
   /// List of all assets
   static List<dynamic> get values => [
