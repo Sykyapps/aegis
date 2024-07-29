@@ -34,6 +34,8 @@ Icon(
    - *assets/example.webp* : `AegisAssets.example`
    - *assets/icons/close.webp* : `AegisAssets.icons_close`
 
+   Don't forget to list to pubspec.yaml if you store the asset in new folder
+
 2. Run this command on Aegis root project
     ```shell
     make build_runner
