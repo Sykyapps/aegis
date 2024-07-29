@@ -78,7 +78,7 @@ flutter_gen:
       package_parameter_enabled: true
       style: snake-case
       class_name: AegisAssetsPro
-    exclude: [lib/assets/]
+    exclude: ["lib/assets/**"]
 
   fonts:
     enabled: false
