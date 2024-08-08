@@ -2,9 +2,17 @@ import 'package:aegis/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:form_validator/form_validator.dart';
 
 void main() {
-  Widget wut = SkUnitField();
+  String labelText = 'This is label text';
+  String hintText = 'This is hint text';
+  String helperText = 'This is helper text';
+  Widget wut = SkUnitField(
+    labelText: labelText,
+    hintText: hintText,
+    helperText: helperText,
+  );
 
   Widget wrapper(Widget child) {
     return ScreenUtilInit(
@@ -17,124 +25,148 @@ void main() {
   }
 
   group('Tests for `SkUnitField`', () {
-    testWidgets(
-      'Should render to the widget tree',
-      (tester) async {
-        await tester.pumpWidget(wrapper(wut));
+    testWidgets('Should render to the widget tree', (tester) async {
+      await tester.pumpWidget(wrapper(wut));
 
-        final finder = find.byWidget(wut);
-        expect(finder, findsOneWidget);
-      },
-    );
+      final finder = find.byWidget(wut);
+      expect(finder, findsOneWidget);
+    });
 
-    group(
-      'Tests to ensure widget is able to receive focus',
-      () {
-        testWidgets(
-          'Should be able to receive focus',
-          (tester) async {
-            final focusNode = FocusNode();
+    testWidgets('Should display label, hint, and helper text', (tester) async {
+      await tester.pumpWidget(wrapper(wut));
 
-            /// Will run after test
-            addTearDown(focusNode.dispose);
+      final labelFinder = find.text(labelText);
+      final hintFinder = find.text(hintText);
+      final helperFinder = find.text(helperText);
 
-            // ignore: no_leading_underscores_for_local_identifiers
-            Widget _wut = SkUnitField(
-              focusNode: focusNode,
-            );
+      expect(labelFinder, findsOneWidget);
+      expect(hintFinder, findsOneWidget);
+      expect(helperFinder, findsOneWidget);
+    });
 
-            await tester.pumpWidget(wrapper(_wut));
+    group('Tests to ensure widget is able to receive focus', () {
+      testWidgets('Should be able to receive focus', (tester) async {
+        final focusNode = FocusNode();
 
-            final finder = find.byWidget(_wut);
+        /// Will run after test
+        addTearDown(focusNode.dispose);
 
-            await tester.tap(finder);
-            await tester.pumpAndSettle();
-
-            expect(focusNode.hasFocus, isTrue);
-          },
+        // ignore: no_leading_underscores_for_local_identifiers
+        Widget _wut = SkUnitField(
+          focusNode: focusNode,
         );
 
-        testWidgets('Should show keyboard when request focus', (tester) async {
-          final focusNode = FocusNode();
-          addTearDown(focusNode.dispose);
+        await tester.pumpWidget(wrapper(_wut));
 
-          // ignore: no_leading_underscores_for_local_identifiers
-          final _wut = SkUnitField(
-            focusNode: focusNode,
-          );
+        final finder = find.byWidget(_wut);
 
-          await tester.pumpWidget(wrapper(_wut));
+        await tester.tap(finder);
+        await tester.pumpAndSettle();
 
-          expect(tester.testTextInput.isVisible, isFalse);
+        expect(focusNode.hasFocus, isTrue);
+      });
 
-          focusNode.requestFocus();
-          await tester.pumpAndSettle();
+      testWidgets('Should show keyboard when request focus', (tester) async {
+        final focusNode = FocusNode();
+        addTearDown(focusNode.dispose);
 
-          expect(tester.testTextInput.isVisible, isTrue);
-        });
-      },
-    );
+        // ignore: no_leading_underscores_for_local_identifiers
+        final _wut = SkUnitField(
+          focusNode: focusNode,
+        );
+
+        await tester.pumpWidget(wrapper(_wut));
+
+        expect(tester.testTextInput.isVisible, isFalse);
+
+        focusNode.requestFocus();
+        await tester.pumpAndSettle();
+
+        expect(tester.testTextInput.isVisible, isTrue);
+      });
+    });
 
     group('Tests to ensure widget is able to receive input', () {
-      testWidgets(
-        'Should able receive number only text',
-        (tester) async {
-          await tester.pumpWidget(wrapper(wut));
+      testWidgets('Should able receive number only text', (tester) async {
+        await tester.pumpWidget(wrapper(wut));
 
-          String good = '10000';
-          String bad = '10000a';
+        String good = '10000';
+        String bad = '10000a';
 
-          final finder = find.byWidget(wut);
+        final finder = find.byWidget(wut);
 
-          await tester.enterText(finder, good);
-          expect(find.text(good), findsOneWidget);
+        await tester.enterText(finder, good);
+        expect(find.text(good), findsOneWidget);
 
-          await tester.enterText(finder, bad);
-          expect(find.text(bad), findsNothing);
-        },
+        await tester.enterText(finder, bad);
+        expect(find.text(bad), findsNothing);
+      });
+
+      testWidgets('Should avoid input start with punctuation like dot or comma',
+          (widgetTester) async {
+        await widgetTester.pumpWidget(wrapper(wut));
+
+        String input = '.1000';
+        final finder = find.byWidget(wut);
+
+        await widgetTester.enterText(finder, input);
+        expect(find.text(''), findsOneWidget);
+        expect(find.text(input), findsNothing);
+      });
+
+      testWidgets('Should convert dot to comma', (tester) async {
+        await tester.pumpWidget(wrapper(wut));
+
+        String input = '1000.2';
+        String formatted = '1000,2';
+        final finder = find.byType(SkUnitField);
+
+        await tester.enterText(finder, input);
+        expect(find.text(formatted), findsOneWidget);
+      });
+
+      testWidgets('Should ignore next dot/comma input when text contains comma',
+          (tester) async {
+        await tester.pumpWidget(wrapper(wut));
+
+        String input = '1000.200,3';
+        String expected = '1000,200';
+        final finder = find.byWidget(wut);
+
+        await tester.enterText(finder, input);
+        expect(find.text(expected), findsOneWidget);
+      });
+    });
+
+    group('Tests to ensure widget validates user input', () {
+      final key = GlobalKey<FormFieldState<String>>();
+      final validator = ValidationBuilder().required().build();
+      // ignore: no_leading_underscores_for_local_identifiers
+      Widget _wut = SkUnitField(
+        key: key,
+        validator: validator,
       );
 
-      testWidgets(
-        'Should avoid input start with punctuation like dot or comma',
-        (widgetTester) async {
-          await widgetTester.pumpWidget(wrapper(wut));
+      testWidgets('Should display error text', (tester) async {
+        await tester.pumpWidget(wrapper(_wut));
 
-          String input = '.1000';
-          final finder = find.byWidget(wut);
+        key.currentState!.validate();
 
-          await widgetTester.enterText(finder, input);
-          expect(find.text(''), findsOneWidget);
-          expect(find.text(input), findsNothing);
-        },
-      );
+        expect(key.currentState!.hasError, isTrue);
+        expect(key.currentState!.errorText, isA<String>());
+      });
 
-      testWidgets(
-        'Should convert dot to comma',
-        (tester) async {
-          await tester.pumpWidget(wrapper(wut));
+      testWidgets('Should not allow empty input', (tester) async {
+        await tester.pumpWidget(wrapper(_wut));
 
-          String input = '1000.2';
-          String formatted = '1000,2';
-          final finder = find.byType(SkUnitField);
+        expect(key.currentState!.isValid, isFalse);
 
-          await tester.enterText(finder, input);
-          expect(find.text(formatted), findsOneWidget);
-        },
-      );
+        final finder = find.byWidget(_wut);
+        await tester.enterText(finder, 'text');
+        await tester.enterText(finder, '');
 
-      testWidgets(
-        'Should ignore next dot/comma input when text contains comma',
-        (tester) async {
-          await tester.pumpWidget(wrapper(wut));
-
-          String input = '1000.200,3';
-          String expected = '1000,200';
-          final finder = find.byWidget(wut);
-
-          await tester.enterText(finder, input);
-          expect(find.text(expected), findsOneWidget);
-        },
-      );
+        expect(key.currentState!.isValid, isFalse);
+      });
     });
   });
 }
