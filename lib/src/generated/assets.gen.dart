@@ -30,6 +30,10 @@ class AegisAssets {
   static const AssetGenImage illustrations_cut_off_start_time =
       AssetGenImage('assets/illustrations/cut_off_start_time.webp');
 
+  /// File path: assets/illustrations/decline.webp
+  static const AssetGenImage illustrations_decline =
+      AssetGenImage('assets/illustrations/decline.webp');
+
   /// File path: assets/illustrations/dictionary_blue.webp
   static const AssetGenImage illustrations_dictionary_blue =
       AssetGenImage('assets/illustrations/dictionary_blue.webp');
@@ -137,6 +141,10 @@ class AegisAssets {
   /// File path: assets/illustrations/photo/photo_placeholder.webp
   static const AssetGenImage illustrations_photo_photo_placeholder =
       AssetGenImage('assets/illustrations/photo/photo_placeholder.webp');
+
+  /// File path: assets/illustrations/promo.webp
+  static const AssetGenImage illustrations_promo =
+      AssetGenImage('assets/illustrations/promo.webp');
 
   /// File path: assets/illustrations/redemption.webp
   static const AssetGenImage illustrations_redemption =
@@ -304,6 +312,10 @@ class AegisAssets {
   /// File path: assets/svg/system/camera_fill.svg
   static const String svg_system_camera_fill =
       'packages/aegis/assets/svg/system/camera_fill.svg';
+
+  /// File path: assets/svg/system/cart.svg
+  static const String svg_system_cart =
+      'packages/aegis/assets/svg/system/cart.svg';
 
   /// File path: assets/svg/system/chat.svg
   static const String svg_system_chat =
@@ -787,6 +799,7 @@ class AegisAssets {
         illustrations_account_2,
         illustrations_cut_off_end_time,
         illustrations_cut_off_start_time,
+        illustrations_decline,
         illustrations_dictionary_blue,
         illustrations_dictionary_red,
         illustrations_empty_general_ghost,
@@ -814,6 +827,7 @@ class AegisAssets {
         illustrations_notification,
         illustrations_ojk,
         illustrations_photo_photo_placeholder,
+        illustrations_promo,
         illustrations_redemption,
         illustrations_redemption_time,
         illustrations_redemption_time_1,
@@ -856,6 +870,7 @@ class AegisAssets {
         svg_system_bookmark_fill,
         svg_system_camera,
         svg_system_camera_fill,
+        svg_system_cart,
         svg_system_chat,
         svg_system_check,
         svg_system_check_circle,
