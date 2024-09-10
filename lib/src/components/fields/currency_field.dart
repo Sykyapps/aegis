@@ -10,6 +10,7 @@ class SkCurrencyField extends FormField<String> {
   final TextEditingController? controller;
   SkCurrencyField({
     super.key,
+    bool enabled = true,
     this.controller,
     FocusNode? focusNode,
     AutovalidateMode? autovalidateMode,
@@ -21,6 +22,7 @@ class SkCurrencyField extends FormField<String> {
     FormFieldValidator<String?>? validator,
     FormFieldSetter<String>? onSaved,
   }) : super(
+          enabled: enabled,
           autovalidateMode: autovalidateMode,
           validator: validator,
           onSaved: onSaved,
@@ -71,9 +73,8 @@ class SkCurrencyField extends FormField<String> {
                 ),
                 labelStyle: AegisFont.bodyMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: fieldState.hasError
-                      ? AegisColors.red300
-                      : AegisColors.textHighEmphasis,
+                  color: AegisColors.textHighEmphasis
+                      .withOpacity(enabled ? 1 : 0.38),
                 ),
                 errorStyle: AegisFont.bodyMedium.copyWith(
                   color: AegisColors.red300,
@@ -91,6 +92,7 @@ class SkCurrencyField extends FormField<String> {
                     style: effectiveDecoration.labelStyle,
                   ),
                 TextFormField(
+                  enabled: enabled,
                   keyboardType: TextInputType.number,
                   controller: controller,
                   cursorColor: AegisColors.blue300,
@@ -102,9 +104,7 @@ class SkCurrencyField extends FormField<String> {
                   ),
                   focusNode: focusNode,
                   onChanged: onChangedHandler,
-                  style: AegisFont.bodyLarge.copyWith(
-                    color: AegisColors.textHighEmphasis,
-                  ),
+                  style: AegisFont.bodyLarge,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                     CurrencyInputFormatter(),

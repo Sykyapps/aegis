@@ -60,7 +60,11 @@ class SkButton extends HookWidget {
         onPressed: isLoading ? () {} : onPressed,
         child: isLoading
             ? SkLoadingAnimation(color: loadingColor)
-            : Text(label, style: textStyle),
+            : Text(
+                label,
+                style: textStyle,
+                textAlign: TextAlign.center,
+              ),
       ),
     );
   }
