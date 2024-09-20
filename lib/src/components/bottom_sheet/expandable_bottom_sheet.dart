@@ -37,10 +37,15 @@ class SkExpandableBottomSheet extends HookWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => SkExpandableBottomSheet(
-        title: title,
-        isExpandable: isExpandable,
-        child: child,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: SkExpandableBottomSheet(
+          title: title,
+          isExpandable: isExpandable,
+          child: child,
+        ),
       ),
     );
 
