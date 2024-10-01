@@ -108,6 +108,7 @@ class AegisIcons {
   static const user_fill = _AegisIconsData(0xf157, 'user_fill');
   static const user = _AegisIconsData(0xf158, 'user');
   static const verified = _AegisIconsData(0xf159, 'verified');
+  static const wallet = _AegisIconsData(0xf15a, 'wallet');
 
   static const all = <String, _AegisIconsData>{
     'add_image': add_image,
@@ -199,5 +200,6 @@ class AegisIcons {
     'user_fill': user_fill,
     'user': user,
     'verified': verified,
+    'wallet': wallet,
   };
 }

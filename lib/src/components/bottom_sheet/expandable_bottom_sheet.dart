@@ -196,7 +196,6 @@ class _Header extends StatelessWidget {
                       child: _ExpandedTitle(title: title),
                     ),
                   ),
-                const SizedBox(height: 4),
               ],
             ),
           );

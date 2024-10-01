@@ -140,7 +140,6 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
         body: _InfiniteScrollView(
           onLoadMore: onLoadMore,
           child: CustomScrollView(
-            controller: scrollController,
             slivers: slivers,
           ),
         ),
