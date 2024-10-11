@@ -10,6 +10,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     super.key,
     required this.slivers,
     required this.title,
+    this.isTwoLineTitle,
     this.subtitle,
     this.leadingIcon,
     this.bottomNavigationBar,
@@ -19,6 +20,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   });
 
   final String title;
+  final bool? isTwoLineTitle;
   final String? subtitle;
   final IconData? leadingIcon;
   final List<Widget> slivers;
@@ -45,7 +47,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
 
           double collapsedHeight = toolbarHeight + additionalHeight;
 
-          Size expandedWidgetSize = MeasurementUtil.measureWidget(
+          var expandedTitleHeight = MeasurementUtil.measureWidget(
             SizedBox(
               width: 1.sw - 40.r,
               child: Text(
@@ -55,9 +57,22 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-          );
+          ).height;
 
-          double expandedTitleHeight = expandedWidgetSize.height;
+          if (isTwoLineTitle ?? false) {
+            var oneLineHeight = MeasurementUtil.measureWidget(
+              SizedBox(
+                width: 1.sw - 40.r,
+                child: Text(
+                  'Test',
+                  style: AegisFont.headlineMedium,
+                  maxLines: 2,
+                  softWrap: true,
+                ),
+              ),
+            ).height;
+            expandedTitleHeight = oneLineHeight * 2;
+          }
 
           double totalExpandedHeight =
               collapsedHeight + expandedTitleHeight + topSpace;
