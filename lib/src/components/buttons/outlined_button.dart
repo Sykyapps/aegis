@@ -10,6 +10,7 @@ class SkOutlinedButton extends StatelessWidget {
     this.size = SkButtonSize.regular,
     this.stretch = false,
     this.textStyle,
+    this.onPressed,
   }) : assert(size != SkButtonSize.custom || customSize != null,
             'If size is SkButtonSize.custom, customSize must be provided.');
 
@@ -18,6 +19,7 @@ class SkOutlinedButton extends StatelessWidget {
   final Size? customSize;
   final TextStyle? textStyle;
   final bool stretch;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,7 @@ class SkOutlinedButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: paddingValue),
           elevation: 0,
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(label),
       ),
     );
