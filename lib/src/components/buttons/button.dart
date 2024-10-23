@@ -10,7 +10,7 @@ class SkButton extends HookWidget {
     required this.label,
     this.isLoading = false,
     this.foregroundColor,
-    this.backgroundColor,
+    this.bgColor,
     this.textStyle,
     this.onPressed,
     this.elevation = 0,
@@ -25,7 +25,7 @@ class SkButton extends HookWidget {
   final String label;
   final bool isLoading;
   final bool stretch;
-  final Color? backgroundColor;
+  final Color? bgColor;
   final Color? foregroundColor;
   final TextStyle? textStyle;
   final VoidCallback? onPressed;
@@ -72,8 +72,9 @@ class SkButton extends HookWidget {
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: foregroundColor ?? AegisColors.neutral0,
-          backgroundColor: backgroundColor ?? AegisColors.purple300,
+          foregroundColor:
+              foregroundColor ?? style.color ?? AegisColors.neutral0,
+          backgroundColor: bgColor ?? AegisColors.purple300,
           disabledBackgroundColor: AegisColors.neutral100,
           disabledForegroundColor: AegisColors.textDisabled,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -107,7 +108,7 @@ class SkButton extends HookWidget {
       label: label,
       onPressed: onPressed,
       foregroundColor: AegisColors.purple300,
-      backgroundColor: AegisColors.purple100,
+      bgColor: AegisColors.purple100,
       elevation: elevation,
       isLoading: isLoading,
       size: size,
