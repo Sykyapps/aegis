@@ -254,6 +254,10 @@ class AegisAssets {
   static const AssetGenImage illustrations_verified =
       AssetGenImage('assets/illustrations/verified.webp');
 
+  /// File path: assets/illustrations/wallet_in_blue.webp
+  static const AssetGenImage illustrations_wallet_in_blue =
+      AssetGenImage('assets/illustrations/wallet_in_blue.webp');
+
   /// File path: assets/svg/check.svg
   static const String svg_check = 'packages/aegis/assets/svg/check.svg';
 
@@ -855,6 +859,7 @@ class AegisAssets {
         illustrations_verification_sucor,
         illustrations_verification_verified,
         illustrations_verified,
+        illustrations_wallet_in_blue,
         svg_check,
         svg_system_add,
         svg_system_add_image,
