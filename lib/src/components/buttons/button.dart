@@ -36,14 +36,14 @@ class SkButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style = textStyle ??
-        switch (size) {
-          SkButtonSize.small => AegisFont.bodySmall,
-          SkButtonSize.medium => AegisFont.bodyMedium,
-          SkButtonSize.regular => AegisFont.bodyLarge,
-          _ => AegisFont.bodyMedium,
-        }
-            .copyWith(fontWeight: FontWeight.bold);
+    TextStyle style = switch (size) {
+      SkButtonSize.small => AegisFont.bodySmall,
+      SkButtonSize.medium => AegisFont.bodyMedium,
+      SkButtonSize.regular => AegisFont.bodyLarge,
+      _ => AegisFont.bodyMedium,
+    }
+        .merge(textStyle)
+        .copyWith(fontWeight: FontWeight.bold);
 
     Size minimumSize = switch (size) {
       SkButtonSize.small => Size.fromHeight(29.r),
@@ -87,7 +87,6 @@ class SkButton extends HookWidget {
             ? SkLoadingAnimation(color: foregroundColor ?? AegisColors.neutral0)
             : Text(
                 label,
-                style: textStyle,
                 textAlign: TextAlign.center,
               ),
       ),
