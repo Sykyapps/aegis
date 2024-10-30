@@ -57,7 +57,7 @@ class SkExpandableBottomSheet extends HookWidget {
     var expandedHeight = minExpandedHeight;
 
     var titleRef = MeasurementUtil.measureWidget(
-      const _ExpandedTitle(title: ''),
+      const _ExpandedTitle(title: 'Title'),
     );
     var titleSize = MeasurementUtil.measureWidget(_ExpandedTitle(title: title));
     if (titleSize.height > titleRef.height) expandedHeight = maxExpandedHeight;
@@ -105,8 +105,10 @@ class SkExpandableBottomSheet extends HookWidget {
             child: Container(
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(
-                borderRadius:
-                    BorderRadius.only(topLeft: radius, topRight: radius),
+                borderRadius: BorderRadius.only(
+                  topLeft: radius,
+                  topRight: radius,
+                ),
                 color: AegisColors.neutral0,
               ),
               child: DraggableScrollableSheet(
@@ -121,7 +123,7 @@ class SkExpandableBottomSheet extends HookWidget {
                     shrinkWrap: true,
                     slivers: [
                       _Header(title: title, expandedHeight: expandedHeight),
-                      SliverToBoxAdapter(child: child),
+                      SliverFillRemaining(child: child),
                     ],
                   );
                 },
