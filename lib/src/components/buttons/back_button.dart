@@ -19,6 +19,7 @@ class SkBackButton extends StatelessWidget {
         AegisIcons.chevron_left,
         size: 22.r,
         color: color ?? AegisColors.iconHighEmphasis,
+        semanticLabel: 'back_button',
       ),
     );
   }
