@@ -38,7 +38,7 @@ class SkSearchField extends HookWidget {
     }, [textUpdate]);
 
     return SkSemantics(
-      label: semanticsLabel,
+      identifier: semanticsLabel,
       child: TextFormField(
         controller: ctrl,
         onChanged: onChanged,

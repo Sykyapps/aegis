@@ -72,7 +72,7 @@ class SkCurrencyBoxField extends FormField<String> {
                       SizedBox(height: 4.r),
                     ],
                     SkSemantics(
-                      label: semanticsLabel = 'input_field',
+                      identifier: semanticsLabel,
                       child: TextFormField(
                         focusNode: focusNode,
                         controller: controller,
