@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
 import '../card/card.dart';
+import '../semantics/semantics.dart';
 import 'formatter/currency_formatter.dart';
 
 class SkCurrencyBoxField extends FormField<String> {
@@ -21,6 +22,7 @@ class SkCurrencyBoxField extends FormField<String> {
     ValueChanged<String>? onChanged,
     InputDecoration? decoration = const InputDecoration(),
     TextStyle? style,
+    String semanticsLabel = 'input_field',
   }) : super(
           builder: (FormFieldState<String> fieldState) {
             void onChangeHandler(String value) {
@@ -69,25 +71,28 @@ class SkCurrencyBoxField extends FormField<String> {
                       ),
                       SizedBox(height: 4.r),
                     ],
-                    TextFormField(
-                      focusNode: focusNode,
-                      controller: controller,
-                      onChanged: onChangeHandler,
-                      style: style ??
-                          AegisFont.headlineSmall.copyWith(
-                            color: AegisColors.neutral500,
-                          ),
-                      cursorWidth: 1.w,
-                      cursorColor: AegisColors.blue300,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      decoration: effectiveDecoration.copyWith(
-                        hintText: hintText,
+                    SkSemantics(
+                      identifier: semanticsLabel,
+                      child: TextFormField(
+                        focusNode: focusNode,
+                        controller: controller,
+                        onChanged: onChangeHandler,
+                        style: style ??
+                            AegisFont.headlineSmall.copyWith(
+                              color: AegisColors.neutral500,
+                            ),
+                        cursorWidth: 1.w,
+                        cursorColor: AegisColors.blue300,
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        decoration: effectiveDecoration.copyWith(
+                          hintText: hintText,
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          CurrencyInputFormatter(),
+                        ],
                       ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                        CurrencyInputFormatter(),
-                      ],
                     ),
                   ],
                 ),
