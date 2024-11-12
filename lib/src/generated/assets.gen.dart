@@ -22,6 +22,10 @@ class AegisAssets {
   static const AssetGenImage illustrations_account_2 =
       AssetGenImage('assets/illustrations/account_2.webp');
 
+  /// File path: assets/illustrations/chicken_saver_mini.webp
+  static const AssetGenImage illustrations_chicken_saver_mini =
+      AssetGenImage('assets/illustrations/chicken_saver_mini.webp');
+
   /// File path: assets/illustrations/cut_off_end_time.webp
   static const AssetGenImage illustrations_cut_off_end_time =
       AssetGenImage('assets/illustrations/cut_off_end_time.webp');
@@ -617,6 +621,10 @@ class AegisAssets {
   static const String svg_system_verified =
       'packages/aegis/assets/svg/system/verified.svg';
 
+  /// File path: assets/svg/system/wallet.svg
+  static const String svg_system_wallet =
+      'packages/aegis/assets/svg/system/wallet.svg';
+
   /// File path: assets/tutorials/add_to_watchlist_1.webp
   static const AssetGenImage tutorials_add_to_watchlist_1 =
       AssetGenImage('assets/tutorials/add_to_watchlist_1.webp');
@@ -801,6 +809,7 @@ class AegisAssets {
   static List<dynamic> get values => [
         illustrations_account,
         illustrations_account_2,
+        illustrations_chicken_saver_mini,
         illustrations_cut_off_end_time,
         illustrations_cut_off_start_time,
         illustrations_decline,
@@ -950,6 +959,7 @@ class AegisAssets {
         svg_system_user,
         svg_system_user_fill,
         svg_system_verified,
+        svg_system_wallet,
         tutorials_add_to_watchlist_1,
         tutorials_add_to_watchlist_2,
         tutorials_add_to_watchlist_3,
