@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../../../utils/currency_util.dart';
 
+const _maxValue = 1000000000000000;
+
 class CurrencyInputFormatter extends TextInputFormatter {
   static String parse(String? text) {
     if (text.toString().isEmpty) {
@@ -41,7 +43,9 @@ class CurrencyInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    double value = double.parse(newValue.text);
+    var value = int.parse(newValue.text);
+    if (value > _maxValue) return oldValue;
+
     final fmt = NumberFormat.simpleCurrency(
       locale: 'id_ID',
       decimalDigits: 0,
