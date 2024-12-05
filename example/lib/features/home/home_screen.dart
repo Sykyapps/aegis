@@ -1,7 +1,8 @@
-import 'package:aegis_app/core/injection/dependency_injection.dart';
-import 'package:aegis_app/core/navigation/navigation_service.dart';
-import 'package:aegis_app/core/navigation/screens.dart';
+import 'package:aegis/components.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/injection/dependency_injection.dart';
+import '../../core/navigation/navigation_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,51 +11,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AegisScreen.home.title),
-      ),
+    return SkScaffold(
+      appBar: const SkAppBar(title: 'Home', showLeading: false),
       body: ListView(
         children: [
           ListTile(
-            title: Text(AegisScreen.bottomsheet.title),
+            title: const Text('Styles'),
             trailing: const Icon(Icons.arrow_right_rounded),
-            onTap: () {
-              /// Go to [BottomSheetScreen]
-              ns.push(AegisScreen.bottomsheet.path);
-            },
+            onTap: () => ns.push(AegisScreens.styles.path),
           ),
           ListTile(
-            title: Text(AegisScreen.segmentedControl.title),
+            title: const Text('Components'),
             trailing: const Icon(Icons.arrow_right_rounded),
-            onTap: () {
-              /// Go to [SegmentedControlScreen]
-              ns.push(AegisScreen.segmentedControl.path);
-            },
-          ),
-          ListTile(
-            title: Text(AegisScreen.fields.title),
-            trailing: const Icon(Icons.arrow_right_rounded),
-            onTap: () {
-              /// Go to [fieldsScreen]
-              ns.push(AegisScreen.fields.path);
-            },
-          ),
-          ListTile(
-            title: Text(AegisScreen.button.title),
-            trailing: const Icon(Icons.arrow_right_rounded),
-            onTap: () {
-              /// Go to [ButtonScreen]
-              ns.push(AegisScreen.button.path);
-            },
-          ),
-          ListTile(
-            title: Text(AegisScreen.icons.title),
-            trailing: const Icon(Icons.arrow_right_rounded),
-            onTap: () {
-              /// Go to [IconsScreen]
-              ns.push(AegisScreen.icons.path);
-            },
+            onTap: () => ns.push(AegisScreens.components.path),
           ),
         ],
       ),

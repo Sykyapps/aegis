@@ -1,18 +1,17 @@
-import 'package:aegis_app/core/navigation/screens.dart';
+import 'package:aegis/aegis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:aegis/aegis.dart';
 
-class SegmentedControlScreen extends HookWidget {
-  const SegmentedControlScreen({super.key});
+class TabsScreen extends HookWidget {
+  const TabsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     var productSegment = useState<int>(0);
     var authSegment = useState<int>(0);
     return Scaffold(
-      appBar: AppBar(title: Text(AegisScreen.segmentedControl.title)),
+      appBar: AppBar(title: const Text('Tabs')),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(20),
