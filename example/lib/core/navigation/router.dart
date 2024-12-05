@@ -1,72 +1,68 @@
-import 'package:aegis_app/features/icons/icons_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/bottomsheet/bottomsheet_screen.dart';
-import '../../features/button/button_screen.dart';
-import '../../features/fields/fields_screen.dart';
+import '../../features/components/buttons/buttons_screen.dart';
+import '../../features/components/components_screen.dart';
+import '../../features/components/fields/fields_screen.dart';
+import '../../features/components/tabs/tabs_screen.dart';
+import '../../features/components/sheets/sheets_screen.dart';
 import '../../features/home/home_screen.dart';
-import '../../features/segmented_control/segmented_control_screen.dart';
+import '../../features/styles/icons/icons_screen.dart';
+import '../../features/styles/styles_screen.dart';
 import 'screens.dart';
 
-class AppRouter {
+class AppRouter extends GoRouter {
   static final _navigatorKey = GlobalKey<NavigatorState>();
-  GoRouter get router => _router;
+
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  static final _router = GoRouter(
-    initialLocation: AegisScreen.home.path,
-    navigatorKey: _navigatorKey,
-    routes: <GoRoute>[
-      GoRoute(
-        name: AegisScreen.home.name,
-        path: AegisScreen.home.path,
-        builder: (context, state) {
-          return const HomeScreen();
-        },
-      ),
-      GoRoute(
-        name: AegisScreen.bottomsheet.name,
-        path: AegisScreen.bottomsheet.path,
-        builder: (context, state) {
-          return const BottomSheetScreen();
-        },
-      ),
-      GoRoute(
-        name: AegisScreen.segmentedControl.name,
-        path: AegisScreen.segmentedControl.path,
-        builder: (context, state) {
-          return const SegmentedControlScreen();
-        },
-      ),
-      GoRoute(
-        name: AegisScreen.fields.name,
-        path: AegisScreen.fields.path,
-        builder: (context, state) {
-          return const FieldsScreen();
-        },
-      ),
-      GoRoute(
-        name: AegisScreen.button.name,
-        path: AegisScreen.button.path,
-        builder: (context, state) {
-          return const ButtonScreen();
-        },
-      ),
-      GoRoute(
-        name: AegisScreen.icons.name,
-        path: AegisScreen.icons.path,
-        builder: (context, state) {
-          return const IconsScreen();
-        },
-      ),
-    ],
-    errorBuilder: (context, state) {
-      return Scaffold(
-        body: Center(
-          child: Text('Error : ${state.error}'),
-        ),
-      );
-    },
-  );
+  AppRouter()
+      : super(
+          initialLocation: AegisScreens.home.path,
+          navigatorKey: _navigatorKey,
+          routes: [
+            GoRoute(
+              name: AegisScreens.home.name,
+              path: AegisScreens.home.path,
+              builder: (_, __) => const HomeScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.styles.name,
+              path: AegisScreens.styles.path,
+              builder: (_, __) => const StylesScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.icons.name,
+              path: AegisScreens.icons.path,
+              builder: (_, __) => const IconsScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.components.name,
+              path: AegisScreens.components.path,
+              builder: (_, __) => const ComponentsScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.sheets.name,
+              path: AegisScreens.sheets.path,
+              builder: (_, __) => const SheetsScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.tabs.name,
+              path: AegisScreens.tabs.path,
+              builder: (_, __) => const TabsScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.fields.name,
+              path: AegisScreens.fields.path,
+              builder: (_, __) => const FieldsScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.buttons.name,
+              path: AegisScreens.buttons.path,
+              builder: (_, __) => const ButtonsScreen(),
+            ),
+          ],
+          errorBuilder: (_, state) =>
+              Scaffold(body: Center(child: Text('Error : ${state.error}'))),
+        );
 }
