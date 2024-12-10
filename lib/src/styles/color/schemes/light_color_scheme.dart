@@ -33,8 +33,8 @@ class AegisLightColorScheme {
   static const onErrorContainer = AegisColors.red300;
 
   // Background
-  static const background = AegisColors.neutral100;
-  static const onBackground = AegisColors.neutral400;
+  static const background = AegisColors.white;
+  static const onBackground = AegisColors.neutral500;
 
   // Surface
   static const surface = AegisColors.white;
