@@ -57,8 +57,10 @@ class AegisColors {
 
   static const backgroundWhite = white;
   static const backgroundGray = neutral100;
-  static const backgroundSurface = Color.fromRGBO(27, 27, 27, 1);
   static const backgroundBlack = Color.fromRGBO(13, 13, 13, 1);
+
+  static const darkSurface = Color.fromRGBO(27, 27, 27, 1);
+  static const darkSurfaceVariant = Color.fromRGBO(20, 20, 20, 1);
 
   static const textHighEmphasis = neutral500;
   static const textLowEmphasis = neutral400;

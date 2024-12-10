@@ -11,7 +11,7 @@ class AegisDarkColorScheme {
   // Primary
   static const primary = AegisColors.purple300;
   static const onPrimary = AegisColors.white;
-  static const primaryContainer = AegisColors.backgroundSurface;
+  static const primaryContainer = AegisColors.darkSurface;
   static const onPrimaryContainer = AegisColors.purple300;
 
   // Secondary
@@ -37,10 +37,10 @@ class AegisDarkColorScheme {
   static const onBackground = AegisColors.white;
 
   // Surface
-  static const surface = AegisColors.backgroundSurface;
+  static const surface = AegisColors.darkSurface;
   static const onSurface = AegisColors.white;
-  static const surfaceVariant = AegisColors.neutral100;
-  static const onSurfaceVariant = AegisColors.neutral400;
+  static const surfaceVariant = AegisColors.darkSurfaceVariant;
+  static const onSurfaceVariant = AegisColors.white;
 
   // Outline
   static const outline = AegisColors.neutralVariant400;
