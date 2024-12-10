@@ -9,6 +9,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SkAppBar({
     super.key,
     this.title = '',
+    this.titleWidget,
     this.centerTitle = true,
     this.titleTextStyle,
     this.showLeading = true,
@@ -23,6 +24,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final String title;
+  final Widget? titleWidget;
   final bool centerTitle;
   final TextStyle? titleTextStyle;
   final bool showLeading;
@@ -43,7 +45,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
+      title: titleWidget ?? Text(title),
       centerTitle: centerTitle,
       titleTextStyle: titleTextStyle,
       backgroundColor: AegisColors.transparent,
