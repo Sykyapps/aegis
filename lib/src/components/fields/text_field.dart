@@ -269,16 +269,16 @@ class _ClearButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () => controller.clear(),
-      icon: const Icon(AegisIcons.close_circle_fill),
-      constraints: const BoxConstraints(),
+    return Padding(
       padding: const EdgeInsets.only(left: 8).r,
-      iconSize: 20.r,
-      color: AegisColors.neutral300,
-      enableFeedback: false,
-      splashColor: Colors.transparent,
-      focusColor: Colors.transparent,
+      child: InkWell(
+        onTap: () => controller.clear(),
+        child: Icon(
+          AegisIcons.close_circle_fill,
+          size: 20.r,
+          color: AegisColors.neutral300,
+        ),
+      ),
     );
   }
 }

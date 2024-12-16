@@ -62,17 +62,16 @@ class SkPasswordField extends HookWidget {
             hasUpperCase.value = SkRegExp.anyUpperCase.hasMatch(password);
             hasNumber.value = SkRegExp.anyDigit.hasMatch(password);
           },
-          suffix: IconButton(
-            onPressed: () => obscureText.value = !obscureText.value,
-            icon: Icon(
-              obscureText.value ? AegisIcons.eye_open : AegisIcons.eye_close,
+          suffix: Padding(
+            padding: const EdgeInsets.only(left: 8).r,
+            child: InkWell(
+              onTap: () => obscureText.value = !obscureText.value,
+              child: Icon(
+                obscureText.value ? AegisIcons.eye_open : AegisIcons.eye_close,
+                size: 20.r,
+                color: AegisColors.neutral300,
+              ),
             ),
-            constraints: const BoxConstraints(),
-            padding: EdgeInsets.zero,
-            iconSize: 20.r,
-            color: AegisColors.neutral300,
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
           ),
           inputFormatters: [
             FilteringTextInputFormatter.deny(' '),
