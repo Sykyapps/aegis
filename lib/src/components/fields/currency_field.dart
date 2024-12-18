@@ -22,6 +22,7 @@ class SkCurrencyField extends FormField<String> {
     FormFieldValidator<String?>? validator,
     FormFieldSetter<String>? onSaved,
   }) : super(
+          initialValue: controller?.text,
           enabled: enabled,
           autovalidateMode: autovalidateMode,
           validator: validator,

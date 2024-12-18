@@ -24,6 +24,7 @@ class SkCurrencyBoxField extends FormField<String> {
     TextStyle? style,
     String semanticsLabel = 'input_field',
   }) : super(
+          initialValue: controller?.text,
           builder: (FormFieldState<String> fieldState) {
             void onChangeHandler(String value) {
               if (value.isEmpty) return;
