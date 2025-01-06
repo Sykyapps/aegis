@@ -3,15 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/injection/dependency_injection.dart';
+import '../../../core/navigation/navigation_service.dart';
+
 class TabsScreen extends HookWidget {
   const TabsScreen({super.key});
+
+  static final NavigationService ns = getIt();
 
   @override
   Widget build(BuildContext context) {
     var productSegment = useState<int>(0);
     var authSegment = useState<int>(0);
-    return Scaffold(
-      appBar: AppBar(title: const Text('Tabs')),
+    return SkScaffold(
+      appBar: SkAppBar(
+        title: 'Tabs',
+        onLeadingPressed: () => ns.pop(),
+      ),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(20),

@@ -1,41 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../foundation.dart';
 import '../buttons/back_button.dart';
 
 class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SkAppBar({
     super.key,
+    this.onLeadingPressed,
     this.title = '',
     this.titleWidget,
-    this.centerTitle = true,
-    this.titleTextStyle,
-    this.showLeading = true,
-    this.leading,
-    this.leadingColor,
-    this.onLeadingPressed,
+    this.centerTitle,
     this.actions,
+    this.bottom,
     this.elevation = 0,
     this.systemOverlayStyle,
-    this.titleSpacing = 0,
-    this.bottom,
   });
 
+  /// The [onLeadingPressed] will be called when the back button was pressed.
+  ///
+  /// If this param is null, the back button will be hidden.
+  final VoidCallback? onLeadingPressed;
+
+  /// The [title] param will be wrapped by [Text] widget.
   final String title;
+
+  /// The [titleWidget] param will be prioritized than the [title] param.
   final Widget? titleWidget;
-  final bool centerTitle;
-  final TextStyle? titleTextStyle;
-  final bool showLeading;
-  final Widget? leading;
-  final Color? leadingColor;
-  final void Function()? onLeadingPressed;
+
+  /// The [centerTitle] param can be used to override the title position.
+  final bool? centerTitle;
+
+  /// A list of Widgets to display in a row after the [title] widget.
+  ///
+  /// Typically these widgets are [IconButton]s representing common operations.
+  /// For less common operations, consider using a [PopupMenuButton] as the last
+  /// action.
+  ///
+  /// The [actions] become the trailing component of the [NavigationToolbar]
+  /// built by this widget. The height of each action is constrained to be no
+  /// bigger than the [toolbarHeight].
   final List<Widget>? actions;
-  final double elevation;
-  final SystemUiOverlayStyle? systemOverlayStyle;
-  final double titleSpacing;
+
+  /// This widget appears across the bottom of the app bar.
+  ///
+  /// Typically a [TabBar] or a [SearchField].
   final PreferredSizeWidget? bottom;
+
+  /// The [elevation] will override the [elevation] of the [AppBarTheme].
+  final double elevation;
+
+  /// The [systemOverlayStyle] will override the [systemOverlayStyle] of the
+  /// [AppBarTheme].
+  final SystemUiOverlayStyle? systemOverlayStyle;
 
   @override
   Size get preferredSize => Size.fromHeight(
@@ -45,26 +61,17 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: titleWidget ?? Text(title),
-      centerTitle: centerTitle,
-      titleTextStyle: titleTextStyle,
-      backgroundColor: AegisColors.transparent,
-      foregroundColor: AegisColors.textHighEmphasis,
-      surfaceTintColor: AegisColors.transparent,
-      automaticallyImplyLeading: showLeading,
-      leadingWidth: 60.w,
-      titleSpacing: titleSpacing,
-      leading: !showLeading
+      leading: onLeadingPressed == null
           ? null
-          : leading ??
-              SkBackButton(
-                color: leadingColor,
-                onPressed: onLeadingPressed,
-              ),
+          : SkBackButton(onPressed: onLeadingPressed),
+      title: titleWidget ?? Text(title),
+      titleSpacing: onLeadingPressed == null ? null : 0,
+      automaticallyImplyLeading: false,
+      centerTitle: centerTitle,
       actions: actions,
-      elevation: elevation,
-      systemOverlayStyle: systemOverlayStyle ?? SystemUiOverlayStyle.dark,
       bottom: bottom,
+      elevation: elevation,
+      systemOverlayStyle: systemOverlayStyle,
     );
   }
 }

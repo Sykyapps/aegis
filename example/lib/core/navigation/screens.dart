@@ -3,6 +3,8 @@ enum AegisScreens {
   styles('/styles'),
   icons('/styles/icons'),
   components('/components'),
+  appBars('/components/app-bars'),
+  basicAppBar('/components/app-bars/basic'),
   buttons('/components/buttons'),
   fields('/components/fields'),
   sheets('/components/sheets'),

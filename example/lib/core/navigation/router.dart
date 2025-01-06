@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/components/app_bars/app_bar_screen.dart';
+import '../../features/components/app_bars/app_bars_screen.dart';
 import '../../features/components/buttons/buttons_screen.dart';
 import '../../features/components/components_screen.dart';
 import '../../features/components/fields/fields_screen.dart';
@@ -42,6 +44,26 @@ class AppRouter extends GoRouter {
               builder: (_, __) => const ComponentsScreen(),
             ),
             GoRoute(
+              name: AegisScreens.appBars.name,
+              path: AegisScreens.appBars.path,
+              builder: (_, __) => const AppBarsScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.basicAppBar.name,
+              path: AegisScreens.basicAppBar.path,
+              builder: (_, __) => const AppBarScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.buttons.name,
+              path: AegisScreens.buttons.path,
+              builder: (_, __) => const ButtonsScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.fields.name,
+              path: AegisScreens.fields.path,
+              builder: (_, __) => const FieldsScreen(),
+            ),
+            GoRoute(
               name: AegisScreens.sheets.name,
               path: AegisScreens.sheets.path,
               builder: (_, __) => const SheetsScreen(),
@@ -50,16 +72,6 @@ class AppRouter extends GoRouter {
               name: AegisScreens.tabs.name,
               path: AegisScreens.tabs.path,
               builder: (_, __) => const TabsScreen(),
-            ),
-            GoRoute(
-              name: AegisScreens.fields.name,
-              path: AegisScreens.fields.path,
-              builder: (_, __) => const FieldsScreen(),
-            ),
-            GoRoute(
-              name: AegisScreens.buttons.name,
-              path: AegisScreens.buttons.path,
-              builder: (_, __) => const ButtonsScreen(),
             ),
           ],
           errorBuilder: (_, state) =>

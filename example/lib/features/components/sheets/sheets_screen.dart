@@ -7,15 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/injection/dependency_injection.dart';
+import '../../../core/navigation/navigation_service.dart';
+
 class SheetsScreen extends HookWidget {
   const SheetsScreen({super.key});
+
+  static final NavigationService ns = getIt();
 
   @override
   Widget build(BuildContext context) {
     var selectedNumbers = useValueNotifier<List<String>>([]);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Sheets')),
+    return SkScaffold(
+      appBar: SkAppBar(
+        title: 'Sheets',
+        onLeadingPressed: () => ns.pop(),
+      ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20).r,
         child: Column(

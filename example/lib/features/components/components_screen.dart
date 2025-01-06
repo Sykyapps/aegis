@@ -19,6 +19,11 @@ class ComponentsScreen extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
+            title: const Text('App Bars'),
+            trailing: const Icon(Icons.arrow_right_rounded),
+            onTap: () => nav.push(AegisScreens.appBars.path),
+          ),
+          ListTile(
             title: const Text('Buttons'),
             trailing: const Icon(Icons.arrow_right_rounded),
             onTap: () => nav.push(AegisScreens.buttons.path),

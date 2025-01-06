@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../styles/color/scheme.dart';
 import '../styles/text/theme.dart';
+import 'components/app_bar_theme.dart';
 
 class AegisTheme {
   AegisTheme._();
@@ -13,6 +14,7 @@ class AegisTheme {
     brightness: Brightness.light,
     colorScheme: AegisColorScheme.light,
     scaffoldBackgroundColor: AegisColorScheme.light.background,
+    appBarTheme: AegisAppBarTheme.light,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -22,5 +24,6 @@ class AegisTheme {
     brightness: Brightness.dark,
     colorScheme: AegisColorScheme.dark,
     scaffoldBackgroundColor: AegisColorScheme.dark.background,
+    appBarTheme: AegisAppBarTheme.dark,
   );
 }

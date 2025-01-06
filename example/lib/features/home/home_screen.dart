@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SkScaffold(
-      appBar: const SkAppBar(title: 'Home', showLeading: false),
+      appBar: const SkAppBar(title: 'Home'),
       body: ListView(
         children: [
           ListTile(
