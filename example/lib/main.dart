@@ -28,6 +28,7 @@ class AegisApp extends StatelessWidget {
           darkTheme: AegisTheme.darkTheme,
           routerDelegate: _router.routerDelegate,
           routeInformationParser: _router.routeInformationParser,
+          debugShowCheckedModeBanner: false,
           builder: (context, child) {
             return MediaQuery(
               data: MediaQuery.of(context)

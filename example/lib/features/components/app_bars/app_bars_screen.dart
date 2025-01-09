@@ -23,6 +23,11 @@ class AppBarsScreen extends StatelessWidget {
             trailing: const Icon(Icons.arrow_right_rounded),
             onTap: () => nav.push(AegisScreens.basicAppBar.path),
           ),
+          ListTile(
+            title: const Text('Sliver App Bar'),
+            trailing: const Icon(Icons.arrow_right_rounded),
+            onTap: () => nav.push(AegisScreens.sliverAppBar.path),
+          ),
         ],
       ),
     );

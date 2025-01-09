@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/components/app_bars/app_bar_screen.dart';
 import '../../features/components/app_bars/app_bars_screen.dart';
+import '../../features/components/app_bars/sliver_app_bar_screen.dart';
 import '../../features/components/buttons/buttons_screen.dart';
 import '../../features/components/components_screen.dart';
 import '../../features/components/fields/fields_screen.dart';
@@ -52,6 +53,11 @@ class AppRouter extends GoRouter {
               name: AegisScreens.basicAppBar.name,
               path: AegisScreens.basicAppBar.path,
               builder: (_, __) => const AppBarScreen(),
+            ),
+            GoRoute(
+              name: AegisScreens.sliverAppBar.name,
+              path: AegisScreens.sliverAppBar.path,
+              builder: (_, __) => const SliverAppBarScreen(),
             ),
             GoRoute(
               name: AegisScreens.buttons.name,
