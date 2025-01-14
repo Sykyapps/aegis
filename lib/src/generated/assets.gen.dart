@@ -14,6 +14,23 @@ class AegisAssets {
 
   static const String package = 'aegis';
 
+  /// File path: assets/emojis/handshake_light_skin_tone_medium_light_skin_tone.webp
+  static const AssetGenImage
+      emojis_handshake_light_skin_tone_medium_light_skin_tone = AssetGenImage(
+          'assets/emojis/handshake_light_skin_tone_medium_light_skin_tone.webp');
+
+  /// File path: assets/emojis/money_bag.webp
+  static const AssetGenImage emojis_money_bag =
+      AssetGenImage('assets/emojis/money_bag.webp');
+
+  /// File path: assets/emojis/money_mouth_face.webp
+  static const AssetGenImage emojis_money_mouth_face =
+      AssetGenImage('assets/emojis/money_mouth_face.webp');
+
+  /// File path: assets/emojis/writing_hand_light_skin_tone.webp
+  static const AssetGenImage emojis_writing_hand_light_skin_tone =
+      AssetGenImage('assets/emojis/writing_hand_light_skin_tone.webp');
+
   /// File path: assets/illustrations/account.webp
   static const AssetGenImage illustrations_account =
       AssetGenImage('assets/illustrations/account.webp');
@@ -807,6 +824,10 @@ class AegisAssets {
 
   /// List of all assets
   static List<dynamic> get values => [
+        emojis_handshake_light_skin_tone_medium_light_skin_tone,
+        emojis_money_bag,
+        emojis_money_mouth_face,
+        emojis_writing_hand_light_skin_tone,
         illustrations_account,
         illustrations_account_2,
         illustrations_chicken_saver_mini,
@@ -1009,11 +1030,18 @@ class AegisAssets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName);
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  });
 
   final String _assetName;
 
   static const String package = 'aegis';
+
+  final Size? size;
+  final Set<String> flavors;
 
   Image image({
     Key? key,
@@ -1033,7 +1061,7 @@ class AssetGenImage {
     ImageRepeat repeat = ImageRepeat.noRepeat,
     Rect? centerSlice,
     bool matchTextDirection = false,
-    bool gaplessPlayback = false,
+    bool gaplessPlayback = true,
     bool isAntiAlias = false,
     @Deprecated('Do not specify package for a generated library asset')
     String? package = package,
