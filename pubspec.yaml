@@ -64,6 +64,7 @@ flutter:
     - assets/illustrations/transaction/
     - assets/illustrations/verification/
     - assets/tutorials/
+    - assets/emojis/
 
 flutter_gen:
   output: lib/src/generated/

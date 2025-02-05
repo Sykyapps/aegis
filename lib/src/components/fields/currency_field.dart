@@ -90,7 +90,9 @@ class SkCurrencyField extends FormField<String> {
                 if (labelText != null)
                   Text(
                     labelText,
-                    style: effectiveDecoration.labelStyle,
+                    style: effectiveDecoration.labelStyle?.copyWith(
+                      color: fieldState.hasError ? AegisColors.red300 : null,
+                    ),
                   ),
                 TextFormField(
                   enabled: enabled,
