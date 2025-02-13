@@ -34,6 +34,7 @@ class SkTextField extends HookWidget {
     this.textCapitalization = TextCapitalization.none,
     this.tooltipTitle,
     this.tooltipContent,
+    this.maxLength,
     this.scrollPadding = const EdgeInsets.all(30.0),
     this.readOnly = false,
     this.semanticLabel,
@@ -55,6 +56,7 @@ class SkTextField extends HookWidget {
   final Widget? prefix;
   final Widget? suffix;
   final TextInputType? keyboardType;
+  final int? maxLength;
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
   final String? tooltipTitle;
@@ -187,6 +189,7 @@ class SkTextField extends HookWidget {
               style: (style ?? AegisFont.bodyLarge).copyWith(
                 color: enabled ? null : AegisColors.neutral300,
               ),
+              maxLength: maxLength,
               obscureText: obscureText,
               cursorHeight: 24.h,
               cursorWidth: 1.w,
@@ -246,6 +249,7 @@ class SkTextField extends HookWidget {
                     AegisFont.bodyMedium.copyWith(
                       color: AegisColors.textPositive,
                     ),
+                counter: const SizedBox(),
                 prefixIcon: prefix,
                 prefixIconConstraints: const BoxConstraints(),
                 suffixIcon: suffix ??
