@@ -66,7 +66,6 @@ class _OptionItem extends StatelessWidget {
     return InkWell(
       onTap: onSelected,
       child: Container(
-        height: 56.r,
         width: 1.sw,
         margin: const EdgeInsets.symmetric(horizontal: 20).r,
         padding: const EdgeInsets.symmetric(vertical: 16).r,
@@ -76,9 +75,8 @@ class _OptionItem extends StatelessWidget {
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
+            Expanded(
               child: Text(
                 name,
                 style: AegisFont.bodyMedium.copyWith(
