@@ -137,41 +137,45 @@ class SkTextField extends HookWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              labelText,
-              style: AegisFont.bodyMedium.copyWith(
-                fontWeight: FontWeight.bold,
-                color: getStateColor(),
+        if (labelText.isNotEmpty)
+          Row(
+            children: [
+              Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  labelText,
+                  style: AegisFont.bodyMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: getStateColor(),
+                  ),
+                ),
               ),
-            ),
-            tooltipTitle != null && tooltipContent != null
-                ? GestureDetector(
-                    onTap: () async {
-                      SkBottomSheet(
-                        title: tooltipTitle,
-                        child: Container(
-                          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          child: Text(
-                            tooltipContent!,
-                            style: AegisFont.bodyMedium,
+              tooltipTitle != null && tooltipContent != null
+                  ? GestureDetector(
+                      onTap: () async {
+                        SkBottomSheet(
+                          title: tooltipTitle,
+                          child: Container(
+                            margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: Text(
+                              tooltipContent!,
+                              style: AegisFont.bodyMedium,
+                            ),
                           ),
+                        ).show(context);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Icon(
+                          AegisIcons.information_fill,
+                          color: AegisColors.neutral300,
+                          size: 15,
                         ),
-                      ).show(context);
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Icon(
-                        AegisIcons.information_fill,
-                        color: AegisColors.neutral300,
-                        size: 15,
                       ),
-                    ),
-                  )
-                : const SizedBox()
-          ],
-        ),
+                    )
+                  : const SizedBox()
+            ],
+          ),
         MergeSemantics(
           child: Semantics(
             explicitChildNodes: true,
