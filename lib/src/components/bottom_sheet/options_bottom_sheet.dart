@@ -11,12 +11,14 @@ class SkOptionsBottomSheet<T> extends HookWidget {
     required this.initial,
     required this.options,
     required this.getName,
+    this.isScrollable = false,
   });
 
   final String title;
   final T? initial;
   final List<T> options;
   final String Function(T) getName;
+  final bool isScrollable;
 
   Future<T?> show(BuildContext context) {
     var result = SkExpandableBottomSheet.show<T>(
@@ -31,6 +33,25 @@ class SkOptionsBottomSheet<T> extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var selected = useState<T?>(initial);
+    if (isScrollable) {
+      return Material(
+        color: AegisColors.backgroundWhite,
+        child: SingleChildScrollView(
+          child: Column(
+            children: options
+                .map((option) => _OptionItem(
+                      name: getName(option),
+                      isActive: selected.value == option,
+                      onSelected: () {
+                        selected.value = option;
+                        Navigator.of(context).pop(selected.value);
+                      },
+                    ))
+                .toList(),
+          ),
+        ),
+      );
+    }
     return Material(
       color: AegisColors.backgroundWhite,
       child: Column(
