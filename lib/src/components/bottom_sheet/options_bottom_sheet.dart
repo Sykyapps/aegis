@@ -11,6 +11,7 @@ class SkOptionsBottomSheet<T> extends HookWidget {
     required this.initial,
     required this.options,
     required this.getName,
+    this.itemBuilder,
     this.isScrollable = false,
   });
 
@@ -18,6 +19,7 @@ class SkOptionsBottomSheet<T> extends HookWidget {
   final T? initial;
   final List<T> options;
   final String Function(T) getName;
+  final Widget Function(T, bool)? itemBuilder;
   final bool isScrollable;
 
   Future<T?> show(BuildContext context) {
@@ -38,16 +40,20 @@ class SkOptionsBottomSheet<T> extends HookWidget {
         color: AegisColors.backgroundWhite,
         child: SingleChildScrollView(
           child: Column(
-            children: options
-                .map((option) => _OptionItem(
+            children: options.map((option) {
+              return GestureDetector(
+                onTap: () {
+                  selected.value = option;
+                  if (itemBuilder != null) return;
+                  Navigator.of(context).pop(selected.value);
+                },
+                child: itemBuilder?.call(option, selected.value == option) ??
+                    _OptionItem(
                       name: getName(option),
                       isActive: selected.value == option,
-                      onSelected: () {
-                        selected.value = option;
-                        Navigator.of(context).pop(selected.value);
-                      },
-                    ))
-                .toList(),
+                    ),
+              );
+            }).toList(),
           ),
         ),
       );
@@ -55,16 +61,20 @@ class SkOptionsBottomSheet<T> extends HookWidget {
     return Material(
       color: AegisColors.backgroundWhite,
       child: Column(
-        children: options
-            .map((option) => _OptionItem(
+        children: options.map((option) {
+          return GestureDetector(
+            onTap: () {
+              selected.value = option;
+              if (itemBuilder != null) return;
+              Navigator.of(context).pop(selected.value);
+            },
+            child: itemBuilder?.call(option, selected.value == option) ??
+                _OptionItem(
                   name: getName(option),
                   isActive: selected.value == option,
-                  onSelected: () {
-                    selected.value = option;
-                    Navigator.of(context).pop(selected.value);
-                  },
-                ))
-            .toList(),
+                ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -74,40 +84,35 @@ class _OptionItem extends StatelessWidget {
   const _OptionItem({
     Key? key,
     required this.name,
-    required this.onSelected,
     this.isActive = false,
   }) : super(key: key);
 
   final String name;
   final bool isActive;
-  final VoidCallback onSelected;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onSelected,
-      child: Container(
-        width: 1.sw,
-        margin: const EdgeInsets.symmetric(horizontal: 20).r,
-        padding: const EdgeInsets.symmetric(vertical: 16).r,
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: AegisColors.borderHighEmphasis),
-          ),
+    return Container(
+      width: 1.sw,
+      margin: const EdgeInsets.symmetric(horizontal: 20).r,
+      padding: const EdgeInsets.symmetric(vertical: 16).r,
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: AegisColors.borderHighEmphasis),
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                name,
-                style: AegisFont.bodyMedium.copyWith(
-                  fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-                ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              name,
+              style: AegisFont.bodyMedium.copyWith(
+                fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
               ),
             ),
-            SkCheckbox(isActive: isActive),
-          ],
-        ),
+          ),
+          SkCheckbox(isActive: isActive),
+        ],
       ),
     );
   }
