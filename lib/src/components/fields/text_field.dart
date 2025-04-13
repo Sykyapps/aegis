@@ -34,6 +34,7 @@ class SkTextField extends HookWidget {
     this.textCapitalization = TextCapitalization.none,
     this.tooltipTitle,
     this.tooltipContent,
+    this.maxLength,
     this.scrollPadding = const EdgeInsets.all(30.0),
     this.readOnly = false,
     this.semanticLabel,
@@ -55,6 +56,7 @@ class SkTextField extends HookWidget {
   final Widget? prefix;
   final Widget? suffix;
   final TextInputType? keyboardType;
+  final int? maxLength;
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
   final String? tooltipTitle;
@@ -135,41 +137,45 @@ class SkTextField extends HookWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              labelText,
-              style: AegisFont.bodyMedium.copyWith(
-                fontWeight: FontWeight.bold,
-                color: getStateColor(),
+        if (labelText.isNotEmpty)
+          Row(
+            children: [
+              Flexible(
+                fit: FlexFit.loose,
+                child: Text(
+                  labelText,
+                  style: AegisFont.bodyMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: getStateColor(),
+                  ),
+                ),
               ),
-            ),
-            tooltipTitle != null && tooltipContent != null
-                ? GestureDetector(
-                    onTap: () async {
-                      SkBottomSheet(
-                        title: tooltipTitle,
-                        child: Container(
-                          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          child: Text(
-                            tooltipContent!,
-                            style: AegisFont.bodyMedium,
+              tooltipTitle != null && tooltipContent != null
+                  ? GestureDetector(
+                      onTap: () async {
+                        SkBottomSheet(
+                          title: tooltipTitle,
+                          child: Container(
+                            margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: Text(
+                              tooltipContent!,
+                              style: AegisFont.bodyMedium,
+                            ),
                           ),
+                        ).show(context);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Icon(
+                          AegisIcons.information_fill,
+                          color: AegisColors.neutral300,
+                          size: 15,
                         ),
-                      ).show(context);
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Icon(
-                        AegisIcons.information_fill,
-                        color: AegisColors.neutral300,
-                        size: 15,
                       ),
-                    ),
-                  )
-                : const SizedBox()
-          ],
-        ),
+                    )
+                  : const SizedBox()
+            ],
+          ),
         MergeSemantics(
           child: Semantics(
             explicitChildNodes: true,
@@ -187,6 +193,7 @@ class SkTextField extends HookWidget {
               style: (style ?? AegisFont.bodyLarge).copyWith(
                 color: enabled ? null : AegisColors.neutral300,
               ),
+              maxLength: maxLength,
               obscureText: obscureText,
               cursorHeight: 24.h,
               cursorWidth: 1.w,
@@ -246,6 +253,7 @@ class SkTextField extends HookWidget {
                     AegisFont.bodyMedium.copyWith(
                       color: AegisColors.textPositive,
                     ),
+                counter: const SizedBox(),
                 prefixIcon: prefix,
                 prefixIconConstraints: const BoxConstraints(),
                 suffixIcon: suffix ??
