@@ -15,6 +15,7 @@ enum SkFieldState {
 class SkTextField extends HookWidget {
   const SkTextField({
     super.key,
+    this.formFieldKey,
     this.enabled = true,
     this.style,
     this.validator,
@@ -41,6 +42,7 @@ class SkTextField extends HookWidget {
     this.onTapOutside,
   });
 
+  final Key? formFieldKey;
   final bool enabled;
   final TextStyle? style;
   final FocusNode? focusNode;
@@ -183,6 +185,7 @@ class SkTextField extends HookWidget {
             focusable: true,
             identifier: semanticLabel ?? labelText,
             child: TextFormField(
+              key: formFieldKey,
               onTapOutside: onTapOutside,
               enabled: enabled,
               focusNode: fn,
