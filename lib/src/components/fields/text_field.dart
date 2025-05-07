@@ -30,6 +30,7 @@ class SkTextField extends HookWidget {
     this.prefix,
     this.suffix,
     this.focusNode,
+    this.autoFocus = false,
     this.keyboardType,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.none,
@@ -46,6 +47,7 @@ class SkTextField extends HookWidget {
   final bool enabled;
   final TextStyle? style;
   final FocusNode? focusNode;
+  final bool autoFocus;
   final FormFieldValidator<String>? validator;
   final String? errorText;
   final String labelText;
@@ -186,6 +188,7 @@ class SkTextField extends HookWidget {
             identifier: semanticLabel ?? labelText,
             child: TextFormField(
               key: formFieldKey,
+              autofocus: autoFocus,
               onTapOutside: onTapOutside,
               enabled: enabled,
               focusNode: fn,
