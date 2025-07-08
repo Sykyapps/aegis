@@ -34,7 +34,7 @@ class SkBasicBottomSheet extends StatelessWidget {
           color: AegisColors.neutral0,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(16)).r,
         ),
-        child: child,
+        child: SafeArea(child: child),
       ),
     );
   }
