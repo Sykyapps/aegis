@@ -8,11 +8,13 @@ class SkSectionHeader extends StatelessWidget {
   const SkSectionHeader({
     super.key,
     required this.title,
+    this.titleStyle,
     this.subtitle,
     this.isGradient = false,
   });
 
   final String title;
+  final TextStyle? titleStyle;
   final String? subtitle;
   final bool isGradient;
 
@@ -22,9 +24,9 @@ class SkSectionHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (isGradient)
-          SkGradientSectionTitle(title)
+          SkGradientSectionTitle(title, titleStyle: titleStyle)
         else
-          SkSectionTitle(title),
+          SkSectionTitle(title, titleStyle: titleStyle),
         if (subtitle != null) ...[
           const SizedBox(height: 4),
           SkSectionSubtitle(subtitle!),
