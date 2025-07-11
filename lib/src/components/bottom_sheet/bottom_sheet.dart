@@ -72,19 +72,21 @@ class SkBottomSheet extends HookWidget {
               top: Radius.circular(16.r),
             ),
           ),
-          child: CustomScrollView(
-            controller: scrollController,
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            slivers: [
-              _Header(
-                title: title,
-                backgroundColor: isPinned.value
-                    ? AegisColors.backgroundWhite
-                    : AegisColors.transparent,
-              ),
-              SliverToBoxAdapter(child: child),
-            ],
+          child: SafeArea(
+            child: CustomScrollView(
+              controller: scrollController,
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              slivers: [
+                _Header(
+                  title: title,
+                  backgroundColor: isPinned.value
+                      ? AegisColors.backgroundWhite
+                      : AegisColors.transparent,
+                ),
+                SliverToBoxAdapter(child: child),
+              ],
+            ),
           ),
         ),
       ),
