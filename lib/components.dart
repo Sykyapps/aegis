@@ -7,6 +7,7 @@ export 'src/components/checkboxes/checkboxes.dart';
 export 'src/components/buttons/buttons.dart';
 export 'src/components/card/card.dart';
 export 'src/components/fields/fields.dart';
+export 'src/components/navbars/navbars.dart';
 export 'src/components/scaffolds/scaffolds.dart';
 export 'src/components/sections/sections.dart';
 export 'src/components/semantics/semantics.dart';
