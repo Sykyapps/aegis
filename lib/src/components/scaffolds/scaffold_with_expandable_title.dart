@@ -159,9 +159,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavigationBar == null
-          ? null
-          : SafeArea(child: bottomNavigationBar!),
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
