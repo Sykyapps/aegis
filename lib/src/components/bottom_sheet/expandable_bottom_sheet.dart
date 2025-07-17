@@ -37,15 +37,10 @@ class SkExpandableBottomSheet extends HookWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: SkExpandableBottomSheet(
-          title: title,
-          isExpandable: isExpandable,
-          child: child,
-        ),
+      builder: (context) => SkExpandableBottomSheet(
+        title: title,
+        isExpandable: isExpandable,
+        child: child,
       ),
     );
 
@@ -63,7 +58,7 @@ class SkExpandableBottomSheet extends HookWidget {
     if (titleSize.height > titleRef.height) expandedHeight = maxExpandedHeight;
 
     var childHeight = MeasurementUtil.measureWidget(child).height;
-    var totalHeight = maxExpandedHeight + childHeight;
+    var totalHeight = expandedHeight + childHeight + context.bottomPadding;
 
     var sheetSize = totalHeight / 1.sh;
 
@@ -85,54 +80,56 @@ class SkExpandableBottomSheet extends HookWidget {
         sigmaX: Shadow.convertRadiusToSigma(4),
         sigmaY: Shadow.convertRadiusToSigma(4),
       ),
-      child: SafeArea(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          clipBehavior: Clip.none,
-          children: [
-            Positioned(
-              top: -12.r,
-              child: Container(
-                height: 4.r,
-                width: 40.r,
-                decoration: const ShapeDecoration(
-                  color: AegisColors.backgroundWhite,
-                  shape: StadiumBorder(),
-                ),
+      child: Stack(
+        alignment: Alignment.topCenter,
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            top: -12.r,
+            child: Container(
+              height: 4.r,
+              width: 40.r,
+              decoration: const ShapeDecoration(
+                color: AegisColors.backgroundWhite,
+                shape: StadiumBorder(),
               ),
             ),
-            GestureDetector(
-              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              child: Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: radius,
-                    topRight: radius,
-                  ),
-                  color: AegisColors.neutral0,
+          ),
+          GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              padding: EdgeInsets.only(bottom: context.bottomPadding),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: radius,
+                  topRight: radius,
                 ),
-                child: DraggableScrollableSheet(
-                  expand: false,
-                  snap: true,
-                  initialChildSize: sheetSize,
-                  minChildSize: minSize,
-                  maxChildSize: maxSize,
-                  builder: (context, scrollController) {
-                    return CustomScrollView(
-                      controller: scrollController,
-                      shrinkWrap: true,
-                      slivers: [
-                        _Header(title: title, expandedHeight: expandedHeight),
-                        SliverFillRemaining(child: child),
-                      ],
-                    );
-                  },
-                ),
+                color: AegisColors.neutral0,
+              ),
+              child: DraggableScrollableSheet(
+                expand: false,
+                snap: true,
+                initialChildSize: sheetSize,
+                minChildSize: minSize,
+                maxChildSize: maxSize,
+                builder: (context, scrollController) {
+                  return CustomScrollView(
+                    controller: scrollController,
+                    physics: !isExpandable
+                        ? const NeverScrollableScrollPhysics()
+                        : null,
+                    shrinkWrap: true,
+                    slivers: [
+                      _Header(title: title, expandedHeight: expandedHeight),
+                      SliverFillRemaining(child: child),
+                    ],
+                  );
+                },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

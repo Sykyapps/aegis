@@ -95,9 +95,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
             sigmaY: Shadow.convertRadiusToSigma(4),
           ),
           child: Container(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
+            padding: EdgeInsets.only(bottom: context.bottomPadding - 16),
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
               borderRadius:
