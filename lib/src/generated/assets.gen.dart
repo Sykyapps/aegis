@@ -131,6 +131,10 @@ class AegisAssets {
   static const AssetGenImage illustrations_move_porto =
       AssetGenImage('assets/illustrations/move_porto.webp');
 
+  /// File path: assets/illustrations/nabung_rutin.webp
+  static const AssetGenImage illustrations_nabung_rutin =
+      AssetGenImage('assets/illustrations/nabung_rutin.webp');
+
   /// File path: assets/illustrations/no_nabung_rutin.webp
   static const AssetGenImage illustrations_no_nabung_rutin =
       AssetGenImage('assets/illustrations/no_nabung_rutin.webp');
@@ -853,6 +857,7 @@ class AegisAssets {
         illustrations_media_website,
         illustrations_media_whatsapp,
         illustrations_move_porto,
+        illustrations_nabung_rutin,
         illustrations_no_nabung_rutin,
         illustrations_no_transaction_1,
         illustrations_no_transaction_2,
