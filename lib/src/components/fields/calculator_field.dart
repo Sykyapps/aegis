@@ -8,6 +8,7 @@ import 'formatter/decimal_text_input_formatter.dart';
 class SkCalculatorField extends StatelessWidget {
   const SkCalculatorField({
     super.key,
+    this.readOnly = false,
     this.suffixTitle,
     this.prefixTitle,
     this.controller,
@@ -19,6 +20,7 @@ class SkCalculatorField extends StatelessWidget {
     required this.label,
   });
 
+  final bool readOnly;
   final String label;
   final String? suffixTitle;
   final String? prefixTitle;
@@ -31,6 +33,7 @@ class SkCalculatorField extends StatelessWidget {
 
   const SkCalculatorField.currency({
     super.key,
+    this.readOnly = false,
     this.suffixTitle,
     this.prefixTitle = 'Rp',
     this.controller,
@@ -45,6 +48,7 @@ class SkCalculatorField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SkTextField(
+      readOnly: readOnly,
       labelText: label,
       hintText: hintText,
       controller: controller,
