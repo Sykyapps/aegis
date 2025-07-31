@@ -75,7 +75,7 @@ class SkCurrencyField extends FormField<String> {
                 labelStyle: AegisFont.bodyMedium.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AegisColors.textHighEmphasis
-                      .withOpacity(enabled ? 1 : 0.38),
+                      .withValues(alpha: enabled ? 1 : 0.38),
                 ),
                 errorStyle: AegisFont.bodyMedium.copyWith(
                   color: AegisColors.red300,

@@ -81,7 +81,7 @@ class SkIconButton extends StatelessWidget {
             side: border,
             borderRadius: BorderRadius.circular(4),
           ),
-          shadowColor: const Color(0xFF000000).withOpacity(0.08),
+          shadowColor: const Color(0xFF000000).withValues(alpha: 0.08),
         ),
         onPressed: onPressed,
       ),

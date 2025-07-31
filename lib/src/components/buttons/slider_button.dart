@@ -107,9 +107,9 @@ class SkSliderButtonState extends State<SkSliderButton> {
         percent = 0.0;
       }
 
-      int red = widget.backgroundColorEnd!.red;
-      int green = widget.backgroundColorEnd!.green;
-      int blue = widget.backgroundColorEnd!.blue;
+      int red = (widget.backgroundColorEnd!.r * 255).toInt();
+      int green = (widget.backgroundColorEnd!.g * 255).toInt();
+      int blue = (widget.backgroundColorEnd!.b * 255).toInt();
 
       return Color.alphaBlend(
           Color.fromRGBO(red, green, blue, percent), widget.backgroundColor);
