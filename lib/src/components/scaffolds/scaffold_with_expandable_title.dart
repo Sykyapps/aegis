@@ -31,7 +31,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SkScaffold(
       body: NestedScrollView(
         controller: scrollController,
         headerSliverBuilder: (_, __) {
