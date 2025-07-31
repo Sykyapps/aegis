@@ -48,7 +48,7 @@ class SkCalculatorField extends StatelessWidget {
       labelText: label,
       hintText: hintText,
       controller: controller,
-      tooltipTitle: tooltipTitle,
+      tooltipTitle: tooltipTitle ?? label,
       tooltipContent: tooltipContent,
       keyboardType: isDecimal
           ? const TextInputType.numberWithOptions(decimal: true)
