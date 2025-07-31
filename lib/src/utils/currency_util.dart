@@ -8,8 +8,12 @@ class CurrencyUtil {
     customPattern: '\u00a4#,###',
   );
 
-  static String format(dynamic value) {
-    return formatter.format(value);
+  static String format(dynamic value, {bool withSymbol = true}) {
+    var formatted = formatter.format(value);
+    if (!withSymbol) {
+      formatted = formatted.replaceAll('Rp', '');
+    }
+    return formatted;
   }
 
   static String compactFormat(dynamic value, {bool withCurrency = false}) {
