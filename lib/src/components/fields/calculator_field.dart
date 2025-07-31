@@ -64,33 +64,27 @@ class SkCalculatorField extends StatelessWidget {
               : [FilteringTextInputFormatter.digitsOnly],
       prefix: prefixTitle != null
           ? Container(
-              height: 28,
-              width: 43,
               color: AegisColors.neutral100,
               margin: const EdgeInsets.only(right: 8),
-              child: Center(
-                child: Text(
-                  prefixTitle!,
-                  style: AegisFont.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: AegisColors.neutral400,
-                  ),
+              padding: const EdgeInsets.fromLTRB(12, 2, 12, 4),
+              child: Text(
+                prefixTitle!,
+                style: AegisFont.bodyLarge.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: AegisColors.neutral400,
                 ),
               ),
             )
           : null,
       suffix: suffixTitle != null
           ? Container(
-              height: 28,
-              width: 68,
               color: AegisColors.neutral100,
-              child: Center(
-                child: Text(
-                  suffixTitle!,
-                  style: AegisFont.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: AegisColors.neutral400,
-                  ),
+              padding: const EdgeInsets.fromLTRB(12, 2, 12, 4),
+              child: Text(
+                suffixTitle!,
+                style: AegisFont.bodyLarge.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: AegisColors.neutral400,
                 ),
               ),
             )
