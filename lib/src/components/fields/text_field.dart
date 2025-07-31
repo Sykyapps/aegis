@@ -263,7 +263,7 @@ class SkTextField extends HookWidget {
                 prefixIcon: prefix,
                 prefixIconConstraints: const BoxConstraints(),
                 suffixIcon: suffix ??
-                    (fn.hasFocus && ctrl.text.isNotEmpty
+                    (fn.hasFocus && ctrl.text.isNotEmpty && !readOnly
                         ? _ClearButton(controller: ctrl)
                         : null),
                 suffixIconConstraints: const BoxConstraints(),
