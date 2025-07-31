@@ -85,6 +85,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
               toolbarHeight: toolbarHeight,
               expandedHeight: totalExpandedHeight,
               backgroundColor: AegisColors.backgroundWhite,
+              surfaceTintColor: AegisColors.transparent,
               leading: IconButton(
                 constraints: const BoxConstraints(),
                 padding: EdgeInsets.zero,
