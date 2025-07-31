@@ -37,15 +37,10 @@ class SkExpandableBottomSheet extends HookWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: SkExpandableBottomSheet(
-          title: title,
-          isExpandable: isExpandable,
-          child: child,
-        ),
+      builder: (context) => SkExpandableBottomSheet(
+        title: title,
+        isExpandable: isExpandable,
+        child: child,
       ),
     );
 
@@ -63,7 +58,7 @@ class SkExpandableBottomSheet extends HookWidget {
     if (titleSize.height > titleRef.height) expandedHeight = maxExpandedHeight;
 
     var childHeight = MeasurementUtil.measureWidget(child).height;
-    var totalHeight = maxExpandedHeight + childHeight;
+    var totalHeight = expandedHeight + childHeight + context.bottomPadding;
 
     var sheetSize = totalHeight / 1.sh;
 
@@ -104,6 +99,7 @@ class SkExpandableBottomSheet extends HookWidget {
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             child: Container(
               clipBehavior: Clip.antiAlias,
+              padding: EdgeInsets.only(bottom: context.bottomPadding),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: radius,
@@ -120,6 +116,9 @@ class SkExpandableBottomSheet extends HookWidget {
                 builder: (context, scrollController) {
                   return CustomScrollView(
                     controller: scrollController,
+                    physics: !isExpandable
+                        ? const NeverScrollableScrollPhysics()
+                        : null,
                     shrinkWrap: true,
                     slivers: [
                       _Header(title: title, expandedHeight: expandedHeight),

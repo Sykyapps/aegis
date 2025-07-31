@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'section_title.dart';
 
 class SkGradientSectionTitle extends StatelessWidget {
-  const SkGradientSectionTitle(this.title, {Key? key}) : super(key: key);
+  const SkGradientSectionTitle(this.title, {Key? key, this.titleStyle})
+      : super(key: key);
 
   final String title;
+  final TextStyle? titleStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class SkGradientSectionTitle extends StatelessWidget {
           Color.fromRGBO(77, 104, 220, 1),
         ],
       ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-      child: SkSectionTitle(title),
+      child: SkSectionTitle(title, titleStyle: titleStyle),
     );
   }
 }

@@ -9,9 +9,11 @@ class SkSection extends StatelessWidget {
     this.subtitle,
     this.isHighlight = false,
     required this.child,
+    this.titleStyle,
   });
 
   final String title;
+  final TextStyle? titleStyle;
   final String? subtitle;
   final bool isHighlight;
   final Widget child;
@@ -28,6 +30,7 @@ class SkSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SkSectionHeader(
             title: title,
+            titleStyle: titleStyle,
             subtitle: subtitle,
             isGradient: isHighlight,
           ),
