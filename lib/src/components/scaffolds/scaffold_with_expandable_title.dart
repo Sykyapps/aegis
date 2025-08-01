@@ -16,6 +16,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     this.bottomNavigationBar,
     this.additionalHeader,
     this.scrollController,
+    this.bodyScrollController,
     this.onLoadMore,
   });
 
@@ -27,6 +28,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final Widget? additionalHeader;
   final ScrollController? scrollController;
+  final ScrollController? bodyScrollController;
   final VoidCallback? onLoadMore;
 
   @override
@@ -156,6 +158,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
         body: _InfiniteScrollView(
           onLoadMore: onLoadMore,
           child: CustomScrollView(
+            controller: bodyScrollController,
             slivers: slivers,
           ),
         ),
