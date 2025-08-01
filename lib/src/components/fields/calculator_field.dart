@@ -13,6 +13,7 @@ class SkCalculatorField extends StatelessWidget {
     this.prefixTitle,
     this.controller,
     this.hintText,
+    this.errorText,
     this.tooltipTitle,
     this.tooltipContent,
     this.validator,
@@ -25,6 +26,7 @@ class SkCalculatorField extends StatelessWidget {
   final String? suffixTitle;
   final String? prefixTitle;
   final TextEditingController? controller;
+  final String? errorText;
   final String? hintText;
   final String? tooltipTitle;
   final String? tooltipContent;
@@ -38,6 +40,7 @@ class SkCalculatorField extends StatelessWidget {
     this.prefixTitle = 'Rp',
     this.controller,
     this.hintText,
+    this.errorText,
     this.tooltipTitle,
     this.tooltipContent,
     this.validator,
@@ -52,6 +55,7 @@ class SkCalculatorField extends StatelessWidget {
       labelText: label,
       hintText: hintText,
       controller: controller,
+      errorText: errorText,
       tooltipTitle: tooltipTitle ?? label,
       tooltipContent: tooltipContent,
       keyboardType: isDecimal
