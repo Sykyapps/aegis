@@ -19,6 +19,7 @@ class SkCalculatorField extends StatelessWidget {
     this.validator,
     this.isDecimal = false,
     required this.label,
+    this.focusNode,
   });
 
   final bool readOnly;
@@ -32,6 +33,7 @@ class SkCalculatorField extends StatelessWidget {
   final String? tooltipContent;
   final String? Function(String?)? validator;
   final bool isDecimal;
+  final FocusNode? focusNode;
 
   const SkCalculatorField.currency({
     super.key,
@@ -46,6 +48,7 @@ class SkCalculatorField extends StatelessWidget {
     this.validator,
     this.isDecimal = false,
     required this.label,
+    this.focusNode,
   });
 
   @override
@@ -55,6 +58,7 @@ class SkCalculatorField extends StatelessWidget {
       labelText: label,
       hintText: hintText,
       controller: controller,
+      focusNode: focusNode,
       errorText: errorText,
       tooltipTitle: tooltipTitle ?? label,
       tooltipContent: tooltipContent,
