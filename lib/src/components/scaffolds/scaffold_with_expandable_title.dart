@@ -16,6 +16,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     this.bottomNavigationBar,
     this.additionalHeader,
     this.scrollController,
+    this.bodyScrollController,
     this.onLoadMore,
   });
 
@@ -27,11 +28,12 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final Widget? additionalHeader;
   final ScrollController? scrollController;
+  final ScrollController? bodyScrollController;
   final VoidCallback? onLoadMore;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SkScaffold(
       body: NestedScrollView(
         controller: scrollController,
         headerSliverBuilder: (_, __) {
@@ -85,6 +87,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
               toolbarHeight: toolbarHeight,
               expandedHeight: totalExpandedHeight,
               backgroundColor: AegisColors.backgroundWhite,
+              surfaceTintColor: AegisColors.transparent,
               leading: IconButton(
                 constraints: const BoxConstraints(),
                 padding: EdgeInsets.zero,
@@ -155,6 +158,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
         body: _InfiniteScrollView(
           onLoadMore: onLoadMore,
           child: CustomScrollView(
+            controller: bodyScrollController,
             slivers: slivers,
           ),
         ),
