@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
 
-class SkBasicBottomSheet extends StatelessWidget {
+class SkBasicBottomSheet<T> extends StatelessWidget {
   const SkBasicBottomSheet({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 
-  Future<bool?> show(BuildContext context) {
-    return showModalBottomSheet<bool>(
+  Future<T?> show(BuildContext context) {
+    return showModalBottomSheet<T?>(
       context: context,
       enableDrag: false,
       useRootNavigator: true,

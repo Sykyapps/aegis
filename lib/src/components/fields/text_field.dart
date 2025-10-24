@@ -12,6 +12,15 @@ enum SkFieldState {
   error,
 }
 
+const _border = UnderlineInputBorder(
+  borderRadius: BorderRadius.zero,
+  borderSide: BorderSide(color: AegisColors.neutral200),
+);
+const _errorBorder = UnderlineInputBorder(
+  borderRadius: BorderRadius.zero,
+  borderSide: BorderSide(color: AegisColors.red300),
+);
+
 class SkTextField extends HookWidget {
   const SkTextField({
     super.key,
@@ -81,19 +90,13 @@ class SkTextField extends HookWidget {
     var fieldState = useState<SkFieldState>(
       errorText == null ? baseState : SkFieldState.error,
     );
-
-    Color getStateColor() {
-      switch (fieldState.value) {
-        case SkFieldState.error:
-          return AegisColors.red300;
-        case SkFieldState.disabled:
-          return AegisColors.neutral300;
-        default:
-          return AegisColors.neutral500;
-      }
-    }
-
     var error = useState<String?>(errorText);
+
+    Color getStateColor() => switch (fieldState.value) {
+          SkFieldState.error => AegisColors.red300,
+          SkFieldState.disabled => AegisColors.neutral300,
+          _ => AegisColors.neutral500,
+        };
 
     void onFocusChanged() {
       if (!enabled) return;
@@ -106,11 +109,7 @@ class SkTextField extends HookWidget {
     }
 
     void onErrorChanged() {
-      if (error.value != null) {
-        fieldState.value = SkFieldState.error;
-      } else {
-        fieldState.value = baseState;
-      }
+      fieldState.value = error.value != null ? SkFieldState.error : baseState;
     }
 
     useEffect(() {
@@ -220,36 +219,17 @@ class SkTextField extends HookWidget {
                     color: AegisColors.blue300,
                   ),
                 ),
-                focusedErrorBorder: const UnderlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(
-                    color: AegisColors.red300,
-                  ),
-                ),
-                enabledBorder: const UnderlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(
-                    color: AegisColors.neutral200,
-                  ),
-                ),
-                disabledBorder: const UnderlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(
-                    color: AegisColors.neutral200,
-                  ),
-                ),
-                errorBorder: const UnderlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                  borderSide: BorderSide(
-                    color: AegisColors.red300,
-                  ),
-                ),
+                focusedErrorBorder: _errorBorder,
+                enabledBorder:
+                    (error.value?.isEmpty ?? false) ? _errorBorder : _border,
+                disabledBorder: _border,
+                errorBorder: _errorBorder,
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
                 hintText: hintText,
                 hintStyle: (style ?? AegisFont.bodyLarge).copyWith(
                   color: AegisColors.neutral300,
                 ),
-                errorText: error.value,
+                errorText: (error.value?.isEmpty ?? true) ? null : errorText,
                 errorStyle: AegisFont.bodyMedium.copyWith(
                   color: AegisColors.red300,
                 ),
@@ -263,7 +243,7 @@ class SkTextField extends HookWidget {
                 prefixIcon: prefix,
                 prefixIconConstraints: const BoxConstraints(),
                 suffixIcon: suffix ??
-                    (fn.hasFocus && ctrl.text.isNotEmpty
+                    (fn.hasFocus && ctrl.text.isNotEmpty && !readOnly
                         ? _ClearButton(controller: ctrl)
                         : null),
                 suffixIconConstraints: const BoxConstraints(),
