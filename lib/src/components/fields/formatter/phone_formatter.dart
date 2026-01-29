@@ -26,6 +26,7 @@ class PhoneFormatter extends TextInputFormatter {
     return newValue.copyWith(
       text: newText,
       selection: TextSelection.collapsed(offset: newText.length),
+      composing: TextRange.empty,
     );
   }
 }
