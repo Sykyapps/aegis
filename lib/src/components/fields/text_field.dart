@@ -40,6 +40,8 @@ class SkTextField extends HookWidget {
     this.suffix,
     this.focusNode,
     this.autoFocus = false,
+    this.autoCorrect = true,
+    this.enableSuggestions = true,
     this.keyboardType,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.none,
@@ -57,6 +59,8 @@ class SkTextField extends HookWidget {
   final TextStyle? style;
   final FocusNode? focusNode;
   final bool autoFocus;
+  final bool autoCorrect;
+  final bool enableSuggestions;
   final FormFieldValidator<String>? validator;
   final String? errorText;
   final String labelText;
@@ -188,6 +192,8 @@ class SkTextField extends HookWidget {
             child: TextFormField(
               key: formFieldKey,
               autofocus: autoFocus,
+              autocorrect: autoCorrect,
+              enableSuggestions: enableSuggestions,
               onTapOutside: onTapOutside,
               enabled: enabled,
               focusNode: fn,
