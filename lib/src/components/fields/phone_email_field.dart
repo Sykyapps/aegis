@@ -45,6 +45,8 @@ class SkPhoneEmailField extends HookWidget {
 
     return SkTextField(
       enabled: enabled,
+      autoCorrect: false,
+      enableSuggestions: false,
       labelText: labelText ?? 'Nomor Ponsel atau Email',
       hintText: hintText ?? 'Masukkan nomor ponsel atau email.',
       errorText: errorText,
