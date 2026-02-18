@@ -232,21 +232,26 @@ class _Header extends StatelessWidget {
   final Function(String) onChanged;
   final Widget? trailing;
 
-  static final double height = 64.r;
-  static final double expandedHeight = 156.r;
+  static final collapsedHeight = 56.r;
+  static final expandedHeight = 180.r;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
       elevation: 0,
+      scrolledUnderElevation: 4,
+      shadowColor: AegisColors.shadowEvelation1,
       automaticallyImplyLeading: false,
-      toolbarHeight: height,
+      toolbarHeight: collapsedHeight,
       expandedHeight: expandedHeight,
       backgroundColor: AegisColors.neutral0,
+      surfaceTintColor: AegisColors.neutral0,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraint) {
           var top = constraint.biggest.height;
+          var isCollapsed = top < expandedHeight;
+
           return FlexibleSpaceBar(
             expandedTitleScale: 1,
             titlePadding: EdgeInsets.zero,
@@ -260,7 +265,7 @@ class _Header extends StatelessWidget {
                     const _CloseButton(),
                     Expanded(
                       child: AnimatedOpacity(
-                        opacity: top <= 166 ? 1 : 0,
+                        opacity: isCollapsed ? 1 : 0,
                         duration: const Duration(milliseconds: 300),
                         child: _Title(title: title),
                       ),
@@ -272,7 +277,7 @@ class _Header extends StatelessWidget {
                   ],
                 ),
                 AnimatedOpacity(
-                  opacity: top > 166 ? 1 : 0,
+                  opacity: !isCollapsed ? 1 : 0,
                   duration: const Duration(milliseconds: 300),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20).r,
@@ -285,10 +290,10 @@ class _Header extends StatelessWidget {
         },
       ),
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
+        preferredSize: const Size.fromHeight(80),
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20).r,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20).r,
           child: SkSearchField(
             controller: controller,
             hintText: searchLabel,
