@@ -8,4 +8,10 @@ extension WidgetUtil on BuildContext {
     if (Platform.isAndroid || (Platform.isIOS && bottom == 0)) bottom += 16;
     return bottom;
   }
+
+  double get bottomInset {
+    var bottom = MediaQuery.viewInsetsOf(this).bottom;
+    if (Platform.isAndroid || (Platform.isIOS && bottom == 0)) bottom += 16;
+    return bottom;
+  }
 }

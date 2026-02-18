@@ -203,21 +203,24 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                     else
                       SliverList(
                         delegate: SliverChildListDelegate(
-                          filtered.value.map((f) {
-                            var isSelected = f == selected.value;
-                            return _OptionItem(
-                              imageUrl: getImage?.call(f),
-                              title: getLabel(f),
-                              subtitle: subtitleBuilder?.call(f, isSelected),
-                              trailing: trailingBuilder?.call(f, isSelected),
-                              isSelected: isSelected,
-                              onPressed: () {
-                                selected.value = f;
-                                if (disableUnfocusBehavior) return;
-                                Navigator.of(context).pop(f);
-                              },
-                            );
-                          }).toList(),
+                          [
+                            ...filtered.value.map((f) {
+                              var isSelected = f == selected.value;
+                              return _OptionItem(
+                                imageUrl: getImage?.call(f),
+                                title: getLabel(f),
+                                subtitle: subtitleBuilder?.call(f, isSelected),
+                                trailing: trailingBuilder?.call(f, isSelected),
+                                isSelected: isSelected,
+                                onPressed: () {
+                                  selected.value = f;
+                                  if (disableUnfocusBehavior) return;
+                                  Navigator.of(context).pop(f);
+                                },
+                              );
+                            }).toList(),
+                            SizedBox(height: context.bottomInset),
+                          ],
                         ),
                       ),
                   ],
