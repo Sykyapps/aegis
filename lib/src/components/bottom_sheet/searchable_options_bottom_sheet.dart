@@ -16,6 +16,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     required this.emptyTitle,
     required this.emptyDescription,
     required this.options,
+    this.initial,
     required this.getLabel,
     this.getImage,
     this.getTag,
@@ -35,12 +36,13 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final String emptyDescription;
   final String? emptyImage;
   final List<T> options;
+  final T? initial;
   final bool groupByAlphabet;
   final String Function(T) getLabel;
   final String? Function(T)? getImage;
   final String? Function(T)? getTag;
-  final Widget? Function(T)? subtitleBuilder;
-  final Widget? Function(T)? trailingBuilder;
+  final Widget? Function(T, bool)? subtitleBuilder;
+  final Widget? Function(T, bool)? trailingBuilder;
   final Widget? actionButton;
   final bool disableUnfocusBehavior;
   final ValueNotifier<List<dynamic>>? selectedItems;
@@ -61,6 +63,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    var selected = useState<T?>(initial);
     var filtered = useState<List<T>>(options);
     var controller = useTextEditingController();
 
@@ -144,6 +147,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                                   itemCount: grouped().length,
                                   itemBuilder: (context, index) {
                                     var f = grouped()[index];
+                                    var isSelected = f.data == selected.value;
                                     return Column(
                                       children: [
                                         Offstage(
@@ -155,11 +159,14 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                                         _OptionItem(
                                           imageUrl: getImage?.call(f.data),
                                           title: getLabel(f.data),
-                                          subtitle:
-                                              subtitleBuilder?.call(f.data),
-                                          trailing:
-                                              trailingBuilder?.call(f.data),
+                                          subtitle: subtitleBuilder?.call(
+                                            f.data,
+                                            isSelected,
+                                          ),
+                                          trailing: trailingBuilder?.call(
+                                              f.data, isSelected),
                                           onPressed: () {
+                                            selected.value = f.data;
                                             if (disableUnfocusBehavior) return;
                                             Navigator.of(context).pop(f.data);
                                           },
@@ -196,18 +203,21 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                     else
                       SliverList(
                         delegate: SliverChildListDelegate(
-                          filtered.value
-                              .map((f) => _OptionItem(
-                                    imageUrl: getImage?.call(f),
-                                    title: getLabel(f),
-                                    subtitle: subtitleBuilder?.call(f),
-                                    trailing: trailingBuilder?.call(f),
-                                    onPressed: () {
-                                      if (disableUnfocusBehavior) return;
-                                      Navigator.of(context).pop(f);
-                                    },
-                                  ))
-                              .toList(),
+                          filtered.value.map((f) {
+                            var isSelected = f == selected.value;
+                            return _OptionItem(
+                              imageUrl: getImage?.call(f),
+                              title: getLabel(f),
+                              subtitle: subtitleBuilder?.call(f, isSelected),
+                              trailing: trailingBuilder?.call(f, isSelected),
+                              isSelected: isSelected,
+                              onPressed: () {
+                                selected.value = f;
+                                if (disableUnfocusBehavior) return;
+                                Navigator.of(context).pop(f);
+                              },
+                            );
+                          }).toList(),
                         ),
                       ),
                   ],
@@ -393,6 +403,7 @@ class _OptionItem extends StatelessWidget {
   const _OptionItem({
     Key? key,
     required this.title,
+    this.isSelected = false,
     this.subtitle,
     this.imageUrl,
     this.trailing,
@@ -403,6 +414,7 @@ class _OptionItem extends StatelessWidget {
   final Widget? subtitle;
   final String? imageUrl;
   final Widget? trailing;
+  final bool isSelected;
   final VoidCallback onPressed;
 
   @override
@@ -423,7 +435,7 @@ class _OptionItem extends StatelessWidget {
           title,
           style: AegisFont.bodyMedium.copyWith(
             color: AegisColors.textHighEmphasis,
-            fontWeight: subtitle != null ? FontWeight.w700 : null,
+            fontWeight: subtitle != null || isSelected ? FontWeight.w700 : null,
           ),
         ),
         subtitle: subtitle,
