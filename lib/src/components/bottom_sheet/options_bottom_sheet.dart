@@ -11,16 +11,12 @@ class SkOptionsBottomSheet<T> extends HookWidget {
     required this.initial,
     required this.options,
     required this.getName,
-    this.itemBuilder,
-    this.isScrollable = false,
   });
 
   final String title;
   final T? initial;
   final List<T> options;
   final String Function(T) getName;
-  final Widget Function(T, bool)? itemBuilder;
-  final bool isScrollable;
 
   Future<T?> show(BuildContext context) {
     var result = SkExpandableBottomSheet.show<T>(
@@ -35,29 +31,6 @@ class SkOptionsBottomSheet<T> extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var selected = useState<T?>(initial);
-    if (isScrollable) {
-      return Material(
-        color: AegisColors.backgroundWhite,
-        child: SingleChildScrollView(
-          child: Column(
-            children: options.map((option) {
-              return GestureDetector(
-                onTap: () {
-                  selected.value = option;
-                  if (itemBuilder != null) return;
-                  Navigator.of(context).pop(selected.value);
-                },
-                child: itemBuilder?.call(option, selected.value == option) ??
-                    _OptionItem(
-                      name: getName(option),
-                      isActive: selected.value == option,
-                    ),
-              );
-            }).toList(),
-          ),
-        ),
-      );
-    }
     return Material(
       color: AegisColors.backgroundWhite,
       child: Column(
@@ -65,14 +38,12 @@ class SkOptionsBottomSheet<T> extends HookWidget {
           return GestureDetector(
             onTap: () {
               selected.value = option;
-              if (itemBuilder != null) return;
               Navigator.of(context).pop(selected.value);
             },
-            child: itemBuilder?.call(option, selected.value == option) ??
-                _OptionItem(
-                  name: getName(option),
-                  isActive: selected.value == option,
-                ),
+            child: _OptionItem(
+              name: getName(option),
+              isActive: selected.value == option,
+            ),
           );
         }).toList(),
       ),
