@@ -101,7 +101,8 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
           ),
           child: Container(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.paddingOf(context).bottom,
+              bottom:
+                  MediaQuery.paddingOf(context).bottom + context.bottomInset,
             ),
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
@@ -115,8 +116,9 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
               initialChildSize: .93,
               builder: (context, scrollController) {
                 return CustomScrollView(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior: childBuilder != null
+                      ? ScrollViewKeyboardDismissBehavior.manual
+                      : ScrollViewKeyboardDismissBehavior.onDrag,
                   controller: scrollController,
                   shrinkWrap: true,
                   slivers: [
@@ -208,27 +210,24 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                     else
                       SliverList(
                         delegate: SliverChildListDelegate(
-                          [
-                            ...filtered.value.map((f) {
-                              var isSelected = f == selected.value;
-                              return _OptionItem(
-                                imageUrl: getImage?.call(f),
-                                title: getLabel(f),
-                                subtitle: subtitleBuilder?.call(f, isSelected),
-                                trailing: trailingBuilder?.call(f, isSelected),
-                                isSelected: isSelected,
-                                onPressed: () {
-                                  selected.value = f;
-                                  if (onSelected != null) {
-                                    return onSelected?.call(f);
-                                  }
-                                  Navigator.of(context).pop(f);
-                                },
-                                child: childBuilder?.call(f, isSelected),
-                              );
-                            }).toList(),
-                            SizedBox(height: context.bottomInset),
-                          ],
+                          filtered.value.map((f) {
+                            var isSelected = f == selected.value;
+                            return _OptionItem(
+                              imageUrl: getImage?.call(f),
+                              title: getLabel(f),
+                              subtitle: subtitleBuilder?.call(f, isSelected),
+                              trailing: trailingBuilder?.call(f, isSelected),
+                              isSelected: isSelected,
+                              onPressed: () {
+                                selected.value = f;
+                                if (onSelected != null) {
+                                  return onSelected?.call(f);
+                                }
+                                Navigator.of(context).pop(f);
+                              },
+                              child: childBuilder?.call(f, isSelected),
+                            );
+                          }).toList(),
                         ),
                       ),
                   ],

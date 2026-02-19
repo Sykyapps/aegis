@@ -111,9 +111,9 @@ class BottomSheetScreen extends HookWidget {
                   groupByAlphabet: true,
                   getLabel: (p0) => p0.name,
                   getImage: (p0) => '',
-                  getSubtitle: (p0) => p0.phone,
+                  subtitleBuilder: (p0, _) => const SizedBox(),
                   selectedItems: selectedNumbers,
-                  trailingButton: (p0) {
+                  trailingBuilder: (p0, _) {
                     void addPhone(bool add) {
                       List<String> temp = List.from(selectedNumbers.value);
                       add ? temp.add(p0.phone) : temp.remove(p0.phone);
@@ -140,7 +140,6 @@ class BottomSheetScreen extends HookWidget {
                     }
                   },
                   actionButton: const _ActionButton(),
-                  disableUnfocusBehavior: true,
                   trailing: Container(
                     padding: const EdgeInsets.all(10),
                     color: AegisColors.red300,
