@@ -20,14 +20,15 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     required this.getLabel,
     this.getImage,
     this.getTag,
-    this.subtitleBuilder,
     this.groupByAlphabet = false,
+    this.subtitleBuilder,
     this.trailingBuilder,
+    this.childBuilder,
     this.actionButton,
-    this.disableUnfocusBehavior = false,
     this.emptyImage,
     this.selectedItems,
     this.trailing,
+    this.onSelected,
   });
 
   final String title;
@@ -43,10 +44,11 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final String? Function(T)? getTag;
   final Widget? Function(T, bool)? subtitleBuilder;
   final Widget? Function(T, bool)? trailingBuilder;
+  final Widget? Function(T, bool)? childBuilder;
   final Widget? actionButton;
-  final bool disableUnfocusBehavior;
   final ValueNotifier<List<dynamic>>? selectedItems;
   final Widget? trailing;
+  final void Function(T)? onSelected;
 
   static const radius = Radius.circular(16);
 
@@ -141,7 +143,6 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                             Expanded(
                               child: GestureDetector(
                                 onTapDown: (_) {
-                                  if (disableUnfocusBehavior) return;
                                   FocusManager.instance.primaryFocus?.unfocus();
                                 },
                                 child: AzListView(
@@ -169,7 +170,9 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                                               f.data, isSelected),
                                           onPressed: () {
                                             selected.value = f.data;
-                                            if (disableUnfocusBehavior) return;
+                                            if (onSelected != null) {
+                                              return onSelected?.call(f.data);
+                                            }
                                             Navigator.of(context).pop(f.data);
                                           },
                                         ),
@@ -216,9 +219,12 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                                 isSelected: isSelected,
                                 onPressed: () {
                                   selected.value = f;
-                                  if (disableUnfocusBehavior) return;
+                                  if (onSelected != null) {
+                                    return onSelected?.call(f);
+                                  }
                                   Navigator.of(context).pop(f);
                                 },
+                                child: childBuilder?.call(f, isSelected),
                               );
                             }).toList(),
                             SizedBox(height: context.bottomInset),
@@ -413,6 +419,7 @@ class _OptionItem extends StatelessWidget {
     this.imageUrl,
     this.trailing,
     required this.onPressed,
+    this.child,
   }) : super(key: key);
 
   final String title;
@@ -421,31 +428,43 @@ class _OptionItem extends StatelessWidget {
   final Widget? trailing;
   final bool isSelected;
   final VoidCallback onPressed;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20).r,
+      padding: const EdgeInsets.symmetric(vertical: 16).r,
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: AegisColors.borderHighEmphasis),
         ),
       ),
-      child: ListTile(
-        dense: true,
-        leading:
-            imageUrl == null ? null : _Image(imageUrl: imageUrl!, title: title),
-        contentPadding: const EdgeInsets.symmetric(vertical: 8).r,
-        title: Text(
-          title,
-          style: AegisFont.bodyMedium.copyWith(
-            color: AegisColors.textHighEmphasis,
-            fontWeight: subtitle != null || isSelected ? FontWeight.w700 : null,
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: onPressed,
+            child: Row(
+              spacing: 16,
+              children: [
+                if (imageUrl != null) _Image(imageUrl: imageUrl!, title: title),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: AegisFont.bodyMedium.copyWith(
+                      color: AegisColors.textHighEmphasis,
+                      fontWeight: subtitle != null || isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
+                    ),
+                  ),
+                ),
+                if (trailing != null) trailing!,
+              ],
+            ),
           ),
-        ),
-        subtitle: subtitle,
-        trailing: trailing,
-        onTap: onPressed,
+          if (child != null) child!,
+        ],
       ),
     );
   }
