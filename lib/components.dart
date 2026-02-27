@@ -11,4 +11,5 @@ export 'src/components/fields/fields.dart';
 export 'src/components/navbars/navbars.dart';
 export 'src/components/scaffolds/scaffolds.dart';
 export 'src/components/sections/sections.dart';
+export 'src/components/switches/switches.dart';
 export 'src/components/semantics/semantics.dart';
