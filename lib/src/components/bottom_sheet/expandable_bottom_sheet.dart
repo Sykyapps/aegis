@@ -155,6 +155,7 @@ class _Header extends StatelessWidget {
       toolbarHeight: collapsedHeight,
       expandedHeight: expandedHeight,
       backgroundColor: AegisColors.neutral0,
+      surfaceTintColor: AegisColors.neutral0,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraint) {
           var top = constraint.biggest.height;

@@ -16,17 +16,19 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     required this.emptyTitle,
     required this.emptyDescription,
     required this.options,
+    this.initial,
     required this.getLabel,
     this.getImage,
     this.getTag,
-    this.getSubtitle,
     this.groupByAlphabet = false,
-    this.trailingButton,
+    this.subtitleBuilder,
+    this.trailingBuilder,
+    this.childBuilder,
     this.actionButton,
-    this.disableUnfocusBehavior = false,
     this.emptyImage,
     this.selectedItems,
     this.trailing,
+    this.onSelected,
   });
 
   final String title;
@@ -35,16 +37,18 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final String emptyDescription;
   final String? emptyImage;
   final List<T> options;
+  final T? initial;
+  final bool groupByAlphabet;
   final String Function(T) getLabel;
   final String? Function(T)? getImage;
   final String? Function(T)? getTag;
-  final String? Function(T)? getSubtitle;
-  final bool groupByAlphabet;
-  final Widget? Function(T)? trailingButton;
+  final Widget? Function(T, bool)? subtitleBuilder;
+  final Widget? Function(T, bool)? trailingBuilder;
+  final Widget? Function(T, bool)? childBuilder;
   final Widget? actionButton;
-  final bool disableUnfocusBehavior;
   final ValueNotifier<List<dynamic>>? selectedItems;
   final Widget? trailing;
+  final void Function(T)? onSelected;
 
   static const radius = Radius.circular(16);
 
@@ -61,6 +65,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    var selected = useState<T?>(initial);
     var filtered = useState<List<T>>(options);
     var controller = useTextEditingController();
 
@@ -95,7 +100,10 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
             sigmaY: Shadow.convertRadiusToSigma(4),
           ),
           child: Container(
-            padding: EdgeInsets.only(bottom: context.bottomPadding - 16),
+            padding: EdgeInsets.only(
+              bottom:
+                  MediaQuery.paddingOf(context).bottom + context.bottomInset,
+            ),
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
               borderRadius:
@@ -108,8 +116,9 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
               initialChildSize: .93,
               builder: (context, scrollController) {
                 return CustomScrollView(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior: childBuilder != null
+                      ? ScrollViewKeyboardDismissBehavior.manual
+                      : ScrollViewKeyboardDismissBehavior.onDrag,
                   controller: scrollController,
                   shrinkWrap: true,
                   slivers: [
@@ -136,7 +145,6 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                             Expanded(
                               child: GestureDetector(
                                 onTapDown: (_) {
-                                  if (disableUnfocusBehavior) return;
                                   FocusManager.instance.primaryFocus?.unfocus();
                                 },
                                 child: AzListView(
@@ -144,22 +152,31 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                                   itemCount: grouped().length,
                                   itemBuilder: (context, index) {
                                     var f = grouped()[index];
+                                    var isSelected = f.data == selected.value;
                                     return Column(
                                       children: [
                                         Offstage(
                                           offstage: !f.isShowSuspension,
                                           child: _AzGroup(
-                                              tag: f.getSuspensionTag()),
+                                            tag: f.getSuspensionTag(),
+                                          ),
                                         ),
                                         _OptionItem(
-                                          title: getLabel(f.data),
-                                          subtitle: getSubtitle?.call(f.data),
                                           imageUrl: getImage?.call(f.data),
+                                          title: getLabel(f.data),
+                                          subtitle: subtitleBuilder?.call(
+                                            f.data,
+                                            isSelected,
+                                          ),
+                                          trailing: trailingBuilder?.call(
+                                              f.data, isSelected),
                                           onPressed: () {
-                                            if (disableUnfocusBehavior) return;
+                                            selected.value = f.data;
+                                            if (onSelected != null) {
+                                              return onSelected?.call(f.data);
+                                            }
                                             Navigator.of(context).pop(f.data);
                                           },
-                                          button: trailingButton?.call(f.data),
                                         ),
                                       ],
                                     );
@@ -193,16 +210,24 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                     else
                       SliverList(
                         delegate: SliverChildListDelegate(
-                          filtered.value
-                              .map((f) => _OptionItem(
-                                    title: getLabel(f),
-                                    imageUrl: getImage?.call(f),
-                                    onPressed: () {
-                                      if (disableUnfocusBehavior) return;
-                                      Navigator.of(context).pop(f);
-                                    },
-                                  ))
-                              .toList(),
+                          filtered.value.map((f) {
+                            var isSelected = f == selected.value;
+                            return _OptionItem(
+                              imageUrl: getImage?.call(f),
+                              title: getLabel(f),
+                              subtitle: subtitleBuilder?.call(f, isSelected),
+                              trailing: trailingBuilder?.call(f, isSelected),
+                              isSelected: isSelected,
+                              onPressed: () {
+                                selected.value = f;
+                                if (onSelected != null) {
+                                  return onSelected?.call(f);
+                                }
+                                Navigator.of(context).pop(f);
+                              },
+                              child: childBuilder?.call(f, isSelected),
+                            );
+                          }).toList(),
                         ),
                       ),
                   ],
@@ -232,21 +257,26 @@ class _Header extends StatelessWidget {
   final Function(String) onChanged;
   final Widget? trailing;
 
-  static final double height = 64.r;
-  static final double expandedHeight = 156.r;
+  static final collapsedHeight = 56.r;
+  static final expandedHeight = 180.r;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
       elevation: 0,
+      scrolledUnderElevation: 4,
+      shadowColor: AegisColors.shadowEvelation1,
       automaticallyImplyLeading: false,
-      toolbarHeight: height,
+      toolbarHeight: collapsedHeight,
       expandedHeight: expandedHeight,
       backgroundColor: AegisColors.neutral0,
+      surfaceTintColor: AegisColors.neutral0,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraint) {
           var top = constraint.biggest.height;
+          var isCollapsed = top < expandedHeight;
+
           return FlexibleSpaceBar(
             expandedTitleScale: 1,
             titlePadding: EdgeInsets.zero,
@@ -260,7 +290,7 @@ class _Header extends StatelessWidget {
                     const _CloseButton(),
                     Expanded(
                       child: AnimatedOpacity(
-                        opacity: top <= 166 ? 1 : 0,
+                        opacity: isCollapsed ? 1 : 0,
                         duration: const Duration(milliseconds: 300),
                         child: _Title(title: title),
                       ),
@@ -272,7 +302,7 @@ class _Header extends StatelessWidget {
                   ],
                 ),
                 AnimatedOpacity(
-                  opacity: top > 166 ? 1 : 0,
+                  opacity: !isCollapsed ? 1 : 0,
                   duration: const Duration(milliseconds: 300),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20).r,
@@ -285,10 +315,10 @@ class _Header extends StatelessWidget {
         },
       ),
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
+        preferredSize: const Size.fromHeight(80),
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20).r,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20).r,
           child: SkSearchField(
             controller: controller,
             hintText: searchLabel,
@@ -383,49 +413,57 @@ class _OptionItem extends StatelessWidget {
   const _OptionItem({
     Key? key,
     required this.title,
+    this.isSelected = false,
     this.subtitle,
     this.imageUrl,
+    this.trailing,
     required this.onPressed,
-    this.button,
+    this.child,
   }) : super(key: key);
 
   final String title;
-  final String? subtitle;
+  final Widget? subtitle;
   final String? imageUrl;
+  final Widget? trailing;
+  final bool isSelected;
   final VoidCallback onPressed;
-  final Widget? button;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20).r,
+      padding: const EdgeInsets.symmetric(vertical: 16).r,
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: AegisColors.borderHighEmphasis),
         ),
       ),
-      child: ListTile(
-        dense: true,
-        leading:
-            imageUrl == null ? null : _Image(imageUrl: imageUrl!, title: title),
-        title: Text(
-          title,
-          style: AegisFont.bodyMedium.copyWith(
-            color: AegisColors.textHighEmphasis,
-            fontWeight: subtitle != null ? FontWeight.w700 : null,
-          ),
-        ),
-        subtitle: subtitle != null
-            ? Text(
-                subtitle!,
-                style: AegisFont.bodySmall.copyWith(
-                  color: AegisColors.textHighEmphasis,
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: onPressed,
+            child: Row(
+              spacing: 16,
+              children: [
+                if (imageUrl != null) _Image(imageUrl: imageUrl!, title: title),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: AegisFont.bodyMedium.copyWith(
+                      color: AegisColors.textHighEmphasis,
+                      fontWeight: subtitle != null || isSelected
+                          ? FontWeight.w700
+                          : FontWeight.w500,
+                    ),
+                  ),
                 ),
-              )
-            : null,
-        contentPadding: const EdgeInsets.symmetric(vertical: 8).r,
-        onTap: onPressed,
-        trailing: button,
+                if (trailing != null) trailing!,
+              ],
+            ),
+          ),
+          if (child != null) child!,
+        ],
       ),
     );
   }
