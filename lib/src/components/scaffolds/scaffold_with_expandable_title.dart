@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,6 +19,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     this.scrollController,
     this.bodyScrollController,
     this.onLoadMore,
+    this.onRefresh,
   });
 
   final String title;
@@ -30,6 +32,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   final ScrollController? scrollController;
   final ScrollController? bodyScrollController;
   final VoidCallback? onLoadMore;
+  final AsyncCallback? onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -157,9 +160,23 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
         },
         body: _InfiniteScrollView(
           onLoadMore: onLoadMore,
-          child: CustomScrollView(
-            controller: bodyScrollController,
-            slivers: slivers,
+          child: Builder(
+            builder: (_) {
+              if (onRefresh == null) {
+                return CustomScrollView(
+                  controller: bodyScrollController,
+                  slivers: slivers,
+                );
+              }
+              return RefreshIndicator.adaptive(
+                onRefresh: onRefresh!,
+                displacement: 16.h,
+                child: CustomScrollView(
+                  controller: bodyScrollController,
+                  slivers: slivers,
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -250,15 +267,13 @@ class _InfiniteScrollView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (onLoadMore == null) return child;
 
-    return NotificationListener<ScrollNotification>(
+    return NotificationListener<UserScrollNotification>(
       onNotification: (notification) {
         if (notification.depth != 0) return true;
-
         var metrics = notification.metrics;
-        if (metrics.pixels == metrics.maxScrollExtent) {
+        if (metrics.pixels >= metrics.maxScrollExtent - 80) {
           onLoadMore?.call();
         }
-
         return true;
       },
       child: child,
