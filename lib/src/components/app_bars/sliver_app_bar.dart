@@ -8,11 +8,13 @@ class SkSliverAppBar extends StatelessWidget {
     Key? key,
     required this.title,
     required this.expandedHeight,
+    this.subtitle,
     this.leading,
     this.action,
   }) : super(key: key);
 
   final String title;
+  final String? subtitle;
   final Widget? leading;
   final Widget? action;
   final double expandedHeight;
@@ -68,7 +70,26 @@ class SkSliverAppBar extends StatelessWidget {
                     child: AnimatedOpacity(
                       opacity: !isCollapsed ? 1 : 0,
                       duration: const Duration(milliseconds: 300),
-                      child: _ExpandedTitle(title: title),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _ExpandedTitle(title: title),
+                          if (subtitle != null) ...[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20).r,
+                              child: Text(
+                                subtitle!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AegisFont.bodyMedium.copyWith(
+                                  color: AegisColors.neutral500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
                     ),
                   ),
                 const SizedBox(height: 4),
