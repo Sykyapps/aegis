@@ -31,3 +31,10 @@ build/
 
 # FVM Version Cache
 .fvm/
+
+# AI tools and configs
+.kilo/
+.kilocode/
+.opencode/
+AGENTS.md
+graphify-out/
