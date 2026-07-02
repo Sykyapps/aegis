@@ -21,7 +21,7 @@ dependencies:
   number_text_input_formatter: ^1.0.0+6
 
   # Localizations
-  intl: ^0.18.1
+  intl: ^0.20.2
 
   # List
   azlistview: ^2.0.0
