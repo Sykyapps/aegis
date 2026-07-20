@@ -25,7 +25,7 @@ class SkSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SkSectionHeader(
@@ -37,7 +37,7 @@ class SkSection extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         child,
-        const SizedBox(height: 16),
+        const SizedBox(height: 20),
       ],
     );
   }
