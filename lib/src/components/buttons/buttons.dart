@@ -1,6 +1,7 @@
 export 'button.dart';
 export 'outlined_button.dart';
 export 'back_button.dart';
+export 'circle_back_button.dart';
 export 'slider_button.dart';
 export 'icon_button.dart';
 export 'segmented_control/segmented_control.dart';
