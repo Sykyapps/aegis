@@ -21,7 +21,7 @@ class SkBackButton extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(
           AegisIcons.chevron_left,
-          size: 22.r,
+          size: 24,
           color: color ?? AegisColors.iconHighEmphasis,
         ),
       ),
