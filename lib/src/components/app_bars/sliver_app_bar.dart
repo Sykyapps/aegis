@@ -33,6 +33,7 @@ class SkSliverAppBar extends StatelessWidget {
       toolbarHeight: collapsedHeight,
       expandedHeight: expandedHeight,
       backgroundColor: AegisColors.neutral0,
+      titleSpacing: 0,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraint) {
           var top = constraint.biggest.height;
@@ -48,7 +49,6 @@ class SkSliverAppBar extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(width: 8),
                     leading ?? const SizedBox(),
                     if (title.isNotEmpty)
                       Expanded(
