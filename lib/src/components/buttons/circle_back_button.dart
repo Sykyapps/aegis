@@ -1,6 +1,5 @@
 import 'package:aegis/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
 import '../../../icons.dart';
