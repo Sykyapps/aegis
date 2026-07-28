@@ -71,10 +71,16 @@ class PhoneCodeOptions extends HookWidget {
                     delegate: SliverChildListDelegate(
                       codes.value
                           .map((c) => ListTile(
-                                leading: SvgPicture.network(c['flagUrl'],
-                                    width: 25.r),
-                                title:
-                                    Text('${c['name']} (+${c['phoneCode']})'),
+                                leading: SvgPicture.network(
+                                  c['flagUrl'],
+                                  width: 25.r,
+                                ),
+                                title: Text(
+                                  '${c['name']} (+${c['phoneCode']})',
+                                  style: AegisFont.bodyMedium.copyWith(
+                                    color: AegisColors.textHighEmphasis,
+                                  ),
+                                ),
                                 onTap: () => Navigator.of(context).pop(c),
                               ))
                           .toList(),
