@@ -70,18 +70,33 @@ class PhoneCodeOptions extends HookWidget {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       codes.value
-                          .map((c) => ListTile(
-                                leading: SvgPicture.network(
-                                  c['flagUrl'],
-                                  width: 25.r,
-                                ),
-                                title: Text(
-                                  '${c['name']} (+${c['phoneCode']})',
-                                  style: AegisFont.bodyMedium.copyWith(
-                                    color: AegisColors.textHighEmphasis,
+                          .map((c) => Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: AegisColors.borderHighEmphasis,
+                                    ),
                                   ),
                                 ),
-                                onTap: () => Navigator.of(context).pop(c),
+                                child: ListTile(
+                                  dense: true,
+                                  minVerticalPadding: 16,
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(horizontal: 0),
+                                  leading: SvgPicture.network(
+                                    c['flagUrl'],
+                                    width: 30,
+                                  ),
+                                  title: Text(
+                                    '${c['name']} (+${c['phoneCode']})',
+                                    style: AegisFont.bodyMedium.copyWith(
+                                      color: AegisColors.textHighEmphasis,
+                                    ),
+                                  ),
+                                  onTap: () => Navigator.of(context).pop(c),
+                                ),
                               ))
                           .toList(),
                     ),
@@ -137,9 +152,9 @@ class _Header extends StatelessWidget {
                 AnimatedOpacity(
                   opacity: top > 166 ? 1 : 0,
                   duration: const Duration(milliseconds: 300),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20).r,
-                    child: const _Title(),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: _Title(),
                   ),
                 ),
               ],
@@ -148,10 +163,10 @@ class _Header extends StatelessWidget {
         },
       ),
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
+        preferredSize: const Size.fromHeight(56),
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20).r,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
           child: SkSearchField(
             controller: controller,
             hintText: 'Cari kode ataupun nama negara',
