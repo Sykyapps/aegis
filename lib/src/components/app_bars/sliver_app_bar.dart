@@ -26,7 +26,7 @@ class SkSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       elevation: 0,
-      scrolledUnderElevation: 4,
+      scrolledUnderElevation: 0,
       shadowColor: AegisColors.shadowEvelation1,
       surfaceTintColor: AegisColors.transparent,
       automaticallyImplyLeading: false,
