@@ -45,7 +45,7 @@ class SkSearchField extends HookWidget {
         onFieldSubmitted: onSubmitted,
         style: style ??
             AegisFont.bodyLarge.copyWith(color: AegisColors.neutral500),
-        cursorHeight: 24.h,
+        cursorHeight: 20.w,
         cursorWidth: 1.w,
         cursorColor: AegisColors.blue300,
         textInputAction: TextInputAction.search,
@@ -87,10 +87,11 @@ class _SearchPrefix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12).copyWith(right: 9),
+      padding: const EdgeInsets.all(12).copyWith(right: 8),
       child: const Icon(
         AegisIcons.search,
         color: AegisColors.neutral300,
+        size: 16,
       ),
     );
   }
