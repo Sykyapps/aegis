@@ -1,43 +1,78 @@
 import 'package:intl/intl.dart';
 
-class CurrencyUtil {
-  static var formatter = NumberFormat.currency(
-    locale: 'id',
-    symbol: 'Rp',
-    decimalDigits: 0,
-    customPattern: '\u00a4#,###',
-  );
+enum Currency { idr, usd }
 
-  static String format(dynamic value, {bool withSymbol = true}) {
+class CurrencyUtil {
+  static const String _locale = 'en_US';
+  static const String _compactLocale = 'id_ID';
+
+  static String _symbolFor(Currency currency) {
+    switch (currency) {
+      case Currency.usd:
+        return '\$';
+      case Currency.idr:
+        return 'Rp';
+    }
+  }
+
+  static String format(
+    dynamic value, {
+    bool withSymbol = true,
+    Currency currency = Currency.idr,
+  }) {
+    var formatter = NumberFormat.currency(
+      locale: _locale,
+      symbol: _symbolFor(currency),
+      decimalDigits: 0,
+      customPattern: '¤#,###',
+    );
     var formatted = formatter.format(value);
     if (!withSymbol) {
-      formatted = formatted.replaceAll('Rp', '');
+      formatted = formatted.replaceAll(_symbolFor(currency), '');
     }
     return formatted;
   }
 
-  static String compactFormat(dynamic value, {bool withCurrency = false}) {
+  static String compactFormat(
+    dynamic value, {
+    bool withSymbol = false,
+    Currency currency = Currency.idr,
+  }) {
     var formatter = NumberFormat.compactCurrency(
-      locale: 'id',
-      symbol: withCurrency ? 'Rp' : '',
+      locale: _compactLocale,
+      symbol: withSymbol ? _symbolFor(currency) : '',
       decimalDigits: 2,
     );
     return formatter.format(value).replaceAll(RegExp(r'\s+'), '');
   }
 
-  static String decimalFormat(dynamic value, {int? decimalDigits = 0}) {
+  static String decimalFormat(
+    dynamic value, {
+    int? decimalDigits = 0,
+    Currency currency = Currency.idr,
+  }) {
     var decimal = NumberFormat.currency(
-      locale: 'id',
-      symbol: 'Rp',
+      locale: _locale,
+      symbol: _symbolFor(currency),
       decimalDigits: decimalDigits,
-      customPattern: '\u00a4#,###',
+      customPattern: '¤#,###',
     );
 
     return decimal.format(value);
   }
 
-  static double parse(String value) {
+  static double parse(String value, {Currency currency = Currency.idr}) {
+    var formatter = NumberFormat.currency(
+      locale: _locale,
+      symbol: _symbolFor(currency),
+      decimalDigits: 0,
+    );
     var clean = value.replaceAll(RegExp(r'[^0-9]'), '');
     return formatter.parse(clean).toDouble();
+  }
+
+  static String compactLongFormat(dynamic value) {
+    var formatter = NumberFormat.compactLong(locale: _compactLocale);
+    return formatter.format(value);
   }
 }

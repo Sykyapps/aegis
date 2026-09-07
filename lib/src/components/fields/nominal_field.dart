@@ -80,7 +80,7 @@ class SkNominalField extends HookWidget {
 
                   double value = double.parse(newValue.text);
                   final fmt = NumberFormat.simpleCurrency(
-                    locale: 'id_ID',
+                    locale: 'en_US',
                     decimalDigits: 0,
                   );
 

@@ -47,7 +47,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     if (value > _maxValue) return oldValue;
 
     final fmt = NumberFormat.simpleCurrency(
-      locale: 'id_ID',
+      locale: 'en_US',
       decimalDigits: 0,
     );
 
@@ -87,7 +87,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
 //     double value = double.parse(newValue.text);
 //     final fmt = NumberFormat.simpleCurrency(
-//       locale: 'id_ID',
+//       locale: 'en_US',
 //       decimalDigits: 0,
 //     );
 
