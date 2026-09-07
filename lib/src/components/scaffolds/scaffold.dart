@@ -7,6 +7,8 @@ class SkScaffold extends StatelessWidget {
   final Widget? body;
   final Color backgroundColor;
   final Widget? bottomNavigationBar;
+  final bool extendBodyBehindAppBar;
+
   final List<Widget>? persistentFooterButtons;
   final bool? resizeToAvoidBottomInset;
 
@@ -16,6 +18,7 @@ class SkScaffold extends StatelessWidget {
     this.body,
     this.backgroundColor = AegisColors.neutral0,
     this.bottomNavigationBar,
+    this.extendBodyBehindAppBar = false,
     this.persistentFooterButtons,
     this.resizeToAvoidBottomInset,
   }) : super(key: key);
@@ -31,6 +34,7 @@ class SkScaffold extends StatelessWidget {
           appBar: appBar,
           body: body,
           persistentFooterButtons: persistentFooterButtons,
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
           bottomNavigationBar: bottomNavigationBar,
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         ),
