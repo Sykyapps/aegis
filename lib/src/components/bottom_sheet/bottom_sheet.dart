@@ -15,6 +15,7 @@ class SkBottomSheet extends HookWidget {
     this.backgroundImage,
     this.barrierColor,
     this.showHandle = true,
+    this.showCloseButton = true,
     this.hasBottomNav = false,
   }) : super(key: key);
 
@@ -24,6 +25,7 @@ class SkBottomSheet extends HookWidget {
   final Widget? child;
   final Color? barrierColor;
   final bool showHandle;
+  final bool showCloseButton;
   final bool hasBottomNav;
 
   Future<bool?> show(BuildContext context) {
@@ -83,7 +85,7 @@ class SkBottomSheet extends HookWidget {
                 SkSliverAppBar(
                   title: title ?? '',
                   expandedHeight: expandedHeight,
-                  leading: const _CloseButton(),
+                  leading: showCloseButton ? const _CloseButton() : null,
                 ),
                 SliverToBoxAdapter(child: child),
               ],
