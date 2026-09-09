@@ -1,11 +1,14 @@
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import '../../../utils/currency_util.dart';
 
 const _maxValue = 1000000000000000;
 
 class CurrencyInputFormatter extends TextInputFormatter {
+  const CurrencyInputFormatter({required this.currency});
+
+  final Currency currency;
+
   static String parse(String? text) {
     if (text.toString().isEmpty) {
       return '';
@@ -23,7 +26,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     return cleanString;
   }
 
-  static String format(String? text) {
+  static String format(String? text, Currency currency) {
     if (text.toString().isEmpty) {
       return '';
     }
@@ -31,7 +34,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     var cleanDigit = filterDigit(text!);
     if (cleanDigit.isEmpty) return '';
     double value = double.parse(cleanDigit);
-    return CurrencyUtil.format(value);
+    return CurrencyUtil.format(value, currency: currency);
   }
 
   @override
@@ -46,12 +49,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
     var value = int.parse(newValue.text);
     if (value > _maxValue) return oldValue;
 
-    final fmt = NumberFormat.simpleCurrency(
-      locale: 'en_US',
-      decimalDigits: 0,
-    );
+    var formattedValue = CurrencyUtil.simpleFormat(value, currency: currency);
 
-    final formattedValue = fmt.format(value);
     return newValue.copyWith(
       text: formattedValue,
       selection: TextSelection.collapsed(

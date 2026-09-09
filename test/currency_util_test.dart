@@ -11,7 +11,7 @@ void main() {
     test('compactFormat matches today\'s IDR output', () {
       expect(CurrencyUtil.compactFormat(1500000), '1.5M');
       expect(
-        CurrencyUtil.compactFormat(1500000, withCurrency: true),
+        CurrencyUtil.compactFormat(1500000, withSymbol: true),
         'Rp1.5M',
       );
     });
@@ -82,7 +82,7 @@ void main() {
       expect(
         CurrencyUtil.compactFormat(
           1500000,
-          withCurrency: true,
+          withSymbol: true,
           currency: Currency.usd,
         ),
         '\$1.5M',

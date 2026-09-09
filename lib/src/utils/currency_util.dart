@@ -15,6 +15,18 @@ class CurrencyUtil {
     }
   }
 
+  static String simpleFormat(
+    dynamic value, {
+    Currency currency = Currency.idr,
+  }) {
+    var formatter = NumberFormat.simpleCurrency(
+      locale: _locale,
+      name: _symbolFor(currency),
+      decimalDigits: 0,
+    );
+    return formatter.format(value);
+  }
+
   static String format(
     dynamic value, {
     bool withSymbol = true,

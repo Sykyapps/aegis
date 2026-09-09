@@ -7,9 +7,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../foundation.dart';
 
 class SkCurrencyField extends FormField<String> {
+  final Currency currency;
   final TextEditingController? controller;
+
   SkCurrencyField({
     super.key,
+    required this.currency,
     bool enabled = true,
     this.controller,
     FocusNode? focusNode,
@@ -110,7 +113,7 @@ class SkCurrencyField extends FormField<String> {
                   style: AegisFont.bodyLarge,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    CurrencyInputFormatter(),
+                    CurrencyInputFormatter(currency: currency),
                   ],
                 ),
               ],

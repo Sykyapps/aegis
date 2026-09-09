@@ -9,10 +9,12 @@ import '../semantics/semantics.dart';
 import 'formatter/currency_formatter.dart';
 
 class SkCurrencyBoxField extends FormField<String> {
+  final Currency currency;
   final TextEditingController? controller;
 
   SkCurrencyBoxField({
     super.key,
+    required this.currency,
     super.validator,
     super.autovalidateMode,
     this.controller,
@@ -91,7 +93,7 @@ class SkCurrencyBoxField extends FormField<String> {
                         ),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          CurrencyInputFormatter(),
+                          CurrencyInputFormatter(currency: currency),
                         ],
                       ),
                     ),
