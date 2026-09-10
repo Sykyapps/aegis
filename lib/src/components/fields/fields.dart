@@ -7,6 +7,7 @@ export 'tap_field.dart';
 export 'text_field.dart';
 export 'phone/phone_field.dart';
 export 'validators/validators.dart';
+export 'formatter/formatters.dart';
 export 'nominal_field.dart';
 export 'currency_box_field.dart';
 export 'currency_field.dart';
