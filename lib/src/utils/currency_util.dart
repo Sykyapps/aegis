@@ -17,7 +17,7 @@ class CurrencyUtil {
 
   static String simpleFormat(
     dynamic value, {
-    Currency currency = Currency.idr,
+    required Currency currency,
   }) {
     var formatter = NumberFormat.simpleCurrency(
       locale: _locale,
