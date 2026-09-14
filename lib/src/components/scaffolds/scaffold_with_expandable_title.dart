@@ -91,12 +91,7 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
               expandedHeight: totalExpandedHeight,
               backgroundColor: AegisColors.backgroundWhite,
               surfaceTintColor: AegisColors.transparent,
-              leading: IconButton(
-                constraints: const BoxConstraints(),
-                padding: EdgeInsets.zero,
-                iconSize: 20.sp,
-                color: AegisColors.iconHighEmphasis,
-                icon: Icon(leadingIcon ?? AegisIcons.chevron_left),
+              leading: SkBackButton(
                 onPressed: () => Navigator.of(context).pop(),
               ),
               flexibleSpace: LayoutBuilder(

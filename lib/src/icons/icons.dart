@@ -103,12 +103,13 @@ class AegisIcons {
   static const star_fill = _AegisIconsData(0xf152, 'star_fill');
   static const star = _AegisIconsData(0xf153, 'star');
   static const target = _AegisIconsData(0xf154, 'target');
-  static const time = _AegisIconsData(0xf155, 'time');
-  static const transactions = _AegisIconsData(0xf156, 'transactions');
-  static const user_fill = _AegisIconsData(0xf157, 'user_fill');
-  static const user = _AegisIconsData(0xf158, 'user');
-  static const verified = _AegisIconsData(0xf159, 'verified');
-  static const wallet = _AegisIconsData(0xf15a, 'wallet');
+  static const time_outlined = _AegisIconsData(0xf155, 'time_outlined');
+  static const time = _AegisIconsData(0xf156, 'time');
+  static const transactions = _AegisIconsData(0xf157, 'transactions');
+  static const user_fill = _AegisIconsData(0xf158, 'user_fill');
+  static const user = _AegisIconsData(0xf159, 'user');
+  static const verified = _AegisIconsData(0xf15a, 'verified');
+  static const wallet = _AegisIconsData(0xf15b, 'wallet');
 
   static const all = <String, _AegisIconsData>{
     'add_image': add_image,
@@ -195,6 +196,7 @@ class AegisIcons {
     'star_fill': star_fill,
     'star': star,
     'target': target,
+    'time_outlined': time_outlined,
     'time': time,
     'transactions': transactions,
     'user_fill': user_fill,
