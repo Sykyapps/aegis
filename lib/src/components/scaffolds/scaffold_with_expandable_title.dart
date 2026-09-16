@@ -145,8 +145,8 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(20, 4, 20, 28).w,
                   child: Text(
                     subtitle!,
-                    style: AegisFont.bodyMedium.copyWith(
-                      color: AegisColors.textHighEmphasis,
+                    style: AegisFont.bodySmall.copyWith(
+                      color: AegisColors.textLowEmphasis,
                     ),
                   ),
                 ),
