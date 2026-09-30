@@ -3,20 +3,23 @@ import 'package:flutter/services.dart';
 import '../../../utils/currency_util.dart';
 
 const _maxValue = 1000000000000000;
+const _maxUsdFractionDigits = 2;
 
 class CurrencyInputFormatter extends TextInputFormatter {
   const CurrencyInputFormatter({required this.currency});
 
   final Currency currency;
 
-  static String parse(String? text) {
+  static bool allowsDecimal(Currency currency) => currency == Currency.usd;
+
+  static String parse(String? text, {Currency currency = Currency.idr}) {
     if (text.toString().isEmpty) {
       return '';
     }
 
-    var cleanDigit = filterDigit(text!);
-    if (cleanDigit.isEmpty) return '';
-    return CurrencyUtil.parse(cleanDigit).toString();
+    var clean = _numericOnly(text!, currency);
+    if (!clean.contains(RegExp(r'[0-9]'))) return '';
+    return CurrencyUtil.parse(clean, currency: currency).toString();
   }
 
   static String filterDigit(String text) {
@@ -31,10 +34,31 @@ class CurrencyInputFormatter extends TextInputFormatter {
       return '';
     }
 
-    var cleanDigit = filterDigit(text!);
-    if (cleanDigit.isEmpty) return '';
-    double value = double.parse(cleanDigit);
+    var clean = _numericOnly(text!, currency);
+    if (!clean.contains(RegExp(r'[0-9]'))) return '';
+    double value = CurrencyUtil.parse(clean, currency: currency);
     return CurrencyUtil.format(value, currency: currency);
+  }
+
+  static String _numericOnly(String text, Currency currency) {
+    var pattern = allowsDecimal(currency) ? r'[^0-9.]' : r'[^0-9]';
+    return text.replaceAll(RegExp(pattern), '');
+  }
+
+  static String _normalizeTypedComma(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var text = newValue.text;
+    var cursor = newValue.selection.baseOffset;
+    var isSingleInsert = text.length == oldValue.text.length + 1;
+    if (isSingleInsert &&
+        cursor > 0 &&
+        cursor <= text.length &&
+        text[cursor - 1] == ',') {
+      return text.replaceRange(cursor - 1, cursor, '.');
+    }
+    return text;
   }
 
   @override
@@ -46,10 +70,28 @@ class CurrencyInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    var value = int.parse(newValue.text);
+    var text = allowsDecimal(currency)
+        ? _normalizeTypedComma(oldValue, newValue)
+        : newValue.text;
+    var clean = _numericOnly(text, currency);
+    if (clean.isEmpty) {
+      return const TextEditingValue(
+        selection: TextSelection.collapsed(offset: 0),
+      );
+    }
+
+    var parts = clean.split('.');
+    var hasFraction = parts.length == 2;
+    if (parts.length > 2 ||
+        (hasFraction && parts.last.length > _maxUsdFractionDigits)) {
+      return oldValue;
+    }
+
+    var value = int.parse(parts.first.isEmpty ? '0' : parts.first);
     if (value > _maxValue) return oldValue;
 
     var formattedValue = CurrencyUtil.simpleFormat(value, currency: currency);
+    if (hasFraction) formattedValue = '$formattedValue.${parts.last}';
 
     return newValue.copyWith(
       text: formattedValue,

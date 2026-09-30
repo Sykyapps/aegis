@@ -6,6 +6,11 @@ class CurrencyUtil {
   static const String _locale = 'en_US';
   static const String _compactLocale = 'id_ID';
 
+  static int _fractionDigitsFor(dynamic value, Currency currency) {
+    if (currency != Currency.usd || value is! num) return 0;
+    return (value * 100).round() % 100 == 0 ? 0 : 2;
+  }
+
   static String _symbolFor(Currency currency) {
     switch (currency) {
       case Currency.usd:
@@ -22,7 +27,7 @@ class CurrencyUtil {
     var formatter = NumberFormat.simpleCurrency(
       locale: _locale,
       name: _symbolFor(currency),
-      decimalDigits: 0,
+      decimalDigits: _fractionDigitsFor(value, currency),
     );
     return formatter.format(value);
   }
@@ -35,7 +40,7 @@ class CurrencyUtil {
     var formatter = NumberFormat.currency(
       locale: _locale,
       symbol: _symbolFor(currency),
-      decimalDigits: 0,
+      decimalDigits: _fractionDigitsFor(value, currency),
       customPattern: '¤#,###',
     );
     var formatted = formatter.format(value);
@@ -55,6 +60,12 @@ class CurrencyUtil {
       symbol: withSymbol ? _symbolFor(currency) : '',
       decimalDigits: 2,
     );
+    if (currency == Currency.usd) {
+      formatter
+        ..significantDigitsInUse = false
+        ..minimumFractionDigits = 0
+        ..maximumFractionDigits = 2;
+    }
     return formatter.format(value).replaceAll(RegExp(r'\s+'), '');
   }
 
@@ -74,6 +85,10 @@ class CurrencyUtil {
   }
 
   static double parse(String value, {Currency currency = Currency.idr}) {
+    if (currency == Currency.usd) {
+      return double.parse(value.replaceAll(RegExp(r'[^0-9.]'), ''));
+    }
+
     var formatter = NumberFormat.currency(
       locale: _locale,
       symbol: _symbolFor(currency),

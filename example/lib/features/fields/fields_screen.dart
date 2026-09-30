@@ -65,7 +65,7 @@ class FieldsScreen extends HookWidget {
                 SizedBox(height: 20.r),
                 SkSearchField(controller: basicCtrl),
                 SizedBox(height: 20.r),
-                SkNominalField(
+                SkCurrencyBoxField(
                   currency: Currency.idr,
                   controller: basicCtrl,
                   hintText: 'Rp100.000',

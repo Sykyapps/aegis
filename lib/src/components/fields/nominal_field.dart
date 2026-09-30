@@ -7,6 +7,7 @@ import '../../../components.dart';
 import '../../../foundation.dart';
 import '../../utils/currency_util.dart';
 
+@Deprecated('Use SkCurrencyBoxField. Will be removed in the next major.')
 class SkNominalField extends HookWidget {
   const SkNominalField({
     super.key,
