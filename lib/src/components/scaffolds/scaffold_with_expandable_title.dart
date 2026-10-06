@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,11 +11,12 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
     required this.title,
     this.isTwoLineTitle,
     this.subtitle,
-    this.leadingIcon,
+    this.leading,
+    this.onLeadingPressed,
+    this.actions,
     this.bottomNavigationBar,
     this.additionalHeader,
     this.scrollController,
-    this.bodyScrollController,
     this.onLoadMore,
     this.onRefresh,
   });
@@ -25,242 +24,68 @@ class SkScaffoldWithExpandableTitle extends StatelessWidget {
   final String title;
   final bool? isTwoLineTitle;
   final String? subtitle;
-  final IconData? leadingIcon;
+  final Widget? leading;
+  final VoidCallback? onLeadingPressed;
+  final List<Widget>? actions;
   final List<Widget> slivers;
   final Widget? bottomNavigationBar;
   final Widget? additionalHeader;
   final ScrollController? scrollController;
-  final ScrollController? bodyScrollController;
   final VoidCallback? onLoadMore;
   final AsyncCallback? onRefresh;
 
   @override
   Widget build(BuildContext context) {
+    var slivers = [
+      SkSliverAppBar(
+        title: title,
+        subtitle: subtitle,
+        leading: leading,
+        onLeadingPressed: onLeadingPressed,
+        actions: actions,
+      ),
+      PinnedHeaderSliver(child: additionalHeader),
+      ...this.slivers,
+    ];
     return SkScaffold(
-      body: NestedScrollView(
-        controller: scrollController,
-        headerSliverBuilder: (_, __) {
-          double topSpace = 8.r;
-          double toolbarHeight = 48.r;
-          double additionalHeight = 0;
-
-          if (additionalHeader != null) {
-            Size additionalSize =
-                MeasurementUtil.measureWidget(additionalHeader!);
-            additionalHeight = additionalSize.height;
+      body: _InfiniteScrollView(
+        onLoadMore: onLoadMore,
+        builder: (_) {
+          if (onRefresh == null) {
+            return CustomScrollView(
+              physics: const ClampingScrollPhysics(),
+              controller: scrollController,
+              slivers: slivers,
+            );
           }
-
-          double collapsedHeight = toolbarHeight + additionalHeight;
-
-          var expandedTitleHeight = MeasurementUtil.measureWidget(
-            SizedBox(
-              width: 1.sw - 40.r,
-              child: Text(
-                title,
-                style: AegisFont.headlineMedium,
-                maxLines: 2,
-                softWrap: true,
-              ),
+          return RefreshIndicator.adaptive(
+            onRefresh: onRefresh!,
+            displacement: 16.h,
+            child: CustomScrollView(
+              physics: const ClampingScrollPhysics(),
+              controller: scrollController,
+              slivers: slivers,
             ),
-          ).height;
-
-          if (isTwoLineTitle ?? false) {
-            var oneLineHeight = MeasurementUtil.measureWidget(
-              SizedBox(
-                width: 1.sw - 40.r,
-                child: Text(
-                  'Test',
-                  style: AegisFont.headlineMedium,
-                  maxLines: 2,
-                  softWrap: true,
-                ),
-              ),
-            ).height;
-            expandedTitleHeight = oneLineHeight * 2;
-          }
-
-          double totalExpandedHeight =
-              collapsedHeight + expandedTitleHeight + topSpace;
-
-          return [
-            SliverAppBar(
-              pinned: true,
-              floating: true,
-              collapsedHeight: collapsedHeight,
-              toolbarHeight: toolbarHeight,
-              expandedHeight: totalExpandedHeight,
-              backgroundColor: AegisColors.backgroundWhite,
-              surfaceTintColor: AegisColors.transparent,
-              leading: SkBackButton(
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              flexibleSpace: LayoutBuilder(
-                builder: (context, constraints) {
-                  var settings = context.dependOnInheritedWidgetOfExactType<
-                      FlexibleSpaceBarSettings>()!;
-
-                  var deltaExtent = settings.maxExtent - settings.minExtent;
-
-                  double value = (1.0 -
-                          (settings.currentExtent - settings.minExtent) /
-                              deltaExtent)
-                      .clamp(0.0, 1.0);
-
-                  double begin = math.max(0, 1 - toolbarHeight / deltaExtent);
-                  double end = 1;
-                  double interval = Interval(begin, end).transform(value);
-                  double opacity = 1 - interval;
-
-                  return SafeArea(
-                    child: ColoredBox(
-                      color: AegisColors.backgroundWhite,
-                      child: Stack(
-                        children: [
-                          _AppBarTitle.collapsed(
-                            toolbarHeight: toolbarHeight,
-                            title: title,
-                            opacity: opacity,
-                          ),
-                          _AppBarTitle.expanded(
-                            toolbarHeight: toolbarHeight,
-                            title: title,
-                            opacity: opacity,
-                            bottom: additionalHeight,
-                          ),
-                          if (additionalHeader != null)
-                            Positioned(
-                              bottom: 0,
-                              child: additionalHeader!,
-                            ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            if (subtitle != null)
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 28).w,
-                  child: Text(
-                    subtitle!,
-                    style: AegisFont.bodySmall.copyWith(
-                      color: AegisColors.textLowEmphasis,
-                    ),
-                  ),
-                ),
-              ),
-          ];
+          );
         },
-        body: _InfiniteScrollView(
-          onLoadMore: onLoadMore,
-          child: Builder(
-            builder: (_) {
-              if (onRefresh == null) {
-                return CustomScrollView(
-                  controller: bodyScrollController,
-                  slivers: slivers,
-                );
-              }
-              return RefreshIndicator.adaptive(
-                onRefresh: onRefresh!,
-                displacement: 16.h,
-                child: CustomScrollView(
-                  controller: bodyScrollController,
-                  slivers: slivers,
-                ),
-              );
-            },
-          ),
-        ),
       ),
       bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
 
-class _AppBarTitle extends StatelessWidget {
-  final double toolbarHeight;
-  final double opacity;
-  final String title;
-  final bool isExpand;
-  final double? bottom;
-
-  static _AppBarTitle expanded({
-    required double toolbarHeight,
-    required String title,
-    required double opacity,
-    double? bottom,
-  }) {
-    return _AppBarTitle._(
-      toolbarHeight: toolbarHeight,
-      opacity: opacity,
-      title: title,
-      isExpand: true,
-      bottom: bottom,
-    );
-  }
-
-  static _AppBarTitle collapsed({
-    required double toolbarHeight,
-    required String title,
-    required double opacity,
-  }) {
-    return _AppBarTitle._(
-      toolbarHeight: toolbarHeight,
-      opacity: opacity,
-      title: title,
-      isExpand: false,
-    );
-  }
-
-  const _AppBarTitle._({
-    required this.toolbarHeight,
-    required this.title,
-    required this.isExpand,
-    required this.opacity,
-    this.bottom,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: isExpand ? null : 0,
-      bottom: bottom ?? (isExpand ? 0 : null),
-      left: isExpand ? 20.r : 60.r,
-      height: isExpand ? null : toolbarHeight,
-      width: 1.sw - (isExpand ? 40.r : 120.r),
-      child: Opacity(
-        opacity: isExpand ? opacity : 1 - opacity,
-        child: Container(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            title,
-            style:
-                isExpand ? AegisFont.headlineMedium : AegisFont.headlineSmall,
-            maxLines: isExpand ? 2 : 1,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _InfiniteScrollView extends StatelessWidget {
   const _InfiniteScrollView({
-    required this.child,
+    required this.builder,
     this.onLoadMore,
   });
 
   final VoidCallback? onLoadMore;
-  final Widget child;
+  final WidgetBuilder builder;
 
   @override
   Widget build(BuildContext context) {
-    if (onLoadMore == null) return child;
+    if (onLoadMore == null) return Builder(builder: builder);
 
     return NotificationListener<UserScrollNotification>(
       onNotification: (notification) {
@@ -271,7 +96,7 @@ class _InfiniteScrollView extends StatelessWidget {
         }
         return true;
       },
-      child: child,
+      child: Builder(builder: builder),
     );
   }
 }

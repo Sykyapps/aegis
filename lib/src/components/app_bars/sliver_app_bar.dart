@@ -1,4 +1,7 @@
+import 'package:aegis/components.dart';
+import 'package:aegis/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
@@ -7,136 +10,122 @@ class SkSliverAppBar extends StatelessWidget {
   const SkSliverAppBar({
     Key? key,
     required this.title,
-    required this.expandedHeight,
     this.subtitle,
     this.leading,
-    this.action,
+    this.onLeadingPressed,
+    this.actions,
+    this.bottom,
   }) : super(key: key);
 
   final String title;
   final String? subtitle;
+
+  /// ```
+  /// FittedBox(
+  ///   fit: BoxFit.none,
+  ///   child: SizedBox.square(
+  ///     dimension: 32,
+  ///     child: SkBackButton(
+  ///       onPressed: () => Navigator.maybePop(context),
+  ///     ),
+  ///   ),
+  /// ),
+  ///```
   final Widget? leading;
-  final Widget? action;
-  final double expandedHeight;
+  final VoidCallback? onLeadingPressed;
+  final List<Widget>? actions;
+  final Widget? bottom;
 
-  static const collapsedHeight = 64.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      elevation: 0,
-      scrolledUnderElevation: 0,
-      shadowColor: AegisColors.shadowEvelation1,
-      surfaceTintColor: AegisColors.transparent,
-      automaticallyImplyLeading: false,
-      toolbarHeight: collapsedHeight,
-      expandedHeight: expandedHeight,
-      backgroundColor: AegisColors.neutral0,
-      titleSpacing: 0,
-      flexibleSpace: LayoutBuilder(
-        builder: (context, constraint) {
-          var top = constraint.biggest.height;
-          var isCollapsed = top < expandedHeight;
-
-          return FlexibleSpaceBar(
-            expandedTitleScale: 1,
-            titlePadding: EdgeInsets.zero,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 12),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    leading ?? const SizedBox(),
-                    if (title.isNotEmpty)
-                      Expanded(
-                        child: AnimatedOpacity(
-                          opacity: isCollapsed ? 1 : 0,
-                          duration: const Duration(milliseconds: 300),
-                          child: _CollapsedTitle(title: title),
-                        ),
-                      ),
-                    action ?? const SizedBox(),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-                if (title.isNotEmpty)
-                  Visibility(
-                    visible: !isCollapsed,
-                    maintainState: true,
-                    maintainAnimation: true,
-                    child: AnimatedOpacity(
-                      opacity: !isCollapsed ? 1 : 0,
-                      duration: const Duration(milliseconds: 300),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _ExpandedTitle(title: title),
-                          if (subtitle != null) ...[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20).r,
-                              child: Text(
-                                subtitle!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AegisFont.bodyMedium.copyWith(
-                                  color: AegisColors.neutral500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ),
-                const SizedBox(height: 4),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _CollapsedTitle extends StatelessWidget {
-  const _CollapsedTitle({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  static const toolbarHeight = 56.0;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    var titleWidget = Text(
       title,
       maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: AegisFont.headlineSmall.copyWith(
-        color: AegisColors.neutral500,
+      style: AegisFont.headlineMedium.copyWith(
+        overflow: TextOverflow.ellipsis,
       ),
     );
-  }
-}
+    var subtitleWidget = subtitle == null
+        ? const SizedBox.shrink()
+        : Text(
+            subtitle!,
+            maxLines: 2,
+            style: AegisFont.bodySmall.copyWith(
+              overflow: TextOverflow.ellipsis,
+              color: AegisColors.textLowEmphasis,
+            ),
+          );
 
-class _ExpandedTitle extends StatelessWidget {
-  const _ExpandedTitle({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20).r,
-      child: Text(
-        title,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: AegisFont.headlineMedium.copyWith(
-          color: AegisColors.neutral500,
-        ),
+    var flexibleSpaceWidgets = Container(
+      width: 1.sw,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ).copyWith(bottom: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        spacing: 4,
+        children: [
+          titleWidget,
+          subtitleWidget,
+        ],
       ),
+    );
+
+    var flexibleSpaceHeight =
+        MeasurementUtil.measureWidget(flexibleSpaceWidgets).height;
+
+    var bottomWidgetHeight =
+        MeasurementUtil.measureWidget(bottom ?? const SizedBox.shrink()).height;
+
+    var expandedHeight = toolbarHeight + flexibleSpaceHeight;
+
+    return SliverLayoutBuilder(
+      builder: (context, constraints) {
+        var isScrolledUnder = constraints.scrollOffset > flexibleSpaceHeight;
+        return SliverAppBar(
+          pinned: true,
+          toolbarHeight: toolbarHeight + bottomWidgetHeight,
+          expandedHeight: expandedHeight,
+          backgroundColor:
+              isScrolledUnder ? AegisColors.neutral0 : AegisColors.transparent,
+          systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
+            statusBarColor: AegisColors.transparent,
+          ),
+          title: isScrolledUnder ? Text(title) : null,
+          titleTextStyle: AegisFont.headlineSmall.copyWith(
+            color: AegisColors.textHighEmphasis,
+          ),
+          titleSpacing: 0,
+          leadingWidth: toolbarHeight,
+          leading: leading ??
+              FittedBox(
+                fit: BoxFit.none,
+                child: SizedBox.square(
+                  dimension: 32,
+                  child: SkBackButton(
+                    onPressed:
+                        onLeadingPressed ?? () => Navigator.maybePop(context),
+                  ),
+                ),
+              ),
+          flexibleSpace: FlexibleSpaceBar(
+            collapseMode: CollapseMode.pin,
+            background: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  width: 1.sw,
+                  child: flexibleSpaceWidgets,
+                ),
+              ],
+            ),
+          ),
+          actions: actions,
+        );
+      },
     );
   }
 }
