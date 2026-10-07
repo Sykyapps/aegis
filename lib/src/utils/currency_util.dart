@@ -2,13 +2,17 @@ import 'package:intl/intl.dart';
 
 enum Currency { idr, usd }
 
+extension CurrencyX on Currency {
+  int get fractionDigits => this == Currency.usd ? 2 : 0;
+}
+
 class CurrencyUtil {
   static const String _locale = 'en_US';
   static const String _compactLocale = 'id_ID';
 
   static int _fractionDigitsFor(dynamic value, Currency currency) {
-    if (currency != Currency.usd || value is! num) return 0;
-    return (value * 100).round() % 100 == 0 ? 0 : 2;
+    if (currency.fractionDigits == 0 || value is! num) return 0;
+    return (value * 100).round() % 100 == 0 ? 0 : currency.fractionDigits;
   }
 
   static String _symbolFor(Currency currency) {

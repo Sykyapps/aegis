@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import '../../../utils/currency_util.dart';
 
 const _maxValue = 1000000000000000;
-const _maxUsdFractionDigits = 2;
 
 class CurrencyInputFormatter extends TextInputFormatter {
   const CurrencyInputFormatter({required this.currency});
 
   final Currency currency;
 
-  static bool allowsDecimal(Currency currency) => currency == Currency.usd;
+  static bool allowsDecimal(Currency currency) => currency.fractionDigits > 0;
 
   static String parse(String? text, {Currency currency = Currency.idr}) {
     if (text.toString().isEmpty) {
@@ -83,7 +82,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
     var parts = clean.split('.');
     var hasFraction = parts.length == 2;
     if (parts.length > 2 ||
-        (hasFraction && parts.last.length > _maxUsdFractionDigits)) {
+        (hasFraction && parts.last.length > currency.fractionDigits)) {
       return oldValue;
     }
 

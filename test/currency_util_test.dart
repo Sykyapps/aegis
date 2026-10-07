@@ -2,6 +2,13 @@ import 'package:aegis/utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  group('Currency.fractionDigits', () {
+    test('USD keeps cents, IDR is whole', () {
+      expect(Currency.usd.fractionDigits, 2);
+      expect(Currency.idr.fractionDigits, 0);
+    });
+  });
+
   group('CurrencyUtil default (no currency arg) — regression', () {
     test('format matches today\'s IDR output', () {
       expect(CurrencyUtil.format(100000), 'Rp100,000');
