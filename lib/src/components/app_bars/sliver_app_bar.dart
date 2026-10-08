@@ -19,18 +19,6 @@ class SkSliverAppBar extends StatelessWidget {
 
   final String title;
   final String? subtitle;
-
-  /// ```
-  /// FittedBox(
-  ///   fit: BoxFit.none,
-  ///   child: SizedBox.square(
-  ///     dimension: 32,
-  ///     child: SkBackButton(
-  ///       onPressed: () => Navigator.maybePop(context),
-  ///     ),
-  ///   ),
-  /// ),
-  ///```
   final Widget? leading;
   final VoidCallback? onLeadingPressed;
   final List<Widget>? actions;
@@ -40,6 +28,14 @@ class SkSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var leadingWidget = leading ??
+        SizedBox.square(
+          dimension: 32,
+          child: SkBackButton(
+            onPressed: onLeadingPressed ?? () => Navigator.maybePop(context),
+          ),
+        );
+
     var titleWidget = Text(
       title,
       maxLines: 1,
@@ -100,17 +96,10 @@ class SkSliverAppBar extends StatelessWidget {
           ),
           titleSpacing: 0,
           leadingWidth: toolbarHeight,
-          leading: leading ??
-              FittedBox(
-                fit: BoxFit.none,
-                child: SizedBox.square(
-                  dimension: 32,
-                  child: SkBackButton(
-                    onPressed:
-                        onLeadingPressed ?? () => Navigator.maybePop(context),
-                  ),
-                ),
-              ),
+          leading: FittedBox(
+            fit: BoxFit.none,
+            child: leadingWidget,
+          ),
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.pin,
             background: Stack(
