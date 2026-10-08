@@ -11,6 +11,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title = '',
     this.centerTitle = true,
     this.titleTextStyle,
+    this.backgroundColor,
     this.showLeading = true,
     this.leading,
     this.leadingColor,
@@ -25,6 +26,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool centerTitle;
   final TextStyle? titleTextStyle;
+  final Color? backgroundColor;
   final bool showLeading;
   final Widget? leading;
   final Color? leadingColor;
@@ -46,7 +48,7 @@ class SkAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(title),
       centerTitle: centerTitle,
       titleTextStyle: titleTextStyle,
-      backgroundColor: AegisColors.transparent,
+      backgroundColor: backgroundColor ?? AegisColors.transparent,
       foregroundColor: AegisColors.textHighEmphasis,
       surfaceTintColor: AegisColors.transparent,
       automaticallyImplyLeading: showLeading,

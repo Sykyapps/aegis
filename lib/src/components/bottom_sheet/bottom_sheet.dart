@@ -84,7 +84,6 @@ class SkBottomSheet extends HookWidget {
               slivers: [
                 SkSliverAppBar(
                   title: title ?? '',
-                  expandedHeight: expandedHeight,
                   leading: showCloseButton ? const _CloseButton() : null,
                 ),
                 SliverToBoxAdapter(child: child),
