@@ -45,7 +45,7 @@ class CurrencyUtil {
       locale: _locale,
       symbol: _symbolFor(currency),
       decimalDigits: _fractionDigitsFor(value, currency),
-      customPattern: '¤#,###',
+      customPattern: '¤#,##0',
     );
     var formatted = formatter.format(value);
     if (!withSymbol) {
@@ -82,7 +82,7 @@ class CurrencyUtil {
       locale: _locale,
       symbol: _symbolFor(currency),
       decimalDigits: decimalDigits,
-      customPattern: '¤#,###',
+      customPattern: '¤#,##0',
     );
 
     return decimal.format(value);
