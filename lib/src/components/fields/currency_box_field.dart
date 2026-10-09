@@ -1,6 +1,5 @@
 import 'package:aegis/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
@@ -9,10 +8,12 @@ import '../semantics/semantics.dart';
 import 'formatter/currency_formatter.dart';
 
 class SkCurrencyBoxField extends FormField<String> {
+  final Currency currency;
   final TextEditingController? controller;
 
   SkCurrencyBoxField({
     super.key,
+    required this.currency,
     super.validator,
     super.autovalidateMode,
     this.controller,
@@ -28,7 +29,10 @@ class SkCurrencyBoxField extends FormField<String> {
           builder: (FormFieldState<String> fieldState) {
             void onChangeHandler(String value) {
               if (value.isEmpty) return;
-              var parsed = CurrencyUtil.parse(value).toString();
+              var parsed = CurrencyUtil.parse(
+                value,
+                currency: currency,
+              ).toString();
               if (onChanged != null) onChanged(parsed);
               fieldState.didChange(parsed);
             }
@@ -85,13 +89,15 @@ class SkCurrencyBoxField extends FormField<String> {
                         cursorWidth: 1.w,
                         cursorColor: AegisColors.blue300,
                         textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.numberWithOptions(
+                          decimal:
+                              CurrencyInputFormatter.allowsDecimal(currency),
+                        ),
                         decoration: effectiveDecoration.copyWith(
                           hintText: hintText,
                         ),
                         inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          CurrencyInputFormatter(),
+                          CurrencyInputFormatter(currency: currency),
                         ],
                       ),
                     ),

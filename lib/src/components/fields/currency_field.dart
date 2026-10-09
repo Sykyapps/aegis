@@ -1,15 +1,17 @@
 import 'package:aegis/src/components/fields/formatter/currency_formatter.dart';
 import 'package:aegis/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../foundation.dart';
 
 class SkCurrencyField extends FormField<String> {
+  final Currency currency;
   final TextEditingController? controller;
+
   SkCurrencyField({
     super.key,
+    required this.currency,
     bool enabled = true,
     this.controller,
     FocusNode? focusNode,
@@ -34,7 +36,10 @@ class SkCurrencyField extends FormField<String> {
               String parsed = '';
 
               if (value.isNotEmpty) {
-                parsed = CurrencyUtil.parse(value).toString();
+                parsed = CurrencyUtil.parse(
+                  value,
+                  currency: currency,
+                ).toString();
               }
 
               onChanged(parsed);
@@ -96,7 +101,9 @@ class SkCurrencyField extends FormField<String> {
                   ),
                 TextFormField(
                   enabled: enabled,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(
+                    decimal: CurrencyInputFormatter.allowsDecimal(currency),
+                  ),
                   controller: controller,
                   cursorColor: AegisColors.blue300,
                   cursorWidth: 1.r,
@@ -109,8 +116,7 @@ class SkCurrencyField extends FormField<String> {
                   onChanged: onChangedHandler,
                   style: AegisFont.bodyLarge,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    CurrencyInputFormatter(),
+                    CurrencyInputFormatter(currency: currency),
                   ],
                 ),
               ],

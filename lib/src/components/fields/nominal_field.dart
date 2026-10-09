@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
 import '../../../components.dart';
 import '../../../foundation.dart';
 import '../../utils/currency_util.dart';
 
+@Deprecated('Use SkCurrencyBoxField. Will be removed in the next major.')
 class SkNominalField extends HookWidget {
   const SkNominalField({
     super.key,
+    required this.currency,
     this.controller,
     this.labelText,
     this.hintText,
     required this.onChanged,
   });
 
+  final Currency currency;
   final TextEditingController? controller;
   final String? labelText;
   final String? hintText;
@@ -53,7 +55,9 @@ class SkNominalField extends HookWidget {
               focusNode: fn,
               controller: ctrl,
               onChanged: (value) {
-                onChanged(CurrencyUtil.parse(value).toString());
+                onChanged(
+                  CurrencyUtil.parse(value, currency: currency).toString(),
+                );
               },
               style: AegisFont.headlineSmall.copyWith(
                 color: AegisColors.neutral500,
@@ -79,12 +83,11 @@ class SkNominalField extends HookWidget {
                   }
 
                   double value = double.parse(newValue.text);
-                  final fmt = NumberFormat.simpleCurrency(
-                    locale: 'id_ID',
-                    decimalDigits: 0,
+                  var formattedValue = CurrencyUtil.simpleFormat(
+                    value,
+                    currency: currency,
                   );
 
-                  final formattedValue = fmt.format(value);
                   return newValue.copyWith(
                     text: formattedValue,
                     selection: TextSelection.collapsed(
