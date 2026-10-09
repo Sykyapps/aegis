@@ -8,7 +8,8 @@ class SkScaffold extends StatelessWidget {
   final Color backgroundColor;
   final Widget? bottomNavigationBar;
   final bool extendBodyBehindAppBar;
-
+  final bool extendBody;
+  final Widget? floatingActionButton;
   final List<Widget>? persistentFooterButtons;
   final bool? resizeToAvoidBottomInset;
 
@@ -19,8 +20,10 @@ class SkScaffold extends StatelessWidget {
     this.backgroundColor = AegisColors.neutral0,
     this.bottomNavigationBar,
     this.extendBodyBehindAppBar = false,
+    this.extendBody = false,
     this.persistentFooterButtons,
     this.resizeToAvoidBottomInset,
+    this.floatingActionButton,
   }) : super(key: key);
 
   @override
@@ -28,15 +31,17 @@ class SkScaffold extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
       child: Theme(
-        data: ThemeData(),
+        data: Theme.of(context),
         child: Scaffold(
           backgroundColor: backgroundColor,
           appBar: appBar,
           body: body,
           persistentFooterButtons: persistentFooterButtons,
           extendBodyBehindAppBar: extendBodyBehindAppBar,
+          extendBody: extendBody,
           bottomNavigationBar: bottomNavigationBar,
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          floatingActionButton: floatingActionButton,
         ),
       ),
     );
