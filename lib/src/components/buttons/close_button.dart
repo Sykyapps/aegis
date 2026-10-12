@@ -14,7 +14,7 @@ class SkCloseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SkSemantics(
-      identifier: 'back_button',
+      identifier: 'close_button',
       excludeSemantics: true,
       child: IconButton(
         padding: EdgeInsets.zero,
