@@ -10,6 +10,7 @@ class SkSliverAppBar extends StatelessWidget {
   const SkSliverAppBar({
     Key? key,
     required this.title,
+    this.titleTextStyle,
     this.subtitle,
     this.leading,
     this.onLeadingPressed,
@@ -18,6 +19,7 @@ class SkSliverAppBar extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
+  final TextStyle? titleTextStyle;
   final String? subtitle;
   final Widget? leading;
   final VoidCallback? onLeadingPressed;
@@ -38,8 +40,8 @@ class SkSliverAppBar extends StatelessWidget {
 
     var titleWidget = Text(
       title,
-      maxLines: 1,
-      style: AegisFont.headlineMedium.copyWith(
+      maxLines: 2,
+      style: (titleTextStyle ?? AegisFont.headlineMedium).copyWith(
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -64,6 +66,7 @@ class SkSliverAppBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         spacing: 4,
         children: [
+          const SizedBox(height: 8),
           titleWidget,
           subtitleWidget,
         ],
@@ -76,7 +79,8 @@ class SkSliverAppBar extends StatelessWidget {
     var bottomWidgetHeight =
         MeasurementUtil.measureWidget(bottom ?? const SizedBox.shrink()).height;
 
-    var expandedHeight = toolbarHeight + flexibleSpaceHeight;
+    var expandedHeight =
+        toolbarHeight + flexibleSpaceHeight + bottomWidgetHeight;
 
     return SliverLayoutBuilder(
       builder: (context, constraints) {
@@ -106,7 +110,6 @@ class SkSliverAppBar extends StatelessWidget {
               children: [
                 Positioned(
                   bottom: 0,
-                  width: 1.sw,
                   child: flexibleSpaceWidgets,
                 ),
               ],
