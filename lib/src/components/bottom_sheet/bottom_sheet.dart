@@ -54,7 +54,6 @@ class SkBottomSheet extends HookWidget {
   Widget build(BuildContext context) {
     var scrollController = useScrollController();
     var isPinned = useState(false);
-    var mq = MediaQuery.of(context);
 
     useEffect(() {
       scrollController.addListener(() {
@@ -87,30 +86,31 @@ class SkBottomSheet extends HookWidget {
             Flexible(
               child: Container(
                 clipBehavior: Clip.antiAlias,
-                padding: EdgeInsets.only(bottom: mq.viewInsets.bottom),
                 decoration: BoxDecoration(
                   color: AegisColors.backgroundWhite,
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(16.r),
                   ),
                 ),
-                child: CustomScrollView(
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  slivers: [
-                    SkSliverAppBar(
-                      title: title ?? '',
-                      subtitle: subtitle,
-                      titleTextStyle: titleTextStyle,
-                      leading: showCloseButton
-                          ? SkCloseButton(
-                              onPressed: () => Navigator.maybePop(context),
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                    SliverToBoxAdapter(child: child),
-                  ],
+                child: SkKeyboardInsetPadding(
+                  child: CustomScrollView(
+                    controller: scrollController,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    slivers: [
+                      SkSliverAppBar(
+                        title: title ?? '',
+                        subtitle: subtitle,
+                        titleTextStyle: titleTextStyle,
+                        leading: showCloseButton
+                            ? SkCloseButton(
+                                onPressed: () => Navigator.maybePop(context),
+                              )
+                            : const SizedBox.shrink(),
+                      ),
+                      SliverToBoxAdapter(child: child),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -49,15 +49,27 @@ class SkExpandableBottomSheet extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var expandedHeight = minExpandedHeight;
+    var mediaQuery = MediaQuery.maybeOf(context);
 
-    var titleRef = MeasurementUtil.measureWidget(
-      const _ExpandedTitle(title: 'Title'),
-    );
-    var titleSize = MeasurementUtil.measureWidget(_ExpandedTitle(title: title));
-    if (titleSize.height > titleRef.height) expandedHeight = maxExpandedHeight;
+    var expandedHeight = useMemoized(() {
+      var titleRef = MeasurementUtil.measureWidget(
+        const _ExpandedTitle(title: 'Title'),
+      );
+      var titleSize = MeasurementUtil.measureWidget(
+        _ExpandedTitle(title: title),
+      );
+      return titleSize.height > titleRef.height
+          ? maxExpandedHeight
+          : minExpandedHeight;
+    }, [title]);
 
-    var childHeight = MeasurementUtil.measureWidget(child).height;
+    var childHeight = useMemoized(() {
+      var measured = mediaQuery == null
+          ? child
+          : MediaQuery(data: mediaQuery, child: child);
+      return MeasurementUtil.measureWidget(measured).height;
+    }, [child]);
+
     var totalHeight = expandedHeight + childHeight + context.bottomPadding;
 
     var sheetSize = totalHeight / 1.sh;
