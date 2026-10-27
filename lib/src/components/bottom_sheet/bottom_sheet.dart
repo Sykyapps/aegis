@@ -11,6 +11,8 @@ class SkBottomSheet extends HookWidget {
     Key? key,
     required this.child,
     this.title,
+    this.subtitle,
+    this.titleTextStyle,
     this.expandedHeight = 100,
     this.backgroundImage,
     this.barrierColor,
@@ -20,6 +22,8 @@ class SkBottomSheet extends HookWidget {
   }) : super(key: key);
 
   final String? title;
+  final String? subtitle;
+  final TextStyle? titleTextStyle;
   final double expandedHeight;
   final ImageProvider<Object>? backgroundImage;
   final Widget? child;
@@ -50,7 +54,6 @@ class SkBottomSheet extends HookWidget {
   Widget build(BuildContext context) {
     var scrollController = useScrollController();
     var isPinned = useState(false);
-    var mq = MediaQuery.of(context);
 
     useEffect(() {
       scrollController.addListener(() {
@@ -67,54 +70,51 @@ class SkBottomSheet extends HookWidget {
       ),
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Container(
-          clipBehavior: Clip.antiAlias,
-          padding: EdgeInsets.only(bottom: mq.viewInsets.bottom),
-          decoration: BoxDecoration(
-            color: AegisColors.backgroundWhite,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(16.r),
-            ),
-          ),
-          child: SafeArea(
-            child: CustomScrollView(
-              controller: scrollController,
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              slivers: [
-                SkSliverAppBar(
-                  title: title ?? '',
-                  leading: showCloseButton ? const _CloseButton() : null,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (showHandle)
+              Container(
+                height: 4.r,
+                width: 40.r,
+                margin: EdgeInsets.only(bottom: 12.h),
+                decoration: const ShapeDecoration(
+                  color: AegisColors.backgroundWhite,
+                  shape: StadiumBorder(),
                 ),
-                SliverToBoxAdapter(child: child),
-              ],
+              ),
+            Flexible(
+              child: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: AegisColors.backgroundWhite,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(16.r),
+                  ),
+                ),
+                child: SkKeyboardInsetPadding(
+                  child: CustomScrollView(
+                    controller: scrollController,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    slivers: [
+                      SkSliverAppBar(
+                        title: title ?? '',
+                        subtitle: subtitle,
+                        titleTextStyle: titleTextStyle,
+                        leading: showCloseButton
+                            ? SkCloseButton(
+                                onPressed: () => Navigator.maybePop(context),
+                              )
+                            : const SizedBox.shrink(),
+                      ),
+                      SliverToBoxAdapter(child: child),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CloseButton extends StatelessWidget {
-  const _CloseButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: Container(
-        width: 40,
-        height: 40,
-        alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: AegisColors.backgroundWhite,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          AegisIcons.close,
-          size: 20.sp,
-          color: AegisColors.textHighEmphasis,
+          ],
         ),
       ),
     );
