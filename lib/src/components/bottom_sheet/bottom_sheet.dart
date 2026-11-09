@@ -136,6 +136,7 @@ class SkBottomSheet<T> extends StatelessWidget {
       isScrollControlled: true,
       useRootNavigator: useRootNavigator,
       routeSettings: routeSettings,
+      useSafeArea: useSafeArea,
       builder: (context) => this,
     );
   }
@@ -174,50 +175,47 @@ class SkBottomSheet<T> extends StatelessWidget {
                     top: Radius.circular(16.r),
                   ),
                 ),
-                child: SkKeyboardInsetPadding(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: CustomScrollView(
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          slivers: [
-                            if (showHeader)
-                              SkSliverAppBar(
-                                title: title ?? '',
-                                subtitle: subtitle,
-                                titleTextStyle: titleTextStyle,
-                                leading: leading ??
-                                    (showCloseButton
-                                        ? SkCloseButton(
-                                            onPressed: onClose ??
-                                                () =>
-                                                    Navigator.maybePop(context),
-                                          )
-                                        : const SizedBox.shrink()),
-                                actions: actions,
-                              ),
-                            SliverToBoxAdapter(
-                              child: Padding(
-                                padding: padding ?? EdgeInsets.zero,
-                                child: child,
-                              ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: CustomScrollView(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        slivers: [
+                          if (showHeader)
+                            SkSliverAppBar(
+                              title: title ?? '',
+                              subtitle: subtitle,
+                              titleTextStyle: titleTextStyle,
+                              leading: leading ??
+                                  (showCloseButton
+                                      ? SkCloseButton(
+                                          onPressed: onClose ??
+                                              () => Navigator.maybePop(context),
+                                        )
+                                      : const SizedBox.shrink()),
+                              actions: actions,
                             ),
-                            if (bottomBar == null)
-                              SliverToBoxAdapter(
-                                child: SizedBox(height: bottomPadding),
-                              ),
-                          ],
-                        ),
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: padding ?? EdgeInsets.zero,
+                              child: child,
+                            ),
+                          ),
+                          if (bottomBar == null)
+                            SliverToBoxAdapter(
+                              child: SizedBox(height: bottomPadding),
+                            ),
+                        ],
                       ),
-                      if (bottomBar != null)
-                        Padding(
-                          padding: EdgeInsets.only(bottom: bottomPadding),
-                          child: bottomBar!,
-                        ),
-                    ],
-                  ),
+                    ),
+                    if (bottomBar != null)
+                      Padding(
+                        padding: EdgeInsets.only(bottom: bottomPadding),
+                        child: bottomBar!,
+                      ),
+                  ],
                 ),
               ),
             ),
