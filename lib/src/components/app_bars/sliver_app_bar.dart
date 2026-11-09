@@ -119,7 +119,7 @@ class SkSliverAppBar extends StatelessWidget {
         : Text(
             subtitle!,
             maxLines: 2,
-            style: AegisFont.bodySmall.copyWith(
+            style: AegisFont.bodyMedium.copyWith(
               overflow: TextOverflow.ellipsis,
               color: AegisColors.textLowEmphasis,
             ),
