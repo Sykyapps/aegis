@@ -7,6 +7,11 @@ Future<void> _openSheet(
   WidgetTester tester,
   Future<void> Function(BuildContext context) onOpen,
 ) async {
+  tester.view.physicalSize = const Size(375, 812);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+
   await tester.pumpWidget(
     ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -187,5 +192,85 @@ void main() {
       tester.getRect(find.text('Simpan')).bottom,
       lessThanOrEqualTo(_screenHeight(tester) - keyboardInset),
     );
+  });
+
+  group('SkBottomSheet.showAsDialog', () {
+    testWidgets('renders without a header and applies horizontal padding',
+        (tester) async {
+      await _openSheet(
+        tester,
+        (context) => SkBottomSheet.showAsDialog<void>(
+          context,
+          child: const Text('Isi Dialog'),
+        ),
+      );
+
+      expect(find.byType(SkSliverAppBar), findsNothing);
+      expect(find.byType(SkCloseButton), findsNothing);
+      expect(find.text('Isi Dialog'), findsOneWidget);
+      expect(tester.getRect(find.text('Isi Dialog')).left, 20);
+    });
+
+    testWidgets('forwards barrierDismissible: false', (tester) async {
+      await _openSheet(
+        tester,
+        (context) => SkBottomSheet.showAsDialog<void>(
+          context,
+          barrierDismissible: false,
+          child: const Text('Isi Dialog'),
+        ),
+      );
+
+      await tester.tapAt(const Offset(10, 10));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Isi Dialog'), findsOneWidget);
+    });
+
+    testWidgets('returns a typed result from pop', (tester) async {
+      String? result;
+
+      await _openSheet(tester, (context) async {
+        result = await SkBottomSheet.showAsDialog<String>(
+          context,
+          child: Builder(
+            builder: (sheetContext) => TextButton(
+              onPressed: () => Navigator.of(sheetContext).pop('nilai'),
+              child: const Text('Pilih Ini'),
+            ),
+          ),
+        );
+      });
+
+      await tester.tap(find.text('Pilih Ini'));
+      await tester.pumpAndSettle();
+
+      expect(result, 'nilai');
+    });
+
+    testWidgets('deprecated SkBasicBottomSheet delegates to the helper',
+        (tester) async {
+      String? result;
+      // ignore: deprecated_member_use_from_same_package
+      var sheet = SkBasicBottomSheet<String>(
+        child: Builder(
+          builder: (sheetContext) => TextButton(
+            onPressed: () => Navigator.of(sheetContext).pop('nilai'),
+            child: const Text('Isi Dialog'),
+          ),
+        ),
+      );
+
+      await _openSheet(tester, (context) async {
+        result = await sheet.show(context);
+      });
+
+      expect(find.byType(SkSliverAppBar), findsNothing);
+
+      await tester.tap(find.text('Isi Dialog'));
+      await tester.pumpAndSettle();
+
+      expect(result, 'nilai');
+    });
   });
 }

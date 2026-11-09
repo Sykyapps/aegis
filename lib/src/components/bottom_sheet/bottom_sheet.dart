@@ -25,11 +25,12 @@ class SkBottomSheet<T> extends StatelessWidget {
     this.leading,
     this.onClose,
     this.showHeader = true,
-    this.showHandle = true,
+    this.showHandle = false,
     this.showCloseButton = true,
     this.hasBottomNav = false,
     this.useSafeArea = true,
     this.bottomInset,
+    this.bottomSpacing = 16,
     this.padding,
     this.barrierColor,
     this.backgroundColor = AegisColors.backgroundWhite,
@@ -86,6 +87,11 @@ class SkBottomSheet<T> extends StatelessWidget {
   /// Overrides the bottom padding. When provided, [useSafeArea] is ignored.
   final double? bottomInset;
 
+  /// Extra space below the content or [bottomBar], added on top of the system
+  /// safe area. Defaults to 16. Set to `0` when the bottom bar already
+  /// provides its own bottom padding.
+  final double bottomSpacing;
+
   /// Content padding. Defaults to no padding so consumers are free to
   /// manage their own content spacing.
   final EdgeInsetsGeometry? padding;
@@ -141,10 +147,33 @@ class SkBottomSheet<T> extends StatelessWidget {
     );
   }
 
+  /// Shows a dialog-style sheet: no header, 20dp horizontal padding, shown
+  /// on the root navigator and not draggable. It is the replacement for the
+  /// deprecated `SkBasicBottomSheet`.
+  static Future<T?> showAsDialog<T>(
+    BuildContext context, {
+    required Widget child,
+    EdgeInsetsGeometry? padding,
+    bool useRootNavigator = true,
+    bool barrierDismissible = true,
+  }) {
+    return SkBottomSheet<T>(
+      showHeader: false,
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 20.r),
+      child: child,
+    ).show(
+      context,
+      useRootNavigator: useRootNavigator,
+      barrierDismissible: barrierDismissible,
+      enableDrag: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var bottomPadding = bottomInset ??
-        (useSafeArea ? MediaQuery.paddingOf(context).bottom : 0.0);
+    var bottomPadding = (bottomInset ??
+            (useSafeArea ? MediaQuery.paddingOf(context).bottom : 0.0)) +
+        bottomSpacing.h;
 
     return BackdropFilter(
       filter: ImageFilter.blur(
