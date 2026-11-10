@@ -25,7 +25,7 @@ class SkBottomSheet<T> extends StatelessWidget {
     this.leading,
     this.onClose,
     this.showHeader = true,
-    this.showHandle = false,
+    this.showHandle = true,
     this.showCloseButton = true,
     this.hasBottomNav = false,
     this.useSafeArea = true,
@@ -113,13 +113,13 @@ class SkBottomSheet<T> extends StatelessWidget {
 
   /// Shows the sheet as a modal route.
   ///
-  /// [useRootNavigator] defaults to `false` to preserve legacy behavior;
+  /// [useRootNavigator] defaults to `true` to preserve legacy behavior;
   /// set it to `true` when the sheet must appear above the bottom
   /// navigation / nested navigator.
   /// [barrierDismissible] `false` also disables drag-to-dismiss.
   Future<T?> show(
     BuildContext context, {
-    bool useRootNavigator = false,
+    bool useRootNavigator = true,
     bool barrierDismissible = true,
     bool enableDrag = true,
     RouteSettings? routeSettings,
@@ -159,6 +159,7 @@ class SkBottomSheet<T> extends StatelessWidget {
   }) {
     return SkBottomSheet<T>(
       showHeader: false,
+      showHandle: false,
       padding: padding ?? EdgeInsets.symmetric(horizontal: 20.r),
       child: child,
     ).show(

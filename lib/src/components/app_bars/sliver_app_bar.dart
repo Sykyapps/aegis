@@ -135,7 +135,6 @@ class SkSliverAppBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         spacing: 4,
         children: [
-          const SizedBox(height: 8),
           titleWidget,
           subtitleWidget,
         ],
@@ -217,6 +216,7 @@ class SkSliverAppBar extends StatelessWidget {
           titleTextStyle: AegisFont.headlineSmall.copyWith(
             color: AegisColors.textHighEmphasis,
           ),
+          centerTitle: true,
           titleSpacing: 0,
           leadingWidth: leadingWidth ?? toolbarHeight,
           leading: FittedBox(
@@ -224,7 +224,7 @@ class SkSliverAppBar extends StatelessWidget {
             child: leadingWidget,
           ),
           flexibleSpace: flexibleSpace,
-          actions: actions,
+          actions: isScrolledUnder ? [] : actions,
         );
       },
     );
