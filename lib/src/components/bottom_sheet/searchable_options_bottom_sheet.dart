@@ -29,7 +29,7 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     this.selectedItems,
     this.trailing,
     this.onSelected,
-    this.showHandle = false,
+    this.showHandle = true,
     this.handleColor = AegisColors.backgroundWhite,
   });
 
@@ -141,162 +141,160 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                     ),
                   ),
                 Flexible(
-                  child: _SheetPadding(
-                    child: Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(radius.x.r),
-                          topRight: Radius.circular(radius.x.r),
-                        ),
-                        color: AegisColors.backgroundWhite,
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.paddingOf(context).bottom,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(radius.x.r),
+                        topRight: Radius.circular(radius.x.r),
                       ),
-                      child: DraggableScrollableSheet(
-                        expand: false,
-                        maxChildSize: .93,
-                        initialChildSize: .93,
-                        builder: (context, scrollController) {
-                          return CustomScrollView(
-                            keyboardDismissBehavior: childBuilder != null
-                                ? ScrollViewKeyboardDismissBehavior.manual
-                                : ScrollViewKeyboardDismissBehavior.onDrag,
-                            controller: scrollController,
-                            shrinkWrap: true,
-                            slivers: [
-                              _Header(
-                                title: title,
-                                searchLabel: searchHint,
-                                controller: controller,
-                                onChanged: onChanged,
-                                trailing: trailing,
-                              ),
-                              if (filtered.value.isEmpty)
-                                SliverToBoxAdapter(
-                                  child: _Empty(
-                                    emptyImage: emptyImage,
-                                    title: emptyTitle,
-                                    description: emptyDescription,
-                                  ),
-                                )
-                              else if (groupByAlphabet)
-                                SliverFillRemaining(
-                                  hasScrollBody: true,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: GestureDetector(
-                                          onTapDown: (_) {
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
+                      color: AegisColors.backgroundWhite,
+                    ),
+                    child: DraggableScrollableSheet(
+                      expand: false,
+                      maxChildSize: .93,
+                      initialChildSize: .93,
+                      builder: (context, scrollController) {
+                        return CustomScrollView(
+                          keyboardDismissBehavior: childBuilder != null
+                              ? ScrollViewKeyboardDismissBehavior.manual
+                              : ScrollViewKeyboardDismissBehavior.onDrag,
+                          controller: scrollController,
+                          shrinkWrap: true,
+                          slivers: [
+                            _Header(
+                              title: title,
+                              searchLabel: searchHint,
+                              controller: controller,
+                              onChanged: onChanged,
+                              trailing: trailing,
+                            ),
+                            if (filtered.value.isEmpty)
+                              SliverToBoxAdapter(
+                                child: _Empty(
+                                  emptyImage: emptyImage,
+                                  title: emptyTitle,
+                                  description: emptyDescription,
+                                ),
+                              )
+                            else if (groupByAlphabet)
+                              SliverFillRemaining(
+                                hasScrollBody: true,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTapDown: (_) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
+                                        child: AzListView(
+                                          data: grouped(),
+                                          itemCount: grouped().length,
+                                          itemBuilder: (context, index) {
+                                            var f = grouped()[index];
+                                            var isSelected =
+                                                f.data == selected.value;
+                                            return Column(
+                                              children: [
+                                                Offstage(
+                                                  offstage: !f.isShowSuspension,
+                                                  child: _AzGroup(
+                                                    tag: f.getSuspensionTag(),
+                                                  ),
+                                                ),
+                                                _OptionItem(
+                                                  imageUrl:
+                                                      getImage?.call(f.data),
+                                                  title: getLabel(f.data),
+                                                  subtitle:
+                                                      subtitleBuilder?.call(
+                                                    f.data,
+                                                    isSelected,
+                                                  ),
+                                                  trailing:
+                                                      trailingBuilder?.call(
+                                                          f.data, isSelected),
+                                                  onPressed: () {
+                                                    selected.value = f.data;
+                                                    if (onSelected != null) {
+                                                      return onSelected
+                                                          ?.call(f.data);
+                                                    }
+                                                    Navigator.of(context)
+                                                        .pop(f.data);
+                                                  },
+                                                ),
+                                              ],
+                                            );
                                           },
-                                          child: AzListView(
-                                            data: grouped(),
-                                            itemCount: grouped().length,
-                                            itemBuilder: (context, index) {
-                                              var f = grouped()[index];
-                                              var isSelected =
-                                                  f.data == selected.value;
-                                              return Column(
-                                                children: [
-                                                  Offstage(
-                                                    offstage:
-                                                        !f.isShowSuspension,
-                                                    child: _AzGroup(
-                                                      tag: f.getSuspensionTag(),
-                                                    ),
-                                                  ),
-                                                  _OptionItem(
-                                                    imageUrl:
-                                                        getImage?.call(f.data),
-                                                    title: getLabel(f.data),
-                                                    subtitle:
-                                                        subtitleBuilder?.call(
-                                                      f.data,
-                                                      isSelected,
-                                                    ),
-                                                    trailing:
-                                                        trailingBuilder?.call(
-                                                            f.data, isSelected),
-                                                    onPressed: () {
-                                                      selected.value = f.data;
-                                                      if (onSelected != null) {
-                                                        return onSelected
-                                                            ?.call(f.data);
-                                                      }
-                                                      Navigator.of(context)
-                                                          .pop(f.data);
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                            indexBarOptions: IndexBarOptions(
-                                              needRebuild: true,
-                                              textStyle:
-                                                  AegisFont.small.copyWith(
-                                                fontWeight: FontWeight.w700,
-                                                color: AegisColors
-                                                    .textHighEmphasis,
-                                              ),
-                                              indexHintAlignment:
-                                                  Alignment.centerRight,
-                                              indexHintDecoration:
-                                                  BoxDecoration(
-                                                color: AegisColors.blue300,
-                                                borderRadius:
-                                                    BorderRadius.circular(3),
-                                              ),
-                                              indexHintWidth: 20,
-                                              indexHintHeight: 20,
-                                              indexHintTextStyle:
-                                                  AegisFont.small.copyWith(
-                                                fontWeight: FontWeight.w700,
-                                                color: AegisColors.neutral0,
-                                              ),
+                                          indexBarOptions: IndexBarOptions(
+                                            needRebuild: true,
+                                            textStyle: AegisFont.small.copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              color:
+                                                  AegisColors.textHighEmphasis,
+                                            ),
+                                            indexHintAlignment:
+                                                Alignment.centerRight,
+                                            indexHintDecoration: BoxDecoration(
+                                              color: AegisColors.blue300,
+                                              borderRadius:
+                                                  BorderRadius.circular(3),
+                                            ),
+                                            indexHintWidth: 20,
+                                            indexHintHeight: 20,
+                                            indexHintTextStyle:
+                                                AegisFont.small.copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              color: AegisColors.neutral0,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      if (actionButton != null) actionButton!
-                                    ],
-                                  ),
-                                )
-                              else
-                                SliverList(
-                                  delegate: SliverChildListDelegate(
-                                    filtered.value.map((f) {
-                                      var isSelected = f == selected.value;
-                                      return _OptionItem(
-                                        imageUrl: getImage?.call(f),
-                                        title: getLabel(f),
-                                        subtitle: subtitleBuilder?.call(
-                                          f,
-                                          isSelected,
-                                        ),
-                                        trailing: trailingBuilder?.call(
-                                          f,
-                                          isSelected,
-                                        ),
-                                        isSelected: isSelected,
-                                        onPressed: () {
-                                          selected.value = f;
-                                          if (onSelected != null) {
-                                            return onSelected?.call(f);
-                                          }
-                                          Navigator.of(context).pop(f);
-                                        },
-                                        child: childBuilder?.call(
-                                          f,
-                                          isSelected,
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
+                                    ),
+                                    if (actionButton != null) actionButton!
+                                  ],
                                 ),
-                            ],
-                          );
-                        },
-                      ),
+                              )
+                            else
+                              SliverList(
+                                delegate: SliverChildListDelegate(
+                                  filtered.value.map((f) {
+                                    var isSelected = f == selected.value;
+                                    return _OptionItem(
+                                      imageUrl: getImage?.call(f),
+                                      title: getLabel(f),
+                                      subtitle: subtitleBuilder?.call(
+                                        f,
+                                        isSelected,
+                                      ),
+                                      trailing: trailingBuilder?.call(
+                                        f,
+                                        isSelected,
+                                      ),
+                                      isSelected: isSelected,
+                                      onPressed: () {
+                                        selected.value = f;
+                                        if (onSelected != null) {
+                                          return onSelected?.call(f);
+                                        }
+                                        Navigator.of(context).pop(f);
+                                      },
+                                      child: childBuilder?.call(
+                                        f,
+                                        isSelected,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -305,26 +303,6 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
           ),
         );
       },
-    );
-  }
-}
-
-/// Pads the sheet above the keyboard and the device safe area.
-///
-/// The insets are read here so a keyboard animation only rebuilds this small
-/// widget instead of the whole sheet, mirroring [SkKeyboardInsetPadding].
-class _SheetPadding extends StatelessWidget {
-  const _SheetPadding({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.paddingOf(context).bottom + context.bottomInset,
-      ),
-      child: child,
     );
   }
 }

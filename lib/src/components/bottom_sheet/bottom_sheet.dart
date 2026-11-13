@@ -160,6 +160,7 @@ class SkBottomSheet<T> extends StatelessWidget {
     return SkBottomSheet<T>(
       showHeader: false,
       showHandle: false,
+      bottomInset: 0,
       padding: padding ?? EdgeInsets.symmetric(horizontal: 20.r),
       child: child,
     ).show(
