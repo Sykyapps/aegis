@@ -250,7 +250,7 @@ class SkTextField extends HookWidget {
                 prefixIconConstraints: const BoxConstraints(),
                 suffixIcon: suffix ??
                     (fn.hasFocus && ctrl.text.isNotEmpty && !readOnly
-                        ? _ClearButton(controller: ctrl)
+                        ? _ClearButton(controller: ctrl, onChanged: onChanged)
                         : null),
                 suffixIconConstraints: const BoxConstraints(),
               ),
@@ -263,16 +263,24 @@ class SkTextField extends HookWidget {
 }
 
 class _ClearButton extends StatelessWidget {
-  const _ClearButton({Key? key, required this.controller}) : super(key: key);
+  const _ClearButton({
+    Key? key,
+    required this.controller,
+    this.onChanged,
+  }) : super(key: key);
 
   final TextEditingController controller;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8).r,
       child: InkWell(
-        onTap: () => controller.clear(),
+        onTap: () {
+          controller.clear();
+          onChanged?.call('');
+        },
         child: Icon(
           AegisIcons.close_circle_fill,
           size: 20.r,
