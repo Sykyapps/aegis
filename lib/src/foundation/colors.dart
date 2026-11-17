@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class AegisColors {
   static const transparent = Color.fromRGBO(0, 0, 0, 0);
 
+  /// Barrier color behind modal (bottom sheet, dialog).
+  static const scrim = Color.fromRGBO(4, 8, 22, 0.6);
+
   static const neutral0 = Color.fromRGBO(255, 255, 255, 1);
   static const neutral100 = Color.fromRGBO(245, 246, 250, 1);
   static const neutral200 = Color.fromRGBO(224, 227, 239, 1);

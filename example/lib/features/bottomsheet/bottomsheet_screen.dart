@@ -1,6 +1,5 @@
-import 'dart:developer';
-import 'dart:ui';
 import 'dart:core';
+import 'dart:developer';
 
 import 'package:aegis/components.dart';
 import 'package:aegis/foundation.dart';
@@ -42,26 +41,48 @@ class BottomSheetScreen extends HookWidget {
             ),
             const SizedBox(height: 8),
             SkButton(
-              label: 'Tap to open Bottom Sheet',
-              onPressed: () {
-                log('Button pressed');
-                var mq = MediaQuery.of(context);
-                showModalBottomSheet(
-                  context: context,
-                  // barrierColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  isScrollControlled: true,
-                  constraints: BoxConstraints(
-                    maxHeight: mq.size.height - mq.viewPadding.top,
+              label: 'Bottom Sheet tanpa header',
+              onPressed: () async {
+                await const SkBottomSheet(
+                  showHeader: false,
+                  padding: EdgeInsets.only(top: 20),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Sheet tanpa header'),
+                        SizedBox(height: 8),
+                        Text('Cocok untuk sheet bergaya dialog.'),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   ),
+                ).show(context);
+              },
+            ),
+            const SizedBox(height: 8),
+            SkButton(
+              label: 'Bottom Sheet dengan bottom bar',
+              onPressed: () async {
+                var result = await SkBottomSheet<String>(
+                  title: 'Bottom Bar',
+                  bottomBar: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+                    child: SkButton(
+                      label: 'Pilih',
+                      onPressed: () => Navigator.of(context).pop('dipilih'),
+                    ),
+                  ),
+                  child: const SizedBox(
+                    height: 400,
+                    child: Center(
+                      child: Text('Konten yang bisa di-scroll'),
+                    ),
+                  ),
+                ).show(context);
 
-                  builder: (context) {
-                    return const _SkBottomSheet(
-                      useDraggableScrollableSheet: false,
-                      child: SizedBox(),
-                    );
-                  },
-                );
+                log('Hasil sheet: $result');
               },
             ),
             const SizedBox(height: 8),
@@ -268,82 +289,5 @@ class _Button extends StatelessWidget {
                   onTap?.call();
                 },
               );
-  }
-}
-
-class _SkBottomSheet extends StatelessWidget {
-  const _SkBottomSheet({
-    Key? key,
-    this.child,
-    this.useDraggableScrollableSheet = false,
-  }) : super(key: key);
-
-  final bool useDraggableScrollableSheet;
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(
-        sigmaX: Shadow.convertRadiusToSigma(4),
-        sigmaY: Shadow.convertRadiusToSigma(4),
-      ),
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16).r,
-          color: AegisColors.neutral0,
-        ),
-        child: useDraggableScrollableSheet
-            ? DraggableScrollableSheet(
-                expand: false,
-                builder: (context, scrollController) {
-                  return CustomScrollView(
-                    controller: scrollController,
-                    shrinkWrap: true,
-                    slivers: [
-                      const _Header(),
-                      SliverToBoxAdapter(
-                        child: child ?? Padding(padding: EdgeInsets.all(20.r)),
-                      )
-                    ],
-                  );
-                },
-              )
-            : CustomScrollView(
-                shrinkWrap: true,
-                slivers: [
-                  const _Header(),
-                  SliverToBoxAdapter(
-                    child: child ?? Padding(padding: EdgeInsets.all(20.r)),
-                  )
-                ],
-              ),
-      ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header({
-    Key? key,
-  }) : super(key: key);
-
-  static final double height = 56.r;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      automaticallyImplyLeading: false,
-      leading: IconButton(
-        padding: EdgeInsets.zero,
-        icon: const Icon(AegisIcons.close),
-        onPressed: () {},
-      ),
-      toolbarHeight: height,
-      backgroundColor: AegisColors.neutral200,
-      foregroundColor: AegisColors.neutral500,
-    );
   }
 }

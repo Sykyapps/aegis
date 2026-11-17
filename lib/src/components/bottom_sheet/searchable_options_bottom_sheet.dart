@@ -29,6 +29,8 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
     this.selectedItems,
     this.trailing,
     this.onSelected,
+    this.showHandle = true,
+    this.handleColor = AegisColors.backgroundWhite,
   });
 
   final String title;
@@ -50,13 +52,37 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
   final Widget? trailing;
   final void Function(T)? onSelected;
 
+  /// Whether to show the small drag handle at the top of the sheet.
+  final bool showHandle;
+
+  /// The drag handle's color. Ignored when [showHandle] is `false`.
+  final Color handleColor;
+
   static const radius = Radius.circular(16);
 
-  Future<T?> show(BuildContext context) {
+  /// Shows the sheet as a modal route.
+  ///
+  /// Defaults preserve the legacy behavior. Set [useRootNavigator] to `true`
+  /// when the sheet must appear above the bottom navigation / a nested
+  /// navigator. [barrierDismissible] `false` also disables drag-to-dismiss.
+  Future<T?> show(
+    BuildContext context, {
+    bool useRootNavigator = false,
+    bool barrierDismissible = true,
+    bool enableDrag = true,
+    RouteSettings? routeSettings,
+    String? barrierLabel,
+  }) {
     var selected = showModalBottomSheet<T>(
       context: context,
       backgroundColor: Colors.transparent,
+      barrierColor: AegisColors.scrim,
       isScrollControlled: true,
+      isDismissible: barrierDismissible,
+      barrierLabel: barrierLabel,
+      enableDrag: barrierDismissible && enableDrag,
+      useRootNavigator: useRootNavigator,
+      routeSettings: routeSettings,
       builder: (_) => this,
     );
 
@@ -99,140 +125,180 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
             sigmaX: Shadow.convertRadiusToSigma(4),
             sigmaY: Shadow.convertRadiusToSigma(4),
           ),
-          child: Container(
-            padding: EdgeInsets.only(
-              bottom:
-                  MediaQuery.paddingOf(context).bottom + context.bottomInset,
-            ),
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(
-              borderRadius:
-                  BorderRadius.only(topLeft: radius, topRight: radius),
-              color: AegisColors.neutral0,
-            ),
-            child: DraggableScrollableSheet(
-              expand: false,
-              maxChildSize: .93,
-              initialChildSize: .93,
-              builder: (context, scrollController) {
-                return CustomScrollView(
-                  keyboardDismissBehavior: childBuilder != null
-                      ? ScrollViewKeyboardDismissBehavior.manual
-                      : ScrollViewKeyboardDismissBehavior.onDrag,
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  slivers: [
-                    _Header(
-                      title: title,
-                      searchLabel: searchHint,
-                      controller: controller,
-                      onChanged: onChanged,
-                      trailing: trailing,
+          child: GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (showHandle)
+                  Container(
+                    height: 4.r,
+                    width: 40.r,
+                    margin: EdgeInsets.only(bottom: 12.h),
+                    decoration: ShapeDecoration(
+                      color: handleColor,
+                      shape: const StadiumBorder(),
                     ),
-                    if (filtered.value.isEmpty)
-                      SliverToBoxAdapter(
-                        child: _Empty(
-                          emptyImage: emptyImage,
-                          title: emptyTitle,
-                          description: emptyDescription,
-                        ),
-                      )
-                    else if (groupByAlphabet)
-                      SliverFillRemaining(
-                        hasScrollBody: true,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTapDown: (_) {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                },
-                                child: AzListView(
-                                  data: grouped(),
-                                  itemCount: grouped().length,
-                                  itemBuilder: (context, index) {
-                                    var f = grouped()[index];
-                                    var isSelected = f.data == selected.value;
-                                    return Column(
-                                      children: [
-                                        Offstage(
-                                          offstage: !f.isShowSuspension,
-                                          child: _AzGroup(
-                                            tag: f.getSuspensionTag(),
-                                          ),
-                                        ),
-                                        _OptionItem(
-                                          imageUrl: getImage?.call(f.data),
-                                          title: getLabel(f.data),
-                                          subtitle: subtitleBuilder?.call(
-                                            f.data,
-                                            isSelected,
-                                          ),
-                                          trailing: trailingBuilder?.call(
-                                              f.data, isSelected),
-                                          onPressed: () {
-                                            selected.value = f.data;
-                                            if (onSelected != null) {
-                                              return onSelected?.call(f.data);
-                                            }
-                                            Navigator.of(context).pop(f.data);
+                  ),
+                Flexible(
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.paddingOf(context).bottom,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(radius.x.r),
+                        topRight: Radius.circular(radius.x.r),
+                      ),
+                      color: AegisColors.backgroundWhite,
+                    ),
+                    child: DraggableScrollableSheet(
+                      expand: false,
+                      maxChildSize: .93,
+                      initialChildSize: .93,
+                      builder: (context, scrollController) {
+                        return CustomScrollView(
+                          keyboardDismissBehavior: childBuilder != null
+                              ? ScrollViewKeyboardDismissBehavior.manual
+                              : ScrollViewKeyboardDismissBehavior.onDrag,
+                          controller: scrollController,
+                          shrinkWrap: true,
+                          slivers: [
+                            _Header(
+                              title: title,
+                              searchLabel: searchHint,
+                              controller: controller,
+                              onChanged: onChanged,
+                              trailing: trailing,
+                            ),
+                            if (filtered.value.isEmpty)
+                              SliverToBoxAdapter(
+                                child: _Empty(
+                                  emptyImage: emptyImage,
+                                  title: emptyTitle,
+                                  description: emptyDescription,
+                                ),
+                              )
+                            else if (groupByAlphabet)
+                              SliverFillRemaining(
+                                hasScrollBody: true,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTapDown: (_) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
+                                        child: AzListView(
+                                          data: grouped(),
+                                          itemCount: grouped().length,
+                                          itemBuilder: (context, index) {
+                                            var f = grouped()[index];
+                                            var isSelected =
+                                                f.data == selected.value;
+                                            return Column(
+                                              children: [
+                                                Offstage(
+                                                  offstage: !f.isShowSuspension,
+                                                  child: _AzGroup(
+                                                    tag: f.getSuspensionTag(),
+                                                  ),
+                                                ),
+                                                _OptionItem(
+                                                  imageUrl:
+                                                      getImage?.call(f.data),
+                                                  title: getLabel(f.data),
+                                                  subtitle:
+                                                      subtitleBuilder?.call(
+                                                    f.data,
+                                                    isSelected,
+                                                  ),
+                                                  trailing:
+                                                      trailingBuilder?.call(
+                                                          f.data, isSelected),
+                                                  onPressed: () {
+                                                    selected.value = f.data;
+                                                    if (onSelected != null) {
+                                                      return onSelected
+                                                          ?.call(f.data);
+                                                    }
+                                                    Navigator.of(context)
+                                                        .pop(f.data);
+                                                  },
+                                                ),
+                                              ],
+                                            );
                                           },
+                                          indexBarOptions: IndexBarOptions(
+                                            needRebuild: true,
+                                            textStyle: AegisFont.small.copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              color:
+                                                  AegisColors.textHighEmphasis,
+                                            ),
+                                            indexHintAlignment:
+                                                Alignment.centerRight,
+                                            indexHintDecoration: BoxDecoration(
+                                              color: AegisColors.blue300,
+                                              borderRadius:
+                                                  BorderRadius.circular(3),
+                                            ),
+                                            indexHintWidth: 20,
+                                            indexHintHeight: 20,
+                                            indexHintTextStyle:
+                                                AegisFont.small.copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              color: AegisColors.neutral0,
+                                            ),
+                                          ),
                                         ),
-                                      ],
+                                      ),
+                                    ),
+                                    if (actionButton != null) actionButton!
+                                  ],
+                                ),
+                              )
+                            else
+                              SliverList(
+                                delegate: SliverChildListDelegate(
+                                  filtered.value.map((f) {
+                                    var isSelected = f == selected.value;
+                                    return _OptionItem(
+                                      imageUrl: getImage?.call(f),
+                                      title: getLabel(f),
+                                      subtitle: subtitleBuilder?.call(
+                                        f,
+                                        isSelected,
+                                      ),
+                                      trailing: trailingBuilder?.call(
+                                        f,
+                                        isSelected,
+                                      ),
+                                      isSelected: isSelected,
+                                      onPressed: () {
+                                        selected.value = f;
+                                        if (onSelected != null) {
+                                          return onSelected?.call(f);
+                                        }
+                                        Navigator.of(context).pop(f);
+                                      },
+                                      child: childBuilder?.call(
+                                        f,
+                                        isSelected,
+                                      ),
                                     );
-                                  },
-                                  indexBarOptions: IndexBarOptions(
-                                    needRebuild: true,
-                                    textStyle: AegisFont.small.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      color: AegisColors.textHighEmphasis,
-                                    ),
-                                    indexHintAlignment: Alignment.centerRight,
-                                    indexHintDecoration: BoxDecoration(
-                                      color: AegisColors.blue300,
-                                      borderRadius: BorderRadius.circular(3),
-                                    ),
-                                    indexHintWidth: 20,
-                                    indexHintHeight: 20,
-                                    indexHintTextStyle:
-                                        AegisFont.small.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      color: AegisColors.neutral0,
-                                    ),
-                                  ),
+                                  }).toList(),
                                 ),
                               ),
-                            ),
-                            if (actionButton != null) actionButton!
                           ],
-                        ),
-                      )
-                    else
-                      SliverList(
-                        delegate: SliverChildListDelegate(
-                          filtered.value.map((f) {
-                            var isSelected = f == selected.value;
-                            return _OptionItem(
-                              imageUrl: getImage?.call(f),
-                              title: getLabel(f),
-                              subtitle: subtitleBuilder?.call(f, isSelected),
-                              trailing: trailingBuilder?.call(f, isSelected),
-                              isSelected: isSelected,
-                              onPressed: () {
-                                selected.value = f;
-                                if (onSelected != null) {
-                                  return onSelected?.call(f);
-                                }
-                                Navigator.of(context).pop(f);
-                              },
-                              child: childBuilder?.call(f, isSelected),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                  ],
-                );
-              },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         );
@@ -270,8 +336,8 @@ class _Header extends StatelessWidget {
       automaticallyImplyLeading: false,
       toolbarHeight: collapsedHeight,
       expandedHeight: expandedHeight,
-      backgroundColor: AegisColors.neutral0,
-      surfaceTintColor: AegisColors.neutral0,
+      backgroundColor: AegisColors.backgroundWhite,
+      surfaceTintColor: AegisColors.backgroundWhite,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraint) {
           var top = constraint.biggest.height;
@@ -287,12 +353,19 @@ class _Header extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 8),
-                    const _CloseButton(),
+                    SkCloseButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
                     Expanded(
                       child: AnimatedOpacity(
                         opacity: isCollapsed ? 1 : 0,
                         duration: const Duration(milliseconds: 300),
-                        child: _Title(title: title),
+                        child: _Title(
+                          title: title,
+                          style: AegisFont.headlineSmall.copyWith(
+                            color: AegisColors.neutral500,
+                          ),
+                        ),
                       ),
                     ),
                     Container(
@@ -306,7 +379,12 @@ class _Header extends StatelessWidget {
                   duration: const Duration(milliseconds: 300),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20).r,
-                    child: _Title(title: title),
+                    child: _Title(
+                      title: title,
+                      style: AegisFont.headlineMedium.copyWith(
+                        color: AegisColors.neutral500,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -330,36 +408,22 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _CloseButton extends StatelessWidget {
-  const _CloseButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      iconSize: 24.sp,
-      padding: EdgeInsets.zero,
-      icon: const Icon(
-        AegisIcons.close,
-        color: AegisColors.iconHighEmphasis,
-      ),
-      onPressed: () => Navigator.of(context).pop(),
-    );
-  }
-}
-
 class _Title extends StatelessWidget {
-  const _Title({Key? key, required this.title}) : super(key: key);
+  const _Title({
+    Key? key,
+    required this.title,
+    required this.style,
+  }) : super(key: key);
 
   final String title;
+  final TextStyle style;
 
   @override
   Widget build(BuildContext context) {
     return AutoSizeText(
       title,
       maxLines: 1,
-      style: AegisFont.headlineMedium.copyWith(
-        color: AegisColors.neutral500,
-      ),
+      style: style,
     );
   }
 }
@@ -379,17 +443,17 @@ class _Empty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 300.r,
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20).r,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (emptyImage != null)
             Container(
-              width: 66,
-              height: 56,
-              margin: const EdgeInsets.all(8),
+              width: 66.r,
+              height: 56.r,
+              margin: const EdgeInsets.all(8).r,
               child: Image.asset(emptyImage!),
             ),
           Text(

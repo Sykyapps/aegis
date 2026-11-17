@@ -8,7 +8,6 @@ extension CurrencyX on Currency {
 
 class CurrencyUtil {
   static const String _locale = 'en_US';
-  static const String _compactLocale = 'id_ID';
 
   static int _fractionDigitsFor(dynamic value, Currency currency) {
     if (currency.fractionDigits == 0 || value is! num) return 0;
@@ -60,7 +59,7 @@ class CurrencyUtil {
     Currency currency = Currency.idr,
   }) {
     var formatter = NumberFormat.compactCurrency(
-      locale: _compactLocale,
+      locale: _locale,
       symbol: withSymbol ? _symbolFor(currency) : '',
       decimalDigits: 2,
     );
@@ -103,7 +102,7 @@ class CurrencyUtil {
   }
 
   static String compactLongFormat(dynamic value) {
-    var formatter = NumberFormat.compactLong(locale: _compactLocale);
+    var formatter = NumberFormat.compactLong(locale: _locale);
     return formatter.format(value);
   }
 }
