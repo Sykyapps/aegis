@@ -161,4 +161,15 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('stays above the keyboard', (tester) async {
+    await _openSheet(tester, (context) => _sheet().show(context));
+
+    tester.view.viewInsets = const FakeViewPadding(bottom: 300);
+    addTearDown(tester.view.resetViewInsets);
+    await tester.pumpAndSettle();
+
+    var sheet = tester.getRect(find.byType(DraggableScrollableSheet));
+    expect(sheet.bottom, lessThanOrEqualTo(812 - 300));
+  });
 }

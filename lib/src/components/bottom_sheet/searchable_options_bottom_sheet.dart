@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -144,7 +145,10 @@ class SkSearchableOptionsBottomSheet<T> extends HookWidget {
                   child: Container(
                     clipBehavior: Clip.antiAlias,
                     padding: EdgeInsets.only(
-                      bottom: MediaQuery.paddingOf(context).bottom,
+                      bottom: math.max(
+                        MediaQuery.paddingOf(context).bottom,
+                        MediaQuery.viewInsetsOf(context).bottom,
+                      ),
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
